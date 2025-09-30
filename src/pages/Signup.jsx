@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useSignupMutation } from '../feature/auth/authApi';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useSignupMutation } from "../feature/auth/authApi";
 
 const Signup = () => {
-  const [role, setRole] = useState('customer');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [role, setRole] = useState("customer");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [signup, { isLoading, error }] = useSignupMutation();
   const navigate = useNavigate();
 
@@ -14,13 +14,13 @@ const Signup = () => {
     e.preventDefault();
     try {
       const res = await signup({ name, email, password, role }).unwrap();
-      localStorage.setItem('token', res.access_token);
-      localStorage.setItem('role', res.role);
-      localStorage.setItem('id', res.id);
-      alert('Signup successful! Please log in.');
-      navigate('/login');
+      localStorage.setItem("token", res.access_token);
+      localStorage.setItem("role", res.role);
+      localStorage.setItem("id", res.id);
+      alert("Signup successful! Please log in.");
+      navigate("/login");
     } catch (err) {
-      console.log('signup failed', err);
+      console.log("signup failed", err);
     }
   };
 
@@ -40,18 +40,32 @@ const Signup = () => {
           <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 px-8 py-6 border-b border-gray-100 text-center">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                <svg
+                  className="w-8 h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4v16m8-8H4"
+                  />
                 </svg>
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Create Account</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                Create Account
+              </h2>
               <p className="text-gray-600">Join us and start your journey</p>
             </div>
 
             <div className="px-8 py-8">
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Name</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    Name
+                  </label>
                   <input
                     type="text"
                     placeholder="Your full name"
@@ -63,7 +77,9 @@ const Signup = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    Email
+                  </label>
                   <input
                     type="email"
                     placeholder="Your email address"
@@ -75,7 +91,9 @@ const Signup = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Password</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    Password
+                  </label>
                   <input
                     type="password"
                     placeholder="Choose a strong password"
@@ -87,7 +105,9 @@ const Signup = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Role</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1">
+                    Role
+                  </label>
                   <select
                     className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
                     value={role}
@@ -111,8 +131,18 @@ const Signup = () => {
                     </div>
                   ) : (
                     <div className="flex items-center">
-                      <svg className="w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      <svg
+                        className="w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 4v16m8-8H4"
+                        />
                       </svg>
                       Sign Up
                     </div>
@@ -128,7 +158,7 @@ const Signup = () => {
 
               <div className="mt-8 pt-6 border-t border-gray-200 text-center">
                 <p className="text-gray-600">
-                  Already have an account?{' '}
+                  Already have an account?{" "}
                   <Link
                     to="/login"
                     className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
@@ -145,8 +175,18 @@ const Signup = () => {
               to="/"
               className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-300 group"
             >
-              <svg className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              <svg
+                className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                />
               </svg>
               Back to Home
             </Link>
