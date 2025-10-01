@@ -169,7 +169,9 @@ const CheckoutPage = () => {
                     <li key={item.id} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
                       <div className="flex items-center">
                         <img
-                          src={item.images?.[0]?.images?.[0] ? `http://localhost:3000${item.images[0].images[0]}` : `https://placehold.co/80x80/E0E7FF/3B82F6?text=${encodeURIComponent(item.name)}`}
+                          src={item.images?.[0]?.images?.[0]
+                             ? `${API_URL}${item.images[0].images[0]}`
+                              : `https://placehold.co/80x80/E0E7FF/3B82F6?text=${encodeURIComponent(item.name)}`}
                           alt={item.name}
                           className="w-16 h-16 object-cover rounded-md mr-4 shadow-sm"
                         />
