@@ -393,10 +393,13 @@ const HomePage = () => {
                   className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch"
                 >
                   {filteredProducts.map((product, index) => {
-                    const image = product.images?.[0]?.url
+                    const imageUrl = product.images?.[0]?.url
                       ? product.images[0].url.startsWith("http")
                         ? product.images[0].url
-                        : `${API_URL}${product.images[0].url}`
+                        : `${API_URL}/${product.images[0].url.replace(
+                            /^\/+/,
+                            ""
+                          )}`
                       : null;
 
                     return (
@@ -414,11 +417,11 @@ const HomePage = () => {
                       >
                         {/* Image Container */}
                         <div className="relative overflow-hidden">
-                          {image ? (
+                          {imageUrl ? (
                             <motion.img
                               whileHover={{ scale: 1.1 }}
                               transition={{ duration: 0.3 }}
-                              src={image}
+                              src={imageUrl}
                               alt={product.name}
                               className="w-full h-64 object-cover"
                               onError={(e) => {
