@@ -9,6 +9,7 @@ import SearchBar from "./SearchBar";
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: products = [], isLoading } = useGetAllProductsQuery();
+  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
 
   const { token, role } = useSelector((state) => state.auth);
   const isLoggedIn = Boolean(token);
@@ -392,12 +393,10 @@ const HomePage = () => {
                   className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch"
                 >
                   {filteredProducts.map((product, index) => {
-                    const API_URL = import.meta.env.VITE_API_URL?.replace(
-                      /\/$/,
-                      ""
-                    );
                     const image = product.images?.[0]?.url
-                      ? `${API_URL}${product.images[0].url}`
+                      ? product.images[0].url.startsWith("http")
+                        ? product.images[0].url
+                        : `${API_URL}${product.images[0].url}`
                       : null;
 
                     return (
