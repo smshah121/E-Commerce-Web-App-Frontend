@@ -394,10 +394,10 @@ const HomePage = () => {
                 >
                   {filteredProducts.map((product, index) => {
                     const image = product.images?.[0]?.images?.[0]
-                      ? `${API_URL}${product.images[0].images[0].replace(
-                          /^\/+/,
+                      ? `${API_URL.replace(
+                          /\/$/,
                           ""
-                        )}`
+                        )}/${product.images[0].images[0].replace(/^\/+/, "")}`
                       : null;
 
                     return (
