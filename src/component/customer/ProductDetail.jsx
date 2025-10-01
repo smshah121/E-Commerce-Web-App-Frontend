@@ -20,15 +20,18 @@ const ProductDetail = () => {
   // Check if user is logged in (assuming auth state is in Redux)
   const { token } = useSelector((state) => state.auth);
   const isLoggedIn = Boolean(token);
+  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
 
   // Fetch product data using RTK Query
   const { data: product, isLoading, error } = useGetProductByIdQuery(productId);
   
   // Process images safely using useMemo
   const allImages = useMemo(() => {
-    if (!product?.images) return [];
-    return product.images.flatMap((imgObj) => imgObj.images.map(img => `http://localhost:3000${img}`));
-  }, [product]);
+  if (!product?.images) return [];
+  return product.images.flatMap((imgObj) =>
+    imgObj.images.map((img) => `${API_URL}/${img.replace(/^\/+/, "")}`)
+  );
+}, [product, API_URL]);
 
   // Set initial selected image when images are loaded
   useEffect(() => {
