@@ -1,20 +1,18 @@
-import React, { useEffect } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import AddProductImage from './AddProductImage';
-import UpdateProductForm from './UpdateProductForm';
-import DeleteImageButton from './DeleteImageButton';
-import DeleteProductButton from './DeleteProductButton'; // Import the new component
-import { useNavigate } from 'react-router-dom';
-import CreateProductForm from './CreateProduct';
+import React, { useEffect } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import AddProductImage from "./AddProductImage";
+import UpdateProductForm from "./UpdateProductForm";
+import DeleteImageButton from "./DeleteImageButton";
+import DeleteProductButton from "./DeleteProductButton"; // Import the new component
+import { useNavigate } from "react-router-dom";
+import CreateProductForm from "./CreateProduct";
 // import { useGetAllProductsQuery } from '../../feature/product/productApi';
-import WelcomeBanner from './WelcomeBanner'; // Assuming WelcomeBanner is a separate component
-import ProductBuyersList from './ProductBuyersList';
+import WelcomeBanner from "./WelcomeBanner"; // Assuming WelcomeBanner is a separate component
+import ProductBuyersList from "./ProductBuyersList";
 
-import { useGetAllOrdersQuery } from '../../feature/order/orderApi';
-import OrderListForAdmin from './OrderListForAdmin';
-import { useGetMyProductsQuery } from '../../feature/product/productApi';
-
-
+import { useGetAllOrdersQuery } from "../../feature/order/orderApi";
+import OrderListForAdmin from "./OrderListForAdmin";
+import { useGetMyProductsQuery } from "../../feature/product/productApi";
 
 // Animation variants
 const containerVariants = {
@@ -23,9 +21,9 @@ const containerVariants = {
     opacity: 1,
     transition: {
       delayChildren: 0.3,
-      staggerChildren: 0.2
-    }
-  }
+      staggerChildren: 0.2,
+    },
+  },
 };
 
 const itemVariants = {
@@ -36,16 +34,16 @@ const itemVariants = {
     transition: {
       type: "spring",
       stiffness: 100,
-      damping: 10
-    }
-  }
+      damping: 10,
+    },
+  },
 };
 
 const cardVariants = {
   hidden: {
     opacity: 0,
     y: 50,
-    scale: 0.9
+    scale: 0.9,
   },
   visible: {
     opacity: 1,
@@ -55,8 +53,8 @@ const cardVariants = {
       type: "spring",
       stiffness: 100,
       damping: 12,
-      duration: 0.6
-    }
+      duration: 0.6,
+    },
   },
   hover: {
     y: -8,
@@ -64,50 +62,53 @@ const cardVariants = {
     transition: {
       type: "spring",
       stiffness: 400,
-      damping: 10
-    }
-  }
+      damping: 10,
+    },
+  },
 };
 
 const AdminDashboard = () => {
   // const { data: products = [], isLoading, error } = useGetAllProductsQuery();
-  const { data: products = [], isLoading, error, refetch } = useGetMyProductsQuery();
+  const {
+    data: products = [],
+    isLoading,
+    error,
+    refetch,
+  } = useGetMyProductsQuery();
   const getAdminIdFromToken = () => {
-  const token = localStorage.getItem('token');
-  if (!token) return null;
+    const token = localStorage.getItem("token");
+    if (!token) return null;
 
-  try {
-    const decoded = JSON.parse(atob(token.split('.')[1]));
-    return decoded?.sub || null;
-  } catch (err) {
-    console.error('Invalid token:', err);
-    return null;
-  }
-};
-  const adminId = getAdminIdFromToken()
+    try {
+      const decoded = JSON.parse(atob(token.split(".")[1]));
+      return decoded?.sub || null;
+    } catch (err) {
+      console.error("Invalid token:", err);
+      return null;
+    }
+  };
+  const adminId = getAdminIdFromToken();
   useEffect(() => {
-  if (adminId) {
-    refetch(); // refetch data if admin ID changes
-  }
-}, [adminId]);
+    if (adminId) {
+      refetch(); // refetch data if admin ID changes
+    }
+  }, [adminId]);
 
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
-  const { data: orders = [], isLoading: ordersLoading } = useGetAllOrdersQuery();
-
-  
- 
-
-
+  const { data: orders = [], isLoading: ordersLoading } =
+    useGetAllOrdersQuery();
 
   const formatPrice = (price) => {
-    return typeof price === 'number' ? price.toFixed(2) : parseFloat(price || 0).toFixed(2);
+    return typeof price === "number"
+      ? price.toFixed(2)
+      : parseFloat(price || 0).toFixed(2);
   };
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // or sessionStorage
-    navigate('/login'); // redirect to login
+    localStorage.removeItem("token"); // or sessionStorage
+    navigate("/login"); // redirect to login
   };
 
   // Component for animated section headers
@@ -178,15 +179,14 @@ const AdminDashboard = () => {
             duration: 20,
             ease: "linear",
             repeat: Infinity,
-            repeatType: "reverse"
+            repeatType: "reverse",
           }}
           className="absolute inset-0"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: "60px 60px"
+            backgroundSize: "60px 60px",
           }}
         />
-
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <motion.div
@@ -214,32 +214,31 @@ const AdminDashboard = () => {
         <motion.div
           animate={{
             y: [0, -20, 0],
-            rotate: [0, 5, 0]
+            rotate: [0, 5, 0],
           }}
           transition={{
             duration: 4,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
           className="absolute top-20 right-10 w-16 h-16 bg-white/10 rounded-full blur-sm"
         />
         <motion.div
           animate={{
             y: [0, 15, 0],
-            x: [0, 10, 0]
+            x: [0, 10, 0],
           }}
           transition={{
             duration: 3,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 1
+            delay: 1,
           }}
           className="absolute bottom-20 left-10 w-12 h-12 bg-yellow-400/20 rounded-full blur-sm"
         />
       </section>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
-
         {/* Create Product Section */}
         <section>
           <AnimatedSectionHeader
@@ -257,8 +256,6 @@ const AdminDashboard = () => {
             <CreateProductForm />
           </motion.div>
         </section>
-
-     
 
         {/* Products List Section */}
         <section>
@@ -306,12 +303,26 @@ const AdminDashboard = () => {
             >
               <div className="bg-red-50 border border-red-200 rounded-2xl p-8">
                 <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg
+                    className="w-8 h-8 text-red-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-red-800 mb-2">Error Loading Products</h3>
-                <p className="text-red-600">{error.message || 'Unknown error occurred'}</p>
+                <h3 className="text-xl font-semibold text-red-800 mb-2">
+                  Error Loading Products
+                </h3>
+                <p className="text-red-600">
+                  {error.message || "Unknown error occurred"}
+                </p>
               </div>
             </motion.div>
           ) : (
@@ -338,7 +349,9 @@ const AdminDashboard = () => {
                     <div className="lg:col-span-2 space-y-4">
                       <div className="flex items-start justify-between">
                         <div>
-                          <h2 className="text-2xl font-bold text-gray-900 mb-2">{product.title}</h2>
+                          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                            {product.title}
+                          </h2>
                           <div className="flex items-center space-x-4 mb-4">
                             <motion.div
                               initial={{ scale: 0 }}
@@ -354,8 +367,12 @@ const AdminDashboard = () => {
                               </span>
                             </div>
                           </div>
-                          <p className="text-gray-700 text-2xl leading-relaxed">{product.name}</p>
-                          <p className="text-gray-600 leading-relaxed">{product.description}</p>
+                          <p className="text-gray-700 text-2xl leading-relaxed">
+                            {product.name}
+                          </p>
+                          <p className="text-gray-600 leading-relaxed">
+                            {product.description}
+                          </p>
                         </div>
                       </div>
 
@@ -367,14 +384,8 @@ const AdminDashboard = () => {
                         <DeleteProductButton productId={product.id} />
 
                         <ProductBuyersList productId={product.id} />
-
-                       
-
                       </div>
                     </div>
-                    
-
-       
 
                     {/* Product Images */}
                     <div className="space-y-4">
@@ -386,7 +397,11 @@ const AdminDashboard = () => {
                         <div className="grid grid-cols-2 gap-4">
                           {product.images.map((img) =>
                             img.images.map((path, idx) => {
-                              const fullPath = `http://localhost:3000${path}`;
+                              const API_URL = import.meta.env.VITE_API_URL;
+                              const fullPath = `${API_URL.replace(
+                                /\/$/,
+                                ""
+                              )}${path}`;
                               return (
                                 <motion.div
                                   key={`${img.id}-${idx}`}
@@ -400,12 +415,20 @@ const AdminDashboard = () => {
                                     alt={`Product ${product.id} - ${idx}`}
                                     className="w-full h-32 object-cover rounded-xl border-2 border-gray-200 group-hover:border-blue-400 transition-all duration-300"
                                     onError={(e) => {
-                                      console.error('Image failed to load:', fullPath);
-                                      e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIxIDlWN0E0IDQgMCAwIDAgMTcgM0g3QTQgNCAwIDAgMCAzIDdWMTdBNCA0IDAgMCAwIDcgMjFIOUwyMSA5WiIgc3Ryb2tlPSIjOTk5IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMjEgMTVMMTMgN0w5IDExIiBzdHJva2U9IiM5OTkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjwvcGF0aD4KPC9zdmc+';
-                                      e.target.className = "w-full h-32 object-cover rounded-xl border-2 border-red-300 bg-gray-100 flex items-center justify-center";
+                                      console.error(
+                                        "Image failed to load:",
+                                        fullPath
+                                      );
+                                      e.target.src =
+                                        "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIxIDlWN0E0IDQgMCAwIDAgMTcgM0g3QTQgNCAwIDAgMCAzIDdWMTdBNCA0IDAgMCAwIDcgMjFIOUwyMSA5WiIgc3Ryb2tlPSIjOTk5IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMjEgMTVMMTMgN0w5IDExIiBzdHJva2U9IiM5OTkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjwvcGF0aD4KPC9zdmc+";
+                                      e.target.className =
+                                        "w-full h-32 object-cover rounded-xl border-2 border-red-300 bg-gray-100 flex items-center justify-center";
                                     }}
                                     onLoad={() => {
-                                      console.log('Image loaded successfully:', fullPath);
+                                      console.log(
+                                        "Image loaded successfully:",
+                                        fullPath
+                                      );
                                     }}
                                   />
                                   <DeleteImageButton imageId={img.id} />
@@ -421,10 +444,22 @@ const AdminDashboard = () => {
                           className="h-32 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 flex items-center justify-center"
                         >
                           <div className="text-center">
-                            <svg className="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            <svg
+                              className="w-12 h-12 text-gray-400 mx-auto mb-2"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={1}
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                              />
                             </svg>
-                            <p className="text-gray-500 text-sm">No images available</p>
+                            <p className="text-gray-500 text-sm">
+                              No images available
+                            </p>
                           </div>
                         </motion.div>
                       )}
@@ -436,15 +471,14 @@ const AdminDashboard = () => {
           )}
         </section>
         {/* Orders Management Section */}
-<section>
-  <AnimatedSectionHeader
-    title="Manage Orders"
-    subtitle="View and update order status"
-    icon="📋"
-  />
-  <OrderListForAdmin />
-</section>
-
+        <section>
+          <AnimatedSectionHeader
+            title="Manage Orders"
+            subtitle="View and update order status"
+            icon="📋"
+          />
+          <OrderListForAdmin />
+        </section>
       </div>
     </div>
   );
