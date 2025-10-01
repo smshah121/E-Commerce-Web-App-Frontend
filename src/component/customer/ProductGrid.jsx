@@ -8,6 +8,8 @@ const ProductGrid = ({ products }) => {
   const navigate = useNavigate(); // Initialize useNavigate for navigation
   const [addedItems, setAddedItems] = useState(new Set());
   const [searchTerm, setSearchTerm] = useState('');
+  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
+
 
   const handleAddToCart = (product, event) => {
     // Stop event propagation to prevent navigating to product detail when clicking "Add to Cart"
@@ -101,7 +103,7 @@ const ProductGrid = ({ products }) => {
                 <div className="relative overflow-hidden w-full h-64 flex items-center justify-center bg-gray-100"> {/* Fixed height, flex for centering, fallback bg */}
                   {product.images?.[0]?.images?.[0] ? (
                     <img
-                      src={`http://localhost:3000${product.images[0].images[0]}`}
+                      src={`${API_URL}${product.images[0].images[0]}`}
                       alt={product.name}
                       className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" // Changed object-cover to object-contain, slightly reduced hover scale
                       onError={(e) => {

@@ -18,6 +18,7 @@ const CheckoutPage = () => {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [processingOrder, setProcessingOrder] = useState(false); // Renamed from processingPayment
   const [orderError, setOrderError] = useState(null); // Renamed from paymentError
+  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
 
   // State for address fields
   const [address, setAddress] = useState({
@@ -63,7 +64,7 @@ const CheckoutPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/orders', { // Assuming your orders endpoint is /orders
+      const response = await fetch(`${API_URL}/orders`, { // Assuming your orders endpoint is /orders
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

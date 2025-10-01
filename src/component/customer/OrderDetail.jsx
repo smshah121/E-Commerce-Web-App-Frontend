@@ -12,6 +12,7 @@ const OrderDetail = () => {
 
   // Use the specific useGetOrderByIdQuery hook directly
   const { data: order, isLoading, error } = useGetOrderByIdQuery(orderId);
+  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
 
   // Mock tracking history for demonstration purposes
   // In a real app, this would come from your backend order data
@@ -158,7 +159,9 @@ const OrderDetail = () => {
                     <div className="flex items-center space-x-4 mb-3 sm:mb-0">
                       {/* Product Image */}
                       <img
-                        src={item.product?.images?.[0]?.images?.[0] ? `http://localhost:3000${item.product.images[0].images[0]}` : `https://placehold.co/80x80/E0E7FF/3B82F6?text=${encodeURIComponent(item.product?.name || 'Item')}`}
+                        src={item.product?.images?.[0]?.images?.[0]
+                          ? `${API_URL}${item.product.images[0].images[0]}`
+                          : `https://placehold.co/80x80/E0E7FF/3B82F6?text=${encodeURIComponent(item.product?.name || 'Item')}`}
                         alt={item.product?.name || 'Product'}
                         className="w-20 h-20 object-cover rounded-md shadow-sm"
                         onError={(e) => { e.target.onerror = null; e.target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0zMCAyMC4wNTE2QzI1LjQxNzUgMjAuMDUxNiAyMS43NSAyMy43MTk2IDIxLjc1IDI4LjMwMTZTMjUuNDE3NSAzNi41NTE2IDMwIDM2LjU1MTZTMzguMjUgMzIuODgyNiAzOC4yNSAyOC4zMDE2UzM0LjU4MjUgMjAuMDUxNiAzMCAyMC4wNTE2Wk0zMCAyMy4wNTE2QzMyLjYyNSAyMy4wNTE2IDM0LjM3NSAyOC4wNTE2IDM0LjM3NSAyOS41NTE2UzMyLjYyNSAzMS4wNTE2IDMwIDM3LjA1MTZTMjUuNjI1IDMxLjA1MTYgMjUuNjI1IDI5LjU1MTZTMjcuMTM1IDIzLjA1MTYgMzAgMjIuMDUxNloiIGZpbGw9IiM5QjlCRTAiLz4KPC9zdmc+"; }}

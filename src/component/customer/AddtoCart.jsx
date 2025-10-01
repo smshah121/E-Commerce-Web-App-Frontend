@@ -9,6 +9,7 @@ const AddToCart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const { items: cart, totalAmount, totalQuantity } = useSelector((state) => state.cart);
+  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
 
   const getDashboardPath = ()=> {
     navigate("/customer-dashboard")
@@ -90,7 +91,8 @@ const AddToCart = () => {
                             <div className="flex gap-2">
                               {item.images.slice(0, 2).map(img =>
                                 img.images.slice(0, 1).map((path, idx) => {
-                                  const fullPath = `http://localhost:3000${path}`;
+                                  const fullPath = `${API_URL}${path}`;
+
                                   return (
                                     <img
                                       key={`${img.id}-${idx}`}
