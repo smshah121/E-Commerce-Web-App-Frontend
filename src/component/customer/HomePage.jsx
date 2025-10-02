@@ -393,12 +393,8 @@ const HomePage = () => {
                   className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch"
                 >
                   {filteredProducts.map((product, index) => {
-                    const image = product.images?.[0]?.images?.[0]
-                      ? `${API_URL.replace(
-                          /\/$/,
-                          ""
-                        )}/${product.images[0].images[0].replace(/^\/+/, "")}`
-                      : null;
+                    // Use Cloudinary URL directly
+                    const image = product.images?.[0]?.url || null;
 
                     return (
                       <motion.div

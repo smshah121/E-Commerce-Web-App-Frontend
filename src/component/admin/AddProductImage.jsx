@@ -145,7 +145,7 @@ const AddProductImage = ({ productId }) => {
         <input
           ref={fileInputRef}
           type="file"
-          id="file-input"
+          id={`file-input-${productId}`}
           className="hidden"
           onChange={handleFileChange}
           accept=".pdf,.jpg,.jpeg,.png,.gif,.webp"
