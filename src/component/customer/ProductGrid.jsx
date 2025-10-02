@@ -100,25 +100,35 @@ const ProductGrid = ({ products }) => {
                 onClick={() => handleProductClick(product.id)}
               >
                 {/* Image Container */}
-                <div className="relative overflow-hidden w-full h-64 flex items-center justify-center bg-gray-100"> {/* Fixed height, flex for centering, fallback bg */}
-                  {product.images?.[0]?.images?.[0] ? (
-                    <img
-                      src={`${API_URL}${product.images[0].images[0]}`}
-                      alt={product.name}
-                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" // Changed object-cover to object-contain, slightly reduced hover scale
-                      onError={(e) => {
-                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zz4KPHJlY3Qgd2lkdGg9IjMwMC alturasPSIzMDAiIGZpbGw9IiNGM0Y0RjYiLz4KPHBhdGggZD0iTTE1MCAxMDBDMTI3LjkgMTAwIDExMCAxMTcuOSAxMTAgMTQwUzEyNy45IDE4MCAxNTAgMTgwUzE5MCAxNjIuMSAxOTAgMTQwUzE3Mi4xIDEwMCAxNTAgMTAwTTE1MCAxMTVTMTY0LjMgMTE1IDE3NSAxNDMuMSAxNzUgMTU3UzE2NC4zIDE2NSAxNTAgMjAwUzEyNSAxNjUuMSAxMjUgMTU3UzEzNS43IDExNSAxNTAgMTE1WiIgZmlsbD0iIzlCOTlCRTAiLz4KPC9zdmc+';
-                      }}
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                      <div className="text-center">
-                        <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        <span className="text-gray-500 text-sm font-medium">No Image Available</span>
-                      </div>
-                    </div>
+                <div className="relative overflow-hidden w-full h-64 flex items-center justify-center bg-gray-100">
+  {product.images?.length > 0 ? (
+    <img
+      src={product.images[0].image} // Use Cloudinary URL directly
+      alt={product.name}
+      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+      onError={(e) => {
+        e.target.src = 'data:image/svg+xml;base64,...'; // fallback image
+      }}
+    />
+  ) : (
+    <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+      <div className="text-center">
+        <svg
+          className="w-16 h-16 text-gray-400 mx-auto mb-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1}
+            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+          />
+        </svg>
+        <span className="text-gray-500 text-sm font-medium">No Image Available</span>
+      </div>
+    </div>
                   )}
 
                   {/* Success Badge */}

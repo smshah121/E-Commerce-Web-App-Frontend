@@ -388,55 +388,37 @@ const AdminDashboard = () => {
                     </div>
 
                     {/* Product Images */}
-                    <div className="space-y-4">
-                      <h4 className="font-bold text-lg text-gray-900">
-                        Product Images ({product.images?.length || 0})
-                      </h4>
+                   <div className="space-y-4">
+  <h4 className="font-bold text-lg text-gray-900">
+    Product Images ({product.images?.length || 0})
+  </h4>
 
-                      {product.images?.length > 0 ? (
-                        <div className="grid grid-cols-2 gap-4">
-                          {product.images.map((img) =>
-                            img.images.map((path, idx) => {
-                              const API_URL = import.meta.env.VITE_API_URL;
-                              const fullPath = `${API_URL.replace(
-                                /\/$/,
-                                ""
-                              )}${path}`;
-                              return (
-                                <motion.div
-                                  key={`${img.id}-${idx}`}
-                                  initial={{ opacity: 0, scale: 0.8 }}
-                                  animate={{ opacity: 1, scale: 1 }}
-                                  transition={{ delay: idx * 0.1 }}
-                                  className="relative group"
-                                >
-                                  <img
-                                    src={fullPath}
-                                    alt={`Product ${product.id} - ${idx}`}
-                                    className="w-full h-32 object-cover rounded-xl border-2 border-gray-200 group-hover:border-blue-400 transition-all duration-300"
-                                    onError={(e) => {
-                                      console.error(
-                                        "Image failed to load:",
-                                        fullPath
-                                      );
-                                      e.target.src =
-                                        "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIxIDlWN0E0IDQgMCAwIDAgMTcgM0g3QTQgNCAwIDAgMCAzIDdWMTdBNCA0IDAgMCAwIDcgMjFIOUwyMSA5WiIgc3Ryb2tlPSIjOTk5IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMjEgMTVMMTMgN0w5IDExIiBzdHJva2U9IiM5OTkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjwvcGF0aD4KPC9zdmc+";
-                                      e.target.className =
-                                        "w-full h-32 object-cover rounded-xl border-2 border-red-300 bg-gray-100 flex items-center justify-center";
-                                    }}
-                                    onLoad={() => {
-                                      console.log(
-                                        "Image loaded successfully:",
-                                        fullPath
-                                      );
-                                    }}
-                                  />
-                                  <DeleteImageButton imageId={img.id} />
-                                </motion.div>
-                              );
-                            })
-                          )}
-                        </div>
+  {product.images?.length > 0 ? (
+    <div className="grid grid-cols-2 gap-4">
+      {product.images.map((img) => (
+        <motion.div
+          key={img.id}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1 }}
+          className="relative group"
+        >
+          <img
+            src={img.image} // Cloudinary URL directly
+            alt={img.altText || `Product ${product.id}`}
+            className="w-full h-32 object-cover rounded-xl border-2 border-gray-200 group-hover:border-blue-400 transition-all duration-300"
+            onError={(e) => {
+              e.target.src =
+                "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQi...";
+              e.target.alt = "Image not available";
+              e.target.className =
+                "w-full h-32 object-cover rounded-xl border-2 border-red-300 bg-gray-100 flex items-center justify-center";
+            }}
+          />
+          <DeleteImageButton imageId={img.id} />
+        </motion.div>
+      ))}
+    </div>
                       ) : (
                         <motion.div
                           initial={{ opacity: 0 }}
