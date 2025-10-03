@@ -28,17 +28,16 @@ const ProductDetail = () => {
   // Process images safely using useMemo
   const allImages = useMemo(() => {
   if (!product?.images) return [];
-  return product.images.flatMap((imgObj) =>
-    imgObj.images.map((img) => `${API_URL}/${img.replace(/^\/+/, "")}`)
-  );
-}, [product, API_URL]);
+  return product.images.map((imgObj) => `${imgObj.image}`);
+}, [product]);
+
 
   // Set initial selected image when images are loaded
   useEffect(() => {
-    if (allImages.length > 0 && !selectedImage) {
-      setSelectedImage(allImages[0]);
-    }
-  }, [allImages, selectedImage]);
+  if (allImages.length > 0 && !selectedImage) {
+    setSelectedImage(allImages[0]);
+  }
+}, [allImages, selectedImage]);
 
   const handleAddToCart = () => {
     if (product) {
