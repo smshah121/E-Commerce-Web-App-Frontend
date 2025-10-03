@@ -16,8 +16,6 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
-  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
-
   const handleClick = () => {
     navigate("/login");
   };
@@ -392,70 +390,63 @@ const HomePage = () => {
                   viewport={{ once: true, threshold: 0.1 }}
                   className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch"
                 >
-                  {filteredProducts.map((product, index) => {
-                    // Use Cloudinary URL directly
-                    const image = product.images?.[0]?.url || null;
+                 {filteredProducts.map((product, index) => {
+  // Directly use Cloudinary URL stored in DB
+  const image = product.images?.[0]?.url || null;
 
-                    return (
-                      <motion.div
-                        key={product.id}
-                        variants={cardVariants}
-                        whileHover="hover"
-                        whileTap={{ scale: 0.98 }}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
-                        className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 cursor-pointer h-full flex flex-col"
-                        onClick={handleClick}
-                      >
-                        {/* Image Container */}
-                        <div className="relative overflow-hidden">
-                          {image ? (
-                            <motion.img
-                              whileHover={{ scale: 1.1 }}
-                              transition={{ duration: 0.3 }}
-                              src={image}
-                              alt={product.name}
-                              className="w-full h-64 object-cover"
-                              onError={(e) => {
-                                e.target.src =
-                                  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zz4KPHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNGM0Y0RjYiLz4KPHBhdGggZD0iTTE1MCAxMDBDMTI3LjkgMTAwIDExMCAxMTcuOSAxMTAgMTQwUzEyNy45IDE4MCAxNTAgMTgwUzE5MCAxNjIuMSAxOTAgMTQwUzE3Mi4xIDEwMCAxNTAgMTAwWk0xNTAgMTE1QzE2NC4zIDExNSAxNzUgMTQzLjEgMTc1IDE1N1MxNjQuMyAxNjUgMTUwIDIwMFMxMjUgMTY1LjEgMTI1IDE1N1MxMzUuNyAxMTUgMTUwIDExNVoiIGZpbGw9IiM5QjlCQTAiLz4KPC9zdmc+";
-                              }}
-                            />
-                          ) : (
-                            <div className="w-full h-64 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                              <motion.div
-                                animate={{
-                                  y: [0, -5, 0],
-                                  opacity: [0.5, 1, 0.5],
-                                }}
-                                transition={{
-                                  duration: 2,
-                                  repeat: Infinity,
-                                  ease: "easeInOut",
-                                }}
-                                className="text-center"
-                              >
-                                <svg
-                                  className="w-16 h-16 text-gray-400 mx-auto mb-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1}
-                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                  />
-                                </svg>
-                                <span className="text-gray-500 text-sm font-medium">
-                                  No Image Available
-                                </span>
-                              </motion.div>
-                            </div>
-                          )}
+  return (
+    <motion.div
+      key={product.id}
+      variants={cardVariants}
+      whileHover="hover"
+      whileTap={{ scale: 0.98 }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 cursor-pointer h-full flex flex-col"
+      onClick={handleClick}
+    >
+      {/* Image Container */}
+      <div className="relative overflow-hidden w-full h-64 flex items-center justify-center bg-gray-100">
+        {image ? (
+          <motion.img
+            whileHover={{ scale: 1.1 }}
+            transition={{ duration: 0.3 }}
+            src={image}
+            alt={product.name}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              e.target.src =
+                "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zz4KPHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNGM0Y0RjYiLz4KPHBhdGggZD0iTTE1MCAxMDBDMTI3LjkgMTAwIDExMCAxMTcuOSAxMTAgMTQwUzEyNy45IDE4MCAxNTAgMTgwUzE5MCAxNjIuMSAxOTAgMTQwUzE3Mi4xIDEwMCAxNTAgMTAwWk0xNTAgMTE1QzE2NC4zIDExNSAxNzUgMTQzLjEgMTc1IDE1N1MxNjQuMyAxNjUgMTUwIDIwMFMxMjUgMTY1LjEgMTI1IDE1N1MxMzUuNyAxMTUgMTUwIDExNVoiIGZpbGw9IiM5QjlCQTAiLz4KPC9zdmc+";
+            }}
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+            <motion.div
+              animate={{ y: [0, -5, 0], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="text-center"
+            >
+              <svg
+                className="w-16 h-16 text-gray-400 mx-auto mb-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              <span className="text-gray-500 text-sm font-medium">
+                No Image Available
+              </span>
+            </motion.div>
+          </div>
+        )}
 
                           {/* Login prompt overlay */}
                           <motion.div
