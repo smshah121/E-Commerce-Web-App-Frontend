@@ -392,7 +392,7 @@ const HomePage = () => {
                 >
                  {filteredProducts.map((product, index) => {
   // Directly use Cloudinary URL stored in DB
-  const image = product.images?.[0]?.url || null;
+  const image = product.images?.[0]?.image || null;
 
   return (
     <motion.div
