@@ -12,7 +12,7 @@ const MyOrders = () => {
     navigate("/customer-dashboard");
   };
 
-  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
+
 
   const { data: orders = [], isLoading } = useGetMyOrderQuery();
 
@@ -241,19 +241,20 @@ const MyOrders = () => {
                           <div className="flex items-center space-x-4">
                             {/* Product Image */}
                             <img
-                              src={
-                                item.product?.images?.[0]?.images?.[0]
-                                  ? `${API_URL}${item.product.images[0].images[0]}`
-                                  : `https://placehold.co/60x60/E0E7FF/3B82F6?text=Item`
-                              }
-                              alt={item.product?.name || "Product"}
-                              className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src =
-                                  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0zMCAyMC4wNTE2QzI1LjQxNzUgMjAuMDUxNiAyMS43NSAyMy43MTk2IDIx.75IDI4LjMwMTZTMjUuNDE3NSAzNi41NTE2IDMwIDM2LjU1MTZTMzguMjUgMzIuODgyNiAzOC4yNSAyOC4zMDE2UzM0LjU4MjUgMjAuMDUxNiAz Moe 3MCIDIyLjA1MTZaIiBmaWxsPSIjOUI5QkEwIi8+Cjwvc3ZnPg==";
-                              }}
-                            />
+  src={
+    item.product?.images?.[0]?.image
+      ? item.product.images[0].image
+      : "https://placehold.co/60x60/E0E7FF/3B82F6?text=Item"
+  }
+  alt={item.product?.images?.[0]?.altText || item.product?.name || "Product"}
+  className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+  onError={(e) => {
+    e.target.onerror = null;
+    e.target.src =
+      "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0zMCAyMC4wNTE2QzI1LjQxNzUgMjAuMDUxNiAyMS43NSAyMy43MTk2IDIxLjc1IDI4LjMwMTZTMjUuNDE3NSAzNi41NTE2IDMwIDM2LjU1MTZTMzguMjUgMzIuODgyNiAzOC4yNSAyOC4zMDE2UzM0LjU4MjUgMjAuMDUxNiAzMCAyMC4wNTE2WiIgZmlsbD0iIzk5OTk5OSIvPjwvc3ZnPg==";
+  }}
+/>
+
                             <div>
                               <h5 className="font-medium text-gray-900">
                                 {item.product?.name || "Unknown Product"}
