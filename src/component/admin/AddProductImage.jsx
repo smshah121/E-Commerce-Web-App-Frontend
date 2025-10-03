@@ -153,7 +153,7 @@ const AddProductImage = ({ productId }) => {
 
         {!file ? (
           <motion.label
-            htmlFor="file-input"
+            htmlFor={`file-input-${productId}`} 
             className="flex flex-col items-center justify-center p-8 cursor-pointer text-gray-600"
             animate={{ scale: dragActive ? 1.02 : 1 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
