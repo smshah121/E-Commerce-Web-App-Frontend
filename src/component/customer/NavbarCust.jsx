@@ -51,7 +51,6 @@ const CustomerNavbar = () => {
 
   const navLinks = [
     { name: 'Dashboard', href: '/customer-dashboard' },
-    { name: 'Products', href: '/customer-dashboard/products' },
     { name: 'My Orders', href: '/my-orders' },
   ];
 
