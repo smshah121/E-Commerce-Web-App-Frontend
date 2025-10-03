@@ -86,33 +86,29 @@ const AddToCart = () => {
                     <div key={item.id} className="p-6 hover:bg-gray-50 transition-colors duration-200">
                       <div className="flex items-start gap-6">
                         {/* Product Image */}
-                        <div className="flex-shrink-0">
-                          {item.images?.length > 0 ? (
-                            <div className="flex gap-2">
-                              {item.images.slice(0, 2).map(img =>
-                                img.images.slice(0, 1).map((path, idx) => {
-                                  const fullPath = `${API_URL}${path}`;
+                        {/* Product Image */}
+<div className="flex-shrink-0">
+  {item.images?.length > 0 ? (
+    <div className="flex gap-2">
+      {item.images.slice(0, 2).map((imgObj, idx) => (
+        <img
+          key={imgObj.id || idx}
+          src={imgObj.image} // Use the full Cloudinary URL directly
+          alt={`${item.name} preview`}
+          className="w-20 h-20 object-cover border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+          onError={(e) => {
+            e.target.src = 'https://via.placeholder.com/80x80?text=No+Image';
+          }}
+        />
+      ))}
+    </div>
+  ) : (
+    <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center rounded-lg">
+      <span className="text-2xl">📦</span>
+    </div>
+  )}
+</div>
 
-                                  return (
-                                    <img
-                                      key={`${img.id}-${idx}`}
-                                      src={fullPath}
-                                      alt={`${item.name} preview`}
-                                      className="w-20 h-20 object-cover border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
-                                      onError={(e) => {
-                                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIGZpbGw9IiNGM0Y0RjYiLz48cGF0aCBkPSJNMjggMjRIMzZWNDBIMjhWMjRaIiBmaWxsPSIjOUNBM0FGIi8+PHBhdGggZD0iTTI0IDI4SDQwVjMySDI0VjI4WiIgZmlsbD0iIzlDQTNBRiIvPjwvc3ZnPg==';
-                                      }}
-                                    />
-                                  );
-                                })
-                              )}
-                            </div>
-                          ) : (
-                            <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center rounded-lg">
-                              <span className="text-2xl">📦</span>
-                            </div>
-                          )}
-                        </div>
 
                         {/* Product Info */}
                         <div className="flex-1 min-w-0">
