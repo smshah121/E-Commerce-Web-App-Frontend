@@ -485,51 +485,35 @@ const HomePage = () => {
 
                         {/* Product Info */}
                         <div className="p-6 h-full flex flex-col">
-                          <motion.h3 className="font-bold text-xl mb-2 text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 h-14 flex items-start">
-                            {product.name}
-                          </motion.h3>
+  <motion.h3 className="font-bold text-xl mb-2 text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 h-14 flex items-start">
+    {product.name}
+  </motion.h3>
 
-                          <div className="flex items-center justify-between mb-4">
-                            <motion.div
-                              initial={{ scale: 0 }}
-                              animate={{ scale: 1 }}
-                              transition={{ delay: 0.2, type: "spring" }}
-                              className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"
-                            >
-                              ${formatPrice(product.price)}
-                            </motion.div>
-                            <div className="flex text-yellow-400">
-                              {[...Array(5)].map((_, i) => (
-                                <motion.svg
-                                  key={i}
-                                  initial={{ opacity: 0, rotate: -180 }}
-                                  animate={{ opacity: 1, rotate: 0 }}
-                                  transition={{ delay: i * 0.1, duration: 0.3 }}
-                                  className="w-4 h-4 fill-current"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </motion.svg>
-                              ))}
-                              <span className="text-gray-500 text-sm ml-1">
-                                (4.8)
-                              </span>
-                            </div>
-                          </div>
+  <div className="flex items-center justify-between mb-4">
+    <motion.div
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ delay: 0.2, type: "spring" }}
+      className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"
+    >
+      ${formatPrice(product.price)}
+    </motion.div>
+  </div>
 
-                          {/* Fixed height description container */}
-                          <div className="flex-1 mb-4">
-                            {product.description && (
-                              <motion.p
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.3 }}
-                                className="text-gray-600 text-sm line-clamp-3 leading-relaxed h-16 overflow-hidden"
-                              >
-                                {product.description}
-                              </motion.p>
-                            )}
-                          </div>
+  <div className="flex-1 mb-4">
+    {product.description && (
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="text-gray-600 text-sm line-clamp-3 leading-relaxed h-16 overflow-hidden"
+      >
+        {product.description}
+      </motion.p>
+    )}
+  </div>
+
+
 
                           {/* View Product Button */}
                           <motion.button
