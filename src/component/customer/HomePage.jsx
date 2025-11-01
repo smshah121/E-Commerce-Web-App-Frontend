@@ -404,7 +404,7 @@ const HomePage = () => {
       whileInView="visible"
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden border border-gray-100 cursor-pointer flex flex-col"
+      className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl h-120 transition-all duration-500 hover:-translate-y-2 overflow-hidden border border-gray-100 cursor-pointer flex flex-col"
       onClick={handleClick}
     >
       {/* Image Container */}
