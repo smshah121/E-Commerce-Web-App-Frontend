@@ -216,8 +216,10 @@ const CustomerDashboard = () => {
               ease: "easeInOut",
               delay: 1.5
             }}
-            className="absolute bottom-20 flex justify-center items-center left-10 w-16 h-16 bg-yellow-400/20 rounded-full blur-lg"
-          /><div className="w-4xl">
+            className="absolute bottom-20 left-10 w-16 h-16 bg-yellow-400/20 rounded-full blur-lg"
+          />
+          <div>
+            <div className="w-4xl">
                      <Swiper
                     modules={[Autoplay, Pagination]}
                     spaceBetween={30}
@@ -270,8 +272,7 @@ const CustomerDashboard = () => {
                   </Swiper>
           
                   </div>
-          
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                  <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial="hidden"
               animate="visible"
@@ -360,6 +361,8 @@ const CustomerDashboard = () => {
               </motion.div>
             </motion.div>
           </div>
+            </div>          
+          
         </section>
 
         {/* Products Section (Main Product Listing) */}
