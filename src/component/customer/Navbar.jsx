@@ -18,13 +18,7 @@ const Navbar = ({ isLoggedIn, role, onScrollToSection }) => {
   const handleLoginClick = () => navigate("/login");
   const handleSignupClick = () => navigate("/signup");
 
-  const navLinks = [
-    { name: 'Home', href: '/', isInternal: false },
-    { name: 'Products', href: 'featured-products', isInternal: true }, 
-    { name: 'Categories', href: 'featured-products', isInternal: true },
-    { name: 'About', href: 'why-choose-myshop', isInternal: true },
-    { name: 'Contact', href: 'contact-us', isInternal: true },
-  ];
+ 
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
@@ -79,42 +73,7 @@ const Navbar = ({ isLoggedIn, role, onScrollToSection }) => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              {navLinks.map((link) =>
-                link.isInternal ? (
-                  <a
-                    key={link.name}
-                    href={`#${link.href}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onScrollToSection(link.href);
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 ${
-                      isScrolled
-                        ? 'text-gray-700 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-lg'
-                        : 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-lg'
-                    }`}
-                  >
-                    {link.name}
-                  </a>
-                ) : (
-                  <Link
-                    key={link.name}
-                    to={link.href}
-                    className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 ${
-                      isScrolled
-                        ? 'text-gray-700 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-lg'
-                        : 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-lg'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                )
-              )}
-            </div>
-          </div>
+         
 
           {/* Right side Auth + Cart */}
           <div className="hidden md:flex items-center space-x-4">
