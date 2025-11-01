@@ -213,7 +213,7 @@ const HomePage = () => {
            <Swiper
           modules={[Autoplay, Pagination]}
           spaceBetween={30}
-          slidesPerView={1}
+          slidesPerView={3}
           loop={true}
           autoplay={{ delay: 3000 }}
           pagination={{ clickable: true }}
