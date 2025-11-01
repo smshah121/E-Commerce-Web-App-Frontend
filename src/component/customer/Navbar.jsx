@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGetAllProductsQuery } from '../../feature/product/productApi';
+import { motion} from "framer-motion";
 
 const Navbar = ({ isLoggedIn, role, onScrollToSection }) => { 
   const navigate = useNavigate();
