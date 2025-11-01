@@ -18,7 +18,13 @@ const Navbar = ({ isLoggedIn, role, onScrollToSection }) => {
   const handleLoginClick = () => navigate("/login");
   const handleSignupClick = () => navigate("/signup");
 
- 
+  const navLinks = [
+    { name: 'Home', href: '/', isInternal: false },
+    { name: 'Products', href: 'featured-products', isInternal: true }, 
+    { name: 'Categories', href: 'featured-products', isInternal: true },
+    { name: 'About', href: 'why-choose-myshop', isInternal: true },
+    { name: 'Contact', href: 'contact-us', isInternal: true },
+  ];
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
@@ -73,7 +79,7 @@ const Navbar = ({ isLoggedIn, role, onScrollToSection }) => {
           </div>
 
           {/* Desktop Navigation */}
-         
+          
 
           {/* Right side Auth + Cart */}
           <div className="hidden md:flex items-center space-x-4">
