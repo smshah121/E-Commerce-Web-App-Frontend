@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useGetAllProductsQuery } from '../../feature/product/productApi';
 
 const Navbar = ({ isLoggedIn, role, onScrollToSection }) => { 
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { data: products = [], isLoading } = useGetAllProductsQuery();
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  const heroTextVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,6 +94,16 @@ const Navbar = ({ isLoggedIn, role, onScrollToSection }) => {
           </div>
 
           {/* Desktop Navigation */}
+          <motion.div
+                        variants={heroTextVariants}
+                        transition={{ delay: 0.4 }}
+                        className="max-w-2xl mx-auto mb-8"
+                      >
+                        <SearchBar
+                          searchTerm={searchTerm}
+                          setSearchTerm={setSearchTerm}
+                        />
+                      </motion.div>
           
 
           {/* Right side Auth + Cart */}
