@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useGetAllProductsQuery } from "../../feature/product/productApi";
 import Navbar from "./Navbar";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 // Removed: import SearchBar from "./SearchBar"; // SearchBar is now only in Navbar
 
 const HomePage = () => {
@@ -204,6 +208,41 @@ const HomePage = () => {
             backgroundSize: "60px 60px",
           }}
         />
+        <div className="w-2xl mb-8">
+        <Swiper
+          modules={[Autoplay, Pagination]}
+          spaceBetween={30}
+          slidesPerView={1}
+          loop={true}
+          autoplay={{ delay: 3000 }}
+          pagination={{ clickable: true }}
+          className="rounded-2xl overflow-hidden"
+        >
+          <SwiperSlide>
+            <img
+              src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f"
+              alt="Fashion Sale"
+              className="w-full h-96 object-cover"
+            />
+          </SwiperSlide>
+
+          <SwiperSlide>
+            <img
+              src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f"
+              alt="Electronics"
+              className="w-full h-96 object-cover"
+            />
+          </SwiperSlide>
+
+          <SwiperSlide>
+            <img
+              src="https://images.unsplash.com/photo-1521334884684-d80222895322"
+              alt="Accessories"
+              className="w-full h-96 object-cover"
+            />
+          </SwiperSlide>
+        </Swiper>
+      </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <motion.div
@@ -212,6 +251,8 @@ const HomePage = () => {
             variants={containerVariants}
             className="text-center"
           >
+
+
             <motion.h1
               variants={heroTextVariants}
               className="text-4xl font-bold leading-tight"
