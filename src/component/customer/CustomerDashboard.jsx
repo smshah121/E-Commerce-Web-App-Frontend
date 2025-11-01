@@ -221,7 +221,7 @@ const CustomerDashboard = () => {
           <div className='flex flex-col justify-center items-center'>
             <motion.h1 
                 variants={welcomeTextVariants}
-                className="text-4xl md:text-5xl font-bold mb-4 leading-tight"
+                className="text-4xl md:text-5xl font-bold leading-tight"
               >
                 Welcome,{" "}
                 <motion.span 
@@ -242,7 +242,7 @@ const CustomerDashboard = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7, duration: 0.6 }}
-                className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed"
+                className="text-xl md:text-2xl text-blue-100 max-w-3xl leading-relaxed"
               >
                 Discover the perfect accessories for your mobile devices.
               </motion.p>
