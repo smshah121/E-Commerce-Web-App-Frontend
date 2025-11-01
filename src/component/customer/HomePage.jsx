@@ -221,16 +221,16 @@ const HomePage = () => {
         >
           <SwiperSlide>
             <img
-              src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f"
-              alt="Fashion Sale"
+              src="/magsafe belkin.jpg"
+              alt="MagSafe"
               className="w-full h-96 object-cover"
             />
           </SwiperSlide>
 
           <SwiperSlide>
             <img
-              src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f"
-              alt="Electronics"
+              src="/45W PowerBank.jpg"
+              alt="Power Bank"
               className="w-full h-96 object-cover"
             />
           </SwiperSlide>
@@ -238,7 +238,7 @@ const HomePage = () => {
           <SwiperSlide>
             <img
               src="/adaptor.jpg"
-              alt="Accessories"
+              alt="Adaptor"
               className="w-full h-96 object-cover"
             />
           </SwiperSlide>
