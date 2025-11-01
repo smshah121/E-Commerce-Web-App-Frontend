@@ -129,7 +129,7 @@ const CustomerDashboard = () => {
       </motion.div>
       
       {/* Main Content */}
-      <main className="pt-10"> {/* Adjusted padding-top for fixed navbar */}
+      <main className="pt-5"> {/* Adjusted padding-top for fixed navbar */}
         {/* Welcome Banner Section (SIMPLIFIED) */}
         <section className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 text-white py-16 md:py-24 overflow-hidden">
           
@@ -137,7 +137,7 @@ const CustomerDashboard = () => {
           <div className="absolute inset-0 bg-black opacity-10" />
           
           {/* Content Container */}
-          <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4'>
+          <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8'>
             <motion.div
               initial="hidden"
               animate="visible"
@@ -162,13 +162,13 @@ const CustomerDashboard = () => {
               <motion.p 
                 variants={itemVariants}
                 transition={{ delay: 0.4 }}
-                className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed mt-4"
+                className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed"
               >
                 Discover the perfect accessories for your mobile devices.
               </motion.p>
               
               {/* Swiper Slides (Kept) */}
-              <div className="w-full max-w-4xl mx-auto mt-12">
+              <div className="w-full max-w-4xl mx-auto mt-5">
                 <Swiper
                   modules={[Autoplay, Pagination]}
                   spaceBetween={30}
