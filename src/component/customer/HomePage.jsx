@@ -244,30 +244,7 @@ const HomePage = () => {
             </motion.div>
 
             {/* CTA Buttons */}
-            <motion.div
-              variants={containerVariants}
-              transition={{ delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            >
-              <motion.button
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
-                onClick={() => navigate("/signup")}
-                className="bg-white text-blue-600 px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-2xl"
-              >
-                Get Started
-              </motion.button>
-              <motion.button
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
-                onClick={() => navigate("/login")}
-                className="border-2 border-white text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-white hover:text-blue-600 transition-all duration-300"
-              >
-                Sign In
-              </motion.button>
-            </motion.div>
+           
           </motion.div>
         </div>
 
