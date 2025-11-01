@@ -216,7 +216,7 @@ const CustomerDashboard = () => {
               ease: "easeInOut",
               delay: 1.5
             }}
-            className="absolute bottom-20 left-10 w-16 h-16 bg-yellow-400/20 rounded-full blur-lg"
+            className="absolute bottom-10 left-10 w-16 h-16 bg-yellow-400/20 rounded-full blur-lg"
           />
           <div className='flex flex-col justify-center items-center'>
             <motion.h1 
