@@ -246,7 +246,7 @@ const HomePage = () => {
 
         </div>
        
-        <div className="relative max-w-7xl mx-auto px-4">
+        <div className="relative max-w-7xl mx-auto px-4 py-3">
           <motion.div
             initial="hidden"
             animate="visible"
