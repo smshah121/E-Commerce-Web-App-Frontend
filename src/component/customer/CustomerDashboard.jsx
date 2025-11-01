@@ -216,8 +216,8 @@ const CustomerDashboard = () => {
               ease: "easeInOut",
               delay: 1.5
             }}
-            className="absolute bottom-20 left-10 w-16 h-16 bg-yellow-400/20 rounded-full blur-lg"
-          /><div className="flex justify-center items-center w-4xl">
+            className="absolute bottom-20 flex justify-center items-center left-10 w-16 h-16 bg-yellow-400/20 rounded-full blur-lg"
+          /><div className="w-4xl">
                      <Swiper
                     modules={[Autoplay, Pagination]}
                     spaceBetween={30}
