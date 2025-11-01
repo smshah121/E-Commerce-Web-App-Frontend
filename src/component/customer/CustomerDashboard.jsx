@@ -9,6 +9,10 @@ import CustomerNavbar from './NavbarCust'; // Your updated CustomerNavbar
 import { useGetCurrentUserQuery } from '../../feature/user/userApi';
 import { FiFilter } from 'react-icons/fi'; // Filter icon
 import { MdSort } from 'react-icons/md'; // Sort icon
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const CustomerDashboard = () => {
   const navigate = useNavigate();
@@ -213,7 +217,59 @@ const CustomerDashboard = () => {
               delay: 1.5
             }}
             className="absolute bottom-20 left-10 w-16 h-16 bg-yellow-400/20 rounded-full blur-lg"
-          />
+          /><div className="mt-25 w-4xl">
+                     <Swiper
+                    modules={[Autoplay, Pagination]}
+                    spaceBetween={30}
+                    slidesPerView={3}
+                    loop={true}
+                    autoplay={{ delay: 3000 }}
+                    pagination={{ clickable: true }}
+                    className="rounded-2xl overflow-hidden"
+                  >
+                    <SwiperSlide>
+                      <img
+                        src="/magsafe belkin.jpg"
+                        alt="MagSafe"
+                        className="w-full h-96 object-cover"
+                      />
+                    </SwiperSlide>
+          
+                    <SwiperSlide>
+                      <img
+                        src="/45W PowerBank.jpg"
+                        alt="Power Bank"
+                        className="w-full h-96 object-cover"
+                      />
+                    </SwiperSlide>
+          
+                    <SwiperSlide>
+                      <img
+                        src="/adaptor.jpg"
+                        alt="Adaptor"
+                        className="w-full h-96 object-cover"
+                      />
+                    </SwiperSlide>
+          
+                    <SwiperSlide>
+                      <img
+                        src="/Airpods max.jpg"
+                        alt="Airpods"
+                        className="w-full h-96 object-cover"
+                      />
+                    </SwiperSlide>
+          
+                    <SwiperSlide>
+                      <img
+                        src="/apple earphones.jpg"
+                        alt="Airpods"
+                        className="w-full h-96 object-cover"
+                      />
+                    </SwiperSlide>
+                    
+                  </Swiper>
+          
+                  </div>
           
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
