@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useGetAllProductsQuery } from '../../feature/product/productApi';
+
 import { motion} from "framer-motion";
 import SearchBar from './SearchBar';
 
 
-const Navbar = ({ isLoggedIn, role, onScrollToSection }) => { 
+const Navbar = ({ isLoggedIn, role, onScrollToSection, searchTerm, setSearchTerm }) => { 
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { data: products = [], isLoading } = useGetAllProductsQuery();
-  const [searchTerm, setSearchTerm] = useState("");
+ 
+  
   
   const heroTextVariants = {
     hidden: { opacity: 0, y: 30 },
