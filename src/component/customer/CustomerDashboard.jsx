@@ -137,7 +137,7 @@ const CustomerDashboard = () => {
           <div className="absolute inset-0 bg-black opacity-10" />
           
           {/* Content Container */}
-          <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8'>
+          <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4'>
             <motion.div
               initial="hidden"
               animate="visible"
