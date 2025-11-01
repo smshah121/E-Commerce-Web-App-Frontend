@@ -9,7 +9,7 @@ const SearchBar = ({ searchTerm, setSearchTerm }) => {
         placeholder="Search products..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="flex-grow p-2 border rounded-l-md shadow-sm outline-none"
+        className="flex-grow p-2 rounded-l-md shadow-sm outline-none"
       />
       <button className="px-4 py-2 bg-blue-600 ml-3 text-white rounded-r-md hover:bg-blue-700">
         Search
