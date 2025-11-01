@@ -208,10 +208,45 @@ const HomePage = () => {
             backgroundSize: "60px 60px",
           }}
         />
-        
-        
-        <div className="flex flex-col justify-center w-2xl">
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+      <div className="flex flex-col justify-center items-center">
+        <div className="mt-30 w-2xl">
+           <Swiper
+          modules={[Autoplay, Pagination]}
+          spaceBetween={30}
+          slidesPerView={1}
+          loop={true}
+          autoplay={{ delay: 3000 }}
+          pagination={{ clickable: true }}
+          className="rounded-2xl overflow-hidden"
+        >
+          <SwiperSlide>
+            <img
+              src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f"
+              alt="Fashion Sale"
+              className="w-full h-96 object-cover"
+            />
+          </SwiperSlide>
+
+          <SwiperSlide>
+            <img
+              src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f"
+              alt="Electronics"
+              className="w-full h-96 object-cover"
+            />
+          </SwiperSlide>
+
+          <SwiperSlide>
+            <img
+              src="https://images.unsplash.com/photo-1521334884684-d80222895322"
+              alt="Accessories"
+              className="w-full h-96 object-cover"
+            />
+          </SwiperSlide>
+        </Swiper>
+
+        </div>
+       
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -244,13 +279,12 @@ const HomePage = () => {
               perfect shopping experience starts here.
             </motion.p>
 
-           
-           
+            
             
           </motion.div>
         </div>
+      </div>
 
-        </div>
         
 
         {/* ... (Floating Elements) ... */}
