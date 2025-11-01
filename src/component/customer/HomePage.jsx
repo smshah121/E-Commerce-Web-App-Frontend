@@ -242,6 +242,23 @@ const HomePage = () => {
               className="w-full h-96 object-cover"
             />
           </SwiperSlide>
+
+          <SwiperSlide>
+            <img
+              src="/Airpods max.jpg"
+              alt="Airpods"
+              className="w-full h-96 object-cover"
+            />
+          </SwiperSlide>
+
+          <SwiperSlide>
+            <img
+              src="/apple earphones.jpg"
+              alt="Airpods"
+              className="w-full h-96 object-cover"
+            />
+          </SwiperSlide>
+          
         </Swiper>
 
         </div>
