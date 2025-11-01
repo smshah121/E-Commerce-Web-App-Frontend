@@ -227,7 +227,7 @@ const HomePage = () => {
               transition={{ delay: 0.2 }}
               className="text-xl md:text-2xl text-blue-100 mb-12 max-w-3xl mx-auto leading-relaxed"
             >
-              Discover premium quality products at unbeatable prices. Your
+              Discover premium quality Mobile Accessories at unbeatable prices. Your
               perfect shopping experience starts here.
             </motion.p>
 
