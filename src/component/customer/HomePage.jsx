@@ -237,7 +237,7 @@ const HomePage = () => {
 
           <SwiperSlide>
             <img
-              src="https://images.unsplash.com/photo-1521334884684-d80222895322"
+              src="/adaptor.jpg"
               alt="Accessories"
               className="w-full h-96 object-cover"
             />
