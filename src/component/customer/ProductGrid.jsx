@@ -105,7 +105,7 @@ const ProductGrid = ({ products }) => {
     <img
       src={product.images[0].image} // Use Cloudinary URL directly
       alt={product.name}
-      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
       onError={(e) => {
         e.target.src = 'data:image/svg+xml;base64,...'; // fallback image
       }}
