@@ -219,6 +219,25 @@ const CustomerDashboard = () => {
             className="absolute bottom-20 left-10 w-16 h-16 bg-yellow-400/20 rounded-full blur-lg"
           />
           <div className='flex flex-col justify-center items-center'>
+            <motion.h1 
+                variants={welcomeTextVariants}
+                className="text-4xl md:text-5xl font-bold mb-4 leading-tight"
+              >
+                Welcome,{" "}
+                <motion.span 
+                  initial={{ opacity: 0, scale: 0.8, rotateX: -90 }}
+                  animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+                  transition={{ 
+                    delay: 0.5, 
+                    duration: 0.8,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400"
+                >
+                  {userLoading ? "Customer" : user?.name || "Customer"}!
+                </motion.span>
+              </motion.h1>
             <div className="w-4xl">
                      <Swiper
                     modules={[Autoplay, Pagination]}
@@ -278,25 +297,7 @@ const CustomerDashboard = () => {
               animate="visible"
               variants={heroVariants}
             >
-              <motion.h1 
-                variants={welcomeTextVariants}
-                className="text-4xl md:text-5xl font-bold mb-4 leading-tight"
-              >
-                Welcome,{" "}
-                <motion.span 
-                  initial={{ opacity: 0, scale: 0.8, rotateX: -90 }}
-                  animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-                  transition={{ 
-                    delay: 0.5, 
-                    duration: 0.8,
-                    type: "spring",
-                    stiffness: 100
-                  }}
-                  className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400"
-                >
-                  {userLoading ? "Customer" : user?.name || "Customer"}!
-                </motion.span>
-              </motion.h1>
+              
               
               <motion.p 
                 initial={{ opacity: 0, y: 30 }}
