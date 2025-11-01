@@ -209,7 +209,7 @@ const HomePage = () => {
           }}
         />
       <div className="flex flex-col justify-center items-center">
-        <div className="mt-25 w-2xl">
+        <div className="mt-25 w-3xl">
            <Swiper
           modules={[Autoplay, Pagination]}
           spaceBetween={30}
