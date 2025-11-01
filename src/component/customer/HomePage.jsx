@@ -208,7 +208,7 @@ const HomePage = () => {
             backgroundSize: "60px 60px",
           }}
         />
-        <div className="w-2xl mb-8">
+        <div className="flex justify-center mt-10 w-2xl">
         <Swiper
           modules={[Autoplay, Pagination]}
           spaceBetween={30}
