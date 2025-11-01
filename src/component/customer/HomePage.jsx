@@ -214,7 +214,7 @@ const HomePage = () => {
           >
             <motion.h1
               variants={heroTextVariants}
-              className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
+              className="text-4xl font-bold leading-tight"
             >
               Welcome to{" "}
               <motion.span
@@ -230,7 +230,7 @@ const HomePage = () => {
             <motion.p
               variants={heroTextVariants}
               transition={{ delay: 0.2 }}
-              className="text-xl md:text-2xl text-blue-100 mb-12 max-w-3xl mx-auto leading-relaxed"
+              className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed"
             >
               Discover premium quality Mobile Accessories at unbeatable prices. Your
               perfect shopping experience starts here.
