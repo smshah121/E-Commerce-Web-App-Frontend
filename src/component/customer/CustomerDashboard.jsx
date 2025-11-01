@@ -238,6 +238,14 @@ const CustomerDashboard = () => {
                   {userLoading ? "Customer" : user?.name || "Customer"}!
                 </motion.span>
               </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, duration: 0.6 }}
+                className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed"
+              >
+                Discover the perfect accessories for your mobile devices.
+              </motion.p>
             <div className="w-4xl">
                      <Swiper
                     modules={[Autoplay, Pagination]}
@@ -299,14 +307,7 @@ const CustomerDashboard = () => {
             >
               
               
-              <motion.p 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7, duration: 0.6 }}
-                className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed"
-              >
-                Discover the perfect accessories for your mobile devices.
-              </motion.p>
+              
 
               {/* Quick Stats Animation */}
               <motion.div
