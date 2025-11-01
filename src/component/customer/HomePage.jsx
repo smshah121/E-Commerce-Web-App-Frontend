@@ -485,7 +485,7 @@ const HomePage = () => {
 
                         {/* Product Info */}
                         <div className="p-6 h-full flex flex-col">
-  <motion.h3 className="font-bold text-xl mb-2 text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 h-14 flex items-start">
+  <motion.h3 className="font-bold text-xl text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 h-14 flex items-start">
     {product.name}
   </motion.h3>
 
@@ -500,7 +500,7 @@ const HomePage = () => {
     </motion.div>
   </div>
 
-  <div className="flex-1 mb-4">
+  <div className="flex-1">
     {product.description && (
       <motion.p
         initial={{ opacity: 0 }}
