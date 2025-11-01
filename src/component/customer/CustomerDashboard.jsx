@@ -218,7 +218,7 @@ const CustomerDashboard = () => {
             }}
             className="absolute bottom-20 left-10 w-16 h-16 bg-yellow-400/20 rounded-full blur-lg"
           />
-          <div className='flex justify-center items-center'>
+          <div className='flex flex-col justify-center items-center'>
             <div className="w-4xl">
                      <Swiper
                     modules={[Autoplay, Pagination]}
