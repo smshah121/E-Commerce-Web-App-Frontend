@@ -117,9 +117,11 @@ const CustomerNavbar = () => {
           {/* Right side buttons - Search, Cart, and Menu */}
           <div className="flex items-center space-x-4">
             {/* Enhanced Search Button */}
-            <button className="p-3 rounded-xl transition-all duration-300 hover:scale-110 text-gray-600 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-lg">
+            <a href="#search">
+              <button className="p-3 rounded-xl transition-all duration-300 hover:scale-110 text-gray-600 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-lg">
               <FiSearch className="w-5 h-5" />
             </button>
+              </a>
 
             {/* Enhanced Cart Button */}
             <button

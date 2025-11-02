@@ -52,7 +52,7 @@ const ProductGrid = ({ products }) => {
           </p>
 
           {/* Centered Search Bar */}
-          <div className="max-w-2xl mx-auto">
+          <div id='search' className="max-w-2xl mx-auto">
             <div className="relative">
               <input
                 type="text"
