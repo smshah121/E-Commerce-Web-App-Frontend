@@ -337,7 +337,7 @@ const HomePage = () => {
         id="featured-products"
         className="py-20 bg-gradient-to-br from-gray-50 to-white"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="products" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSectionHeader
             title="Featured Products"
             subtitle="Discover our handpicked selection of premium products"

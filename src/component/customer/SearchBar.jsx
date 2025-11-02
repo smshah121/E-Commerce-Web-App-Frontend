@@ -11,9 +11,12 @@ const SearchBar = ({ searchTerm, setSearchTerm }) => {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="flex-grow p-2 rounded-2xl shadow-sm outline-none mb-3"
       />
-      <button className="px-4 py-2 bg-blue-600 ml-3 mb-3 text-white rounded-2xl hover:bg-blue-700">
+      <a href="#products">
+        <button className="px-4 py-2 bg-blue-600 ml-3 mb-3 text-white rounded-2xl hover:bg-blue-700">
         Search
       </button>
+      </a>
+      
     </div>
   );
 };
