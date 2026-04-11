@@ -15,6 +15,7 @@ import AddToCart from './component/customer/AddtoCart'
 import ProductDetail from './component/customer/ProductDetail'
 import CheckoutPage from './component/customer/CheckOut'
 import OrderDetail from './component/customer/OrderDetail'
+import PaymentSuccessPage from './component/customer/PaymentSuccess'
 
 function App() {
   
@@ -32,7 +33,9 @@ function App() {
     <Route path="/product/:productId" element={<ProductDetail/>} />
     <Route path="/checkout" element={<CheckoutPage/>} />
     <Route path="/my-orders/:orderId" element={<OrderDetail/>} />
+    <Route path="/payment-success" element={<PaymentSuccessPage />} />
    </Routes>
+   
   )
 }
 

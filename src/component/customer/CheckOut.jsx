@@ -1,26 +1,91 @@
-// CheckoutPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import { FaArrowLeft, FaMapMarkerAlt, FaCheckCircle } from "react-icons/fa";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { FaArrowLeft, FaMapMarkerAlt, FaCheckCircle } from "react-icons/fa"; // Changed icon for address
+import { useDispatch } from 'react-redux';
 import CustomerNavbar from './NavbarCust';
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import { clearCart } from '../../feature/cart/cartSlice';
+import { useCreatePaymentMutation } from '../../feature/payment/paymentApi';
+import { useCreateOrderMutation } from '../../feature/order/orderApi';
+
+
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
-  const { token, userId } = useSelector((state) => state.auth);
+  const { token, userId } = useSelector((state) => state.auth); // Get userId from auth state
   const isLoggedIn = Boolean(token);
+  const [createPayment, { isLoading }] = useCreatePaymentMutation();
 
+  const [createOrder]=useCreateOrderMutation()
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const [processingOrder, setProcessingOrder] = useState(false);
-  const [orderError, setOrderError] = useState(null);
+  const [processingOrder, setProcessingOrder] = useState(false); // Renamed from processingPayment
+  const [orderError, setOrderError] = useState(null); // Renamed from paymentError
 
-  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
+   const handlePayOnline = async () => {
+     if (
+    !address.street ||
+    !address.city ||
+    !address.state ||
+    !address.postalCode ||
+    !address.country
+  ) {
+    alert("Fill all address fields");
+    return;
+  }
 
+  try {
+    // ✅ STEP 1: Create Order FIRST
+   const order = await createOrder({
+  items: cartItems.map(item => ({
+    productId: item.id,
+    quantity: item.quantity,
+  })),
+
+  subtotal: cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  ),
+  shipping: 0,
+  tax: 0,
+  total: cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  ),
+
+  address: {
+    street: address.street,
+    city: address.city,
+    state: address.state,
+    postalCode: address.postalCode,
+    country: address.country,
+  },
+
+  customerId: userId, // only if backend requires it
+}).unwrap();
+
+console.log("Order created:", order);
+    // ✅ STEP 2: Create Stripe session using real order.id
+    const res = await createPayment({
+      orderId: order.id, // 👈 FIXED
+    }).unwrap();
+
+    // ✅ STEP 3: Redirect to Stripe
+    if (res.url) {
+      window.location.href = res.url;
+    } else {
+      alert("Payment session not created. Try again.");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Payment initiation failed. Please try again.");
+  }
+};
+  // State for address fields
   const [address, setAddress] = useState({
     street: '',
     city: '',
@@ -29,20 +94,23 @@ const CheckoutPage = () => {
     country: ''
   });
 
+  // Redirect if not logged in or cart is empty
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/login');
     } else if (cartItems.length === 0 && !orderPlaced) {
-      navigate('/customer-dashboard');
+      navigate('/customer-dashboard'); // Or back to cart page
     }
   }, [isLoggedIn, cartItems, navigate, orderPlaced]);
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = 0;
-  const tax = 0;
-  const total = subtotal + shipping + tax;
+  const shipping = 0.00; // Always free delivery
+  const tax = 0.00; // No tax as requested
+  const total = subtotal + shipping + tax; // Total is now just subtotal + free shipping
 
-  const formatPrice = (price) => (typeof price === 'number' ? price.toFixed(2) : parseFloat(price || 0).toFixed(2));
+  const formatPrice = (price) => {
+    return typeof price === 'number' ? price.toFixed(2) : parseFloat(price || 0).toFixed(2);
+  };
 
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
@@ -53,6 +121,7 @@ const CheckoutPage = () => {
     setProcessingOrder(true);
     setOrderError(null);
 
+    // Basic validation for address fields
     if (!address.street || !address.city || !address.state || !address.postalCode || !address.country) {
       setOrderError('Please fill in all address fields.');
       setProcessingOrder(false);
@@ -60,47 +129,51 @@ const CheckoutPage = () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/orders`, {
+      const response = await fetch('http://localhost:3000/orders', { // Assuming your orders endpoint is /orders
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          items: cartItems.map(item => ({
-            productId: item.id,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity,
-            images: item.images
-          })),
-          subtotal,
-          shipping,
-          tax,
-          total,
-          address,
-          customerId: userId,
-          orderedAt: new Date().toISOString(),
-          status: 'pending'
+           items: cartItems.map(item => ({ // Map cart items to a simplified structure for the backend
+             productId: item.id, // Assuming 'id' is productId
+             name: item.name,
+             price: item.price,
+             quantity: item.quantity,
+             images: item.images // Pass images if needed by backend
+           })),
+           subtotal,
+           shipping,
+           tax, // This will be 0.00
+           total,
+           address, // Send the address object directly
+           customerId: userId, // Changed from userId to customerId to match backend entity/DTO
+           orderedAt: new Date().toISOString(), // Add order timestamp
+           status: 'pending' // Initial status
         })
       });
-
       const result = await response.json();
 
       if (response.ok) {
         setOrderPlaced(true);
-        dispatch(clearCart());
+        dispatch(clearCart()); // Clear cart after successful order placement
+        setProcessingOrder(false);
+        // You might navigate to an order confirmation page here
+        // navigate('/order-confirmation', { state: { orderId: result.id } }); // Use result.id for the new order ID
       } else {
         throw new Error(result.message || 'Failed to place order.');
       }
+
     } catch (err) {
       setOrderError(err.message || 'Order placement failed. Please try again.');
-    } finally {
       setProcessingOrder(false);
     }
   };
 
-  if (!isLoggedIn) return null;
+  if (!isLoggedIn) {
+    return null; // Or a loading spinner while redirecting
+  }
 
   if (orderPlaced) {
     return (
@@ -115,9 +188,7 @@ const CheckoutPage = () => {
             <FaCheckCircle />
           </motion.div>
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Order Placed Successfully!</h2>
-          <p className="text-gray-700 text-lg mb-6">
-            Thank you for your purchase. Your Cash on Delivery order has been confirmed and will be processed shortly.
-          </p>
+          <p className="text-gray-700 text-lg mb-6">Thank you for your purchase. Your Cash on Delivery order has been confirmed and will be processed shortly.</p>
           <motion.button
             onClick={() => navigate('/my-orders')}
             className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-md"
@@ -163,11 +234,7 @@ const CheckoutPage = () => {
                     <li key={item.id} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
                       <div className="flex items-center">
                         <img
-                          src={
-                            item.images?.length > 0
-                              ? item.images[0].image || item.images[0]?.images?.[0]
-                              : `https://placehold.co/80x80/E0E7FF/3B82F6?text=${encodeURIComponent(item.name)}`
-                          }
+                          src={item.images?.[0]?.images?.[0] ? `http://localhost:3000${item.images[0].images[0]}` : `https://placehold.co/80x80/E0E7FF/3B82F6?text=${encodeURIComponent(item.name)}`}
                           alt={item.name}
                           className="w-16 h-16 object-cover rounded-md mr-4 shadow-sm"
                         />
@@ -191,21 +258,22 @@ const CheckoutPage = () => {
               </div>
               <div className="flex justify-between text-gray-700">
                 <span>Shipping:</span>
+                {/* Always display "Free" for shipping */}
                 <span className="font-semibold text-green-600">Free</span>
               </div>
+              {/* Removed Tax line */}
               <div className="flex justify-between font-bold text-xl text-gray-900 border-t border-gray-200 pt-3 mt-3">
                 <span>Total:</span>
                 <span>${formatPrice(total)}</span>
               </div>
             </div>
 
-            {/* Delivery Address */}
+            {/* Delivery Address Section */}
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
                 <FaMapMarkerAlt className="mr-3 text-blue-600" /> Delivery Address
               </h2>
               <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 space-y-4">
-                {/* Street */}
                 <div>
                   <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
                   <input
@@ -219,7 +287,6 @@ const CheckoutPage = () => {
                     required
                   />
                 </div>
-                {/* City & State */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">City</label>
@@ -248,7 +315,6 @@ const CheckoutPage = () => {
                     />
                   </div>
                 </div>
-                {/* Postal Code & Country */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
@@ -314,6 +380,28 @@ const CheckoutPage = () => {
                 </>
               )}
             </motion.button>
+            {/* Pay Online Button */}
+<motion.button
+  onClick={handlePayOnline}
+  disabled={cartItems.length === 0 || isLoading}
+  className="w-full mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl text-xl font-semibold shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+  whileHover={{ scale: 1.02, boxShadow: "0 10px 20px rgba(59, 130, 246, 0.4)" }}
+  whileTap={{ scale: 0.98 }}
+>
+  {isLoading ? (
+    <>
+      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      Redirecting...
+    </>
+  ) : (
+    <>
+      <AiOutlineShoppingCart className="mr-3 text-2xl" /> Pay Online
+    </>
+  )}
+</motion.button>
           </motion.div>
         </div>
       </main>

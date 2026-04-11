@@ -6,12 +6,14 @@ import { productApi } from "../feature/product/productApi";
 import { orderApi } from "../feature/order/orderApi";
 import cartReducer from '../feature/cart/cartSlice';
 import searchReducer from "../feature/search/searchSlice"
+import { paymentApi } from "../feature/payment/paymentApi";
 export const store = configureStore({
     reducer: {
         search: searchReducer,
         auth: authReducer,
         cart: cartReducer,
         [authApi.reducerPath]:authApi.reducer,
+        [paymentApi.reducerPath]:paymentApi.reducer,
         [userApi.reducerPath]:userApi.reducer,
         [productApi.reducerPath]:productApi.reducer,
         [orderApi.reducerPath]:orderApi.reducer
@@ -23,6 +25,7 @@ export const store = configureStore({
             authApi.middleware,
             userApi.middleware,
             productApi.middleware,
-            orderApi.middleware
+            orderApi.middleware,
+            paymentApi.middleware
         )
 })
