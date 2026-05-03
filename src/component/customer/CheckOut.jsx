@@ -235,11 +235,15 @@ console.log("Order created:", order);
                 <p className="text-gray-600 text-center py-4">Your cart is empty.</p>
               ) : (
                 <ul className="space-y-4">
-                  {cartItems.map((item) => (
-                    <li key={item.id} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
+                  {cartItems.map((item) => {
+                    const imagePath = item.images?.[0]?.images?.[0] || null;
+                    return (
+                      <li key={item.id} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
                       <div className="flex items-center">
                         <img
-                          src={item.images?.[0]?.images?.[0] ? `${API_URL}${item.images[0].images[0]}` : `https://placehold.co/80x80/E0E7FF/3B82F6?text=${encodeURIComponent(item.name)}`}
+                          src={
+                            imagePath
+                             ? `${API_URL}${imagePath}` : `https://placehold.co/80x80/E0E7FF/3B82F6?text=${encodeURIComponent(item.name)}`}
                           alt={item.name}
                           className="w-16 h-16 object-cover rounded-md mr-4 shadow-sm"
                         />
@@ -250,7 +254,10 @@ console.log("Order created:", order);
                       </div>
                       <span className="font-semibold text-gray-800">${formatPrice(item.price * item.quantity)}</span>
                     </li>
-                  ))}
+                    )
+                  }
+                    
+                  )}
                 </ul>
               )}
             </div>
