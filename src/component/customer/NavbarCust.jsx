@@ -63,7 +63,7 @@ const CustomerNavbar = () => {
           {/* Enhanced Premium Logo */}
           <div className="flex-shrink-0">
             <Link 
-              to="/" 
+              to="/customer-dashboard" 
               className="flex items-center space-x-3 group"
             >
               <div className="relative">
