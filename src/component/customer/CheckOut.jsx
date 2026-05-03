@@ -20,6 +20,8 @@ const CheckoutPage = () => {
   const isLoggedIn = Boolean(token);
   const [createPayment, { isLoading }] = useCreatePaymentMutation();
 
+  const BASE_URL = import.meta.env.VITE_API_URL;
+
   const [createOrder]=useCreateOrderMutation()
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [processingOrder, setProcessingOrder] = useState(false); // Renamed from processingPayment
@@ -129,7 +131,7 @@ console.log("Order created:", order);
     }
 
     try {
-      const response = await fetch('http://localhost:3000/orders', { // Assuming your orders endpoint is /orders
+      const response = await fetch(`${BASE_URL}/orders`, { // Assuming your orders endpoint is /orders
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -234,7 +236,7 @@ console.log("Order created:", order);
                     <li key={item.id} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
                       <div className="flex items-center">
                         <img
-                          src={item.images?.[0]?.images?.[0] ? `http://localhost:3000${item.images[0].images[0]}` : `https://placehold.co/80x80/E0E7FF/3B82F6?text=${encodeURIComponent(item.name)}`}
+                          src={item.images?.[0]?.images?.[0] ? `${BASE_URL}${item.images[0].images[0]}` : `https://placehold.co/80x80/E0E7FF/3B82F6?text=${encodeURIComponent(item.name)}`}
                           alt={item.name}
                           className="w-16 h-16 object-cover rounded-md mr-4 shadow-sm"
                         />
