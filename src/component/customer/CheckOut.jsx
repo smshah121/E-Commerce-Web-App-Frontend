@@ -236,21 +236,19 @@ console.log("Order created:", order);
               ) : (
                 <ul className="space-y-4">
                   {cartItems.map((item) => {
-                    const imagePath =
-  item.product?.images?.[0]?.images?.[0] ||
-  item.images?.[0]?.images?.[0] ||
-  item.image ||
-  null;
+                 
                     return (
                       <li key={item.id} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
                       <div className="flex items-center">
-                        <img
-                          src={
-                            imagePath
-    ? `${API_URL}${imagePath}` : `https://placehold.co/80x80/E0E7FF/3B82F6?text=${encodeURIComponent(item.name)}`}
-                          alt={item.name}
-                          className="w-16 h-16 object-cover rounded-md mr-4 shadow-sm"
-                        />
+                       <img
+  src={
+    item.images?.[0]?.image ||
+    item.product?.images?.[0]?.image ||
+    `https://placehold.co/80x80?text=${encodeURIComponent(item.name)}`
+  }
+  alt={item.name}
+  className="w-16 h-16 object-cover rounded-md mr-4 shadow-sm"
+/>
                         <div>
                           <p className="font-medium text-gray-900">{item.name}</p>
                           <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
