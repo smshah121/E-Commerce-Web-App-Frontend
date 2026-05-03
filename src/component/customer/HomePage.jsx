@@ -1,934 +1,589 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
 import { useGetAllProductsQuery } from "../../feature/product/productApi";
 import Navbar from "./Navbar";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay, Pagination, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-// Removed: import SearchBar from "./SearchBar"; // SearchBar is now only in Navbar
+import "swiper/css/effect-fade";
 
-const HomePage = () => {
-  // 1. searchTerm state remains here, as HomePage needs it for filtering
-  const [searchTerm, setSearchTerm] = useState("");
-  const { data: products = [], isLoading } = useGetAllProductsQuery();
-
-  const { token, role } = useSelector((state) => state.auth);
-  const isLoggedIn = Boolean(token);
-
-  const navigate = useNavigate();
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 150]);
-  const handleClick = () => {
-    navigate("/login");
-  };
-
-  const formatPrice = (price) => {
-    return typeof price === "number"
-      ? price.toFixed(2)
-      : parseFloat(price || 0).toFixed(2);
-  };
-
-  // Function to handle smooth scrolling to sections
-  const handleScrollToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      const navbarHeight = document.querySelector("nav")?.offsetHeight || 0;
-      const offsetTop =
-        section.getBoundingClientRect().top + window.scrollY - navbarHeight;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "smooth",
-      });
+/* ─── Fonts ─────────────────────────────────────────────── */
+const FontImport = () => (
+  <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+    :root {
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+      --c-ink: #0f0e0c;
+      --c-cream: #faf8f4;
+      --c-warm: #f0ede6;
+      --c-gold: #c9a84c;
+      --c-gold-light: #f0d990;
+      --c-charcoal: #2c2a26;
+      --c-muted: #7a7870;
+      --c-accent: #1a3a5c;
+      --c-accent-light: #d6e4f0;
     }
-  };
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: var(--c-cream); color: var(--c-ink); }
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  `}</style>
+);
 
-  // 2. Filtering logic remains here, using the state
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  // Animation variants (omitted for brevity, assume they are correct)
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 10,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      y: 50,
-      scale: 0.9,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-        duration: 0.6,
-      },
-    },
-    hover: {
-      y: -8,
-      scale: 1.02,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10,
-      },
-    },
-  };
-
-  const heroTextVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const buttonVariants = {
-    hover: {
-      scale: 1.05,
-      boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10,
-      },
-    },
-    tap: {
-      scale: 0.95,
-    },
-  };
-
-  const fadeInUpVariants = {
-    hidden: { opacity: 0, y: 60 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  // Component for animated section headers
-  const AnimatedSectionHeader = ({ title, subtitle }) => {
-    const ref = React.useRef(null);
-    const isInView = useInView(ref, { once: true, threshold: 0.1 });
-
-    return (
+/* ─── Ticker ─────────────────────────────────────────────── */
+const Ticker = () => {
+  const items = ["Free shipping on orders over $50", "Premium Mobile Accessories", "Secure Checkout", "30-Day Returns", "Authentic Products Only", "New arrivals every week"];
+  return (
+    <div style={{ background: "var(--c-gold)", overflow: "hidden", height: 36, display: "flex", alignItems: "center" }}>
       <motion.div
-        ref={ref}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        variants={fadeInUpVariants}
-        className="text-center mb-16"
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+        style={{ display: "flex", whiteSpace: "nowrap", gap: "4rem" }}
       >
-        <motion.h2
-          variants={itemVariants}
-          className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
-        >
-          {title}
-        </motion.h2>
-        <motion.div
-          variants={itemVariants}
-          className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full mb-4"
-        />
-        {subtitle && (
-          <motion.p variants={itemVariants} className="text-gray-600 text-lg">
-            {subtitle}
-          </motion.p>
-        )}
+        {[...items, ...items].map((item, i) => (
+          <span key={i} style={{ fontFamily: "var(--font-body)", fontSize: 12, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--c-ink)" }}>
+            {item} <span style={{ opacity: 0.4, marginLeft: "2rem" }}>◆</span>
+          </span>
+        ))}
       </motion.div>
-    );
-  };
+    </div>
+  );
+};
+
+/* ─── Hero ────────────────────────────────────────────────── */
+const Hero = ({ onScrollToProducts }) => {
+  const { scrollY } = useScroll();
+  const yText = useTransform(scrollY, [0, 400], [0, 80]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+
+  const slides = [
+    { src: "/magsafe belkin.jpg", label: "MagSafe Series" },
+    { src: "/45W PowerBank.jpg", label: "Power Bank" },
+    { src: "/adaptor.jpg", label: "Adapters" },
+    { src: "/Airpods max.jpg", label: "AirPods Max" },
+    { src: "/apple earphones.jpg", label: "Earphones" },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-      {/* 3. Pass searchTerm and setSearchTerm to Navbar */}
-      <Navbar
-        isLoggedIn={isLoggedIn}
-        role={role}
-        onScrollToSection={handleScrollToSection}
-        searchTerm={searchTerm} // <-- NEW PROP
-        setSearchTerm={setSearchTerm} // <-- NEW PROP
-      />
-
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 text-white overflow-hidden">
-        {/* ... (Animated Background Elements) ... */}
-        <motion.div
-          style={{ y }}
-          className="absolute inset-0 bg-black opacity-10"
-        />
-        <motion.div
-          animate={{
-            backgroundPosition: ["0% 0%", "100% 100%"],
-          }}
-          transition={{
-            duration: 20,
-            ease: "linear",
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: "60px 60px",
-          }}
-        />
-      <div className="flex flex-col justify-center items-center">
-        <div className="mt-25 w-4xl">
-           <Swiper
-          modules={[Autoplay, Pagination]}
-          spaceBetween={30}
-          slidesPerView={3}
-          loop={true}
-          autoplay={{ delay: 3000 }}
+    <section style={{ position: "relative", height: "92vh", minHeight: 600, overflow: "hidden", background: "var(--c-charcoal)" }}>
+      {/* Full-bleed swiper */}
+      <div style={{ position: "absolute", inset: 0 }}>
+        <Swiper
+          modules={[Autoplay, Pagination, EffectFade]}
+          effect="fade"
+          loop
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
           pagination={{ clickable: true }}
-          className="rounded-2xl overflow-hidden"
+          style={{ height: "100%" }}
         >
-          <SwiperSlide>
-            <img
-              src="/magsafe belkin.jpg"
-              alt="MagSafe"
-              className="w-full h-96 object-cover"
-            />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <img
-              src="/45W PowerBank.jpg"
-              alt="Power Bank"
-              className="w-full h-96 object-cover"
-            />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <img
-              src="/adaptor.jpg"
-              alt="Adaptor"
-              className="w-full h-96 object-cover"
-            />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <img
-              src="/Airpods max.jpg"
-              alt="Airpods"
-              className="w-full h-96 object-cover"
-            />
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <img
-              src="/apple earphones.jpg"
-              alt="Airpods"
-              className="w-full h-96 object-cover"
-            />
-          </SwiperSlide>
-          
+          {slides.map((s, i) => (
+            <SwiperSlide key={i}>
+              <div style={{ position: "relative", height: "100%" }}>
+                <img src={s.src} alt={s.label} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.55 }} />
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(15,14,12,0.85) 40%, rgba(15,14,12,0.2) 100%)" }} />
+              </div>
+            </SwiperSlide>
+          ))}
         </Swiper>
-
-        </div>
-       
-        <div className="relative max-w-7xl mx-auto px-4 py-5">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-            className="text-center"
-          >
-
-
-            <motion.h1
-              variants={heroTextVariants}
-              className="text-2xl md:text-4xl font-bold leading-tight"
-            >
-              Welcome to{" "}
-              <motion.span
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-                className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400"
-              >
-                PriceTag
-              </motion.span>
-            </motion.h1>
-
-            <motion.p
-              variants={heroTextVariants}
-              transition={{ delay: 0.2 }}
-              className="text-sm md:text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed"
-            >
-              Discover premium quality Mobile Accessories at unbeatable prices. Your
-              perfect shopping experience starts here.
-            </motion.p>
-
-            
-            
-          </motion.div>
-        </div>
       </div>
 
-        
-
-        {/* ... (Floating Elements) ... */}
+      {/* Hero copy */}
+      <motion.div style={{ y: yText, opacity, position: "relative", zIndex: 10, height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 8vw", maxWidth: 800 }}>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          style={{ fontFamily: "var(--font-body)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--c-gold)", marginBottom: 20 }}
+        >
+          Premium Collection 2025
+        </motion.p>
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3rem, 6vw, 5.5rem)", fontWeight: 700, lineHeight: 1.05, color: "#fff", marginBottom: 24 }}
+        >
+          Accessories<br />
+          <em style={{ color: "var(--c-gold)", fontStyle: "italic" }}>Worth Having.</em>
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          style={{ fontFamily: "var(--font-body)", fontSize: "clamp(1rem, 1.4vw, 1.15rem)", color: "rgba(255,255,255,0.7)", maxWidth: 460, lineHeight: 1.7, marginBottom: 40 }}
+        >
+          Curated mobile accessories where design meets performance. Every item chosen for quality, not just price.
+        </motion.p>
         <motion.div
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 5, 0],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-20 right-10 w-16 h-16 bg-white/10 rounded-full blur-sm"
-        />
-        <motion.div
-          animate={{
-            y: [0, 15, 0],
-            x: [0, 10, 0],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-          className="absolute bottom-20 left-10 w-12 h-12 bg-yellow-400/20 rounded-full blur-sm"
-        />
-      </section>
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          style={{ display: "flex", gap: 16, flexWrap: "wrap" }}
+        >
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={onScrollToProducts}
+            style={{ background: "var(--c-gold)", color: "var(--c-ink)", border: "none", padding: "14px 36px", fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}
+          >
+            Shop Now
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={onScrollToProducts}
+            style={{ background: "transparent", color: "#fff", border: "1px solid rgba(255,255,255,0.4)", padding: "14px 36px", fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 400, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}
+          >
+            View Catalogue
+          </motion.button>
+        </motion.div>
+      </motion.div>
 
-      {/* Products Section (Remains the same, using filteredProducts) */}
-      <section
-        id="featured-products"
-        className="py-20 bg-gradient-to-br from-gray-50 to-white"
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4 }}
+        style={{ position: "absolute", bottom: 36, left: "50%", transform: "translateX(-50%)", zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}
       >
-        <div id="products" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSectionHeader
-            title="Featured Products"
-            subtitle="Discover our handpicked selection of premium products"
+        <span style={{ fontFamily: "var(--font-body)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Scroll</span>
+        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.6, repeat: Infinity }} style={{ width: 1, height: 40, background: "linear-gradient(to bottom, rgba(201,168,76,0.8), transparent)" }} />
+      </motion.div>
+    </section>
+  );
+};
+
+/* ─── Stats bar ──────────────────────────────────────────── */
+const StatsBar = () => {
+  const stats = [
+    { value: "10K+", label: "Happy Customers" },
+    { value: "500+", label: "Products" },
+    { value: "48hr", label: "Fast Delivery" },
+    { value: "4.9★", label: "Avg Rating" },
+  ];
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
+      style={{ background: "var(--c-accent)", display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}
+    >
+      {stats.map((s, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: i * 0.1 + 0.2 }}
+          style={{ padding: "28px 24px", textAlign: "center", borderRight: i < 3 ? "1px solid rgba(255,255,255,0.1)" : "none" }}
+        >
+          <div style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.6rem, 3vw, 2.4rem)", color: "var(--c-gold)", fontWeight: 700 }}>{s.value}</div>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginTop: 4 }}>{s.label}</div>
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+};
+
+/* ─── Category Pills ─────────────────────────────────────── */
+const categories = ["All", "MagSafe", "Power Banks", "Adapters", "Audio", "Cases"];
+const CategoryFilter = ({ active, onChange }) => (
+  <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center", marginBottom: 56 }}>
+    {categories.map((cat) => (
+      <motion.button
+        key={cat}
+        whileHover={{ y: -2 }}
+        whileTap={{ scale: 0.96 }}
+        onClick={() => onChange(cat)}
+        style={{
+          padding: "9px 22px",
+          fontFamily: "var(--font-body)",
+          fontSize: 12,
+          letterSpacing: "0.1em",
+          textTransform: "uppercase",
+          cursor: "pointer",
+          border: active === cat ? "1px solid var(--c-accent)" : "1px solid #d4d0c8",
+          background: active === cat ? "var(--c-accent)" : "transparent",
+          color: active === cat ? "#fff" : "var(--c-muted)",
+          transition: "all 0.2s",
+        }}
+      >
+        {cat}
+      </motion.button>
+    ))}
+  </div>
+);
+
+/* ─── Product Card ────────────────────────────────────────── */
+const ProductCard = ({ product, index, onClick, formatPrice }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, threshold: 0.1 });
+  const image = product.images?.[0]?.image || null;
+
+  return (
+    <motion.article
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: (index % 4) * 0.08, duration: 0.5 }}
+      whileHover={{ y: -6 }}
+      onClick={onClick}
+      style={{ background: "#fff", border: "1px solid #e8e4dc", cursor: "pointer", display: "flex", flexDirection: "column", transition: "box-shadow 0.3s", position: "relative", overflow: "hidden" }}
+      onMouseEnter={e => e.currentTarget.style.boxShadow = "0 20px 60px rgba(0,0,0,0.1)"}
+      onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}
+    >
+      {/* Image */}
+      <div style={{ position: "relative", overflow: "hidden", aspectRatio: "4/3", background: "var(--c-warm)" }}>
+        {image ? (
+          <motion.img
+            whileHover={{ scale: 1.08 }}
+            transition={{ duration: 0.5 }}
+            src={image}
+            alt={product.name}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            onError={e => { e.target.style.display = "none"; }}
           />
+        ) : (
+          <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "var(--c-muted)", letterSpacing: "0.1em" }}>No Image</span>
+          </div>
+        )}
+        {/* Hover overlay */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+          style={{ position: "absolute", inset: 0, background: "rgba(26,58,92,0.88)", display: "flex", alignItems: "center", justifyContent: "center" }}
+        >
+          <div style={{ textAlign: "center", color: "#fff" }}>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 600, marginBottom: 8 }}>View Details</div>
+            <div style={{ width: 32, height: 1, background: "var(--c-gold)", margin: "0 auto" }} />
+          </div>
+        </motion.div>
+      </div>
 
-          {/* ... (Loading/No Products logic remains the same) ... */}
-          {isLoading ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex items-center justify-center py-20"
-            >
-              <div className="text-center">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="inline-block rounded-full h-16 w-16 border-4 border-blue-600 border-t-transparent mb-4"
-                />
-                <motion.h3
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-2xl font-semibold text-gray-700 mb-2"
-                >
-                  Loading Products
-                </motion.h3>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="text-gray-500"
-                >
-                  Please wait while we fetch amazing products for you...
-                </motion.p>
-              </div>
-            </motion.div>
-          ) : (
-            <>
-              {filteredProducts.length === 0 ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-center py-20"
-                >
-                  <motion.div
-                    animate={{
-                      y: [0, -10, 0],
-                      rotate: [0, 5, -5, 0],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    className="w-32 h-32 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center"
-                  >
-                    <svg
-                      className="w-16 h-16 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1}
-                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2M4 13h2"
-                      />
-                    </svg>
-                  </motion.div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-2">
-                    No products found
-                  </h3>
-                  <p className="text-gray-500 text-lg">
-                    Try adjusting your search terms or browse our categories
-                  </p>
-                </motion.div>
-              ) : (
-                <motion.div
-                  variants={containerVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, threshold: 0.1 }}
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch"
-                >
-                  {filteredProducts.map((product, index) => {
-                    // Directly use Cloudinary URL stored in DB
-                    const image = product.images?.[0]?.image || null;
-
-                    return (
-                      <motion.div
-                        key={product.id}
-                        variants={cardVariants}
-                        whileHover="hover"
-                        whileTap={{ scale: 0.98 }}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
-                        className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl h-120 transition-all duration-500 hover:-translate-y-2 overflow-hidden border border-gray-100 cursor-pointer flex flex-col"
-                        onClick={handleClick}
-                      >
-                        {/* Image Container */}
-                        <div className="relative overflow-hidden w-full h-64 flex items-center justify-center bg-gray-100">
-                          {image ? (
-                            <motion.img
-                              whileHover={{ scale: 1.1 }}
-                              transition={{ duration: 0.3 }}
-                              src={image}
-                              alt={product.name}
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                e.target.src =
-                                  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xNTAgMTAwQzEyNy45IDEwMCAxMTAgMTE3LjkgMTEwIDE0MFMxMjcuOSAxODAgMTUwIDE4MFMxOTAgMTYyLjEgMTkwIDE0MFMxNzIuMSAxMDAgMTUwIDEwMFpNMTE1IDExNUNBMTY0LjMgMTY0LjMgMTc1IDE0My4xIDE3NSAxNTdDMTc1IDE2NSAxNjQuMyAxNjUgMTUwIDIwMFMxMjUgMTY1LjEgMTI1IDE1N0MxMjUgMTQzLjEgMTM1LjcgMTExIDE1MCAxMTVaIiBmaWxsPSIjOUI5QkEwIi8+Cjwvc3ZnPg==";
-                              }}
-                            />
-                          ) : (
-                            <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                              <motion.div
-                                animate={{ y: [0, -5, 0], opacity: [0.5, 1, 0.5] }}
-                                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                                className="text-center"
-                              >
-                                <svg
-                                  className="w-16 h-16 text-gray-400 mx-auto mb-4"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1}
-                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                  />
-                                </svg>
-                                <span className="text-gray-500 text-sm font-medium">
-                                  No Image Available
-                                </span>
-                              </motion.div>
-                            </div>
-                          )}
-
-                          {/* Login prompt overlay */}
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            whileHover={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                            className="absolute inset-0 bg-blue-600/90 flex items-center justify-center"
-                          >
-                            <motion.div
-                              initial={{ scale: 0.8, opacity: 0 }}
-                              whileHover={{ scale: 1, opacity: 1 }}
-                              transition={{ duration: 0.2 }}
-                              className="text-center text-white"
-                            >
-                              <motion.svg
-                                animate={{ x: [0, 5, 0] }}
-                                transition={{ duration: 1, repeat: Infinity }}
-                                className="w-8 h-8 mx-auto mb-2"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                                />
-                              </motion.svg>
-                              <p className="text-sm font-semibold">
-                                Login to Shop
-                              </p>
-                            </motion.div>
-                          </motion.div>
-                        </div>
-
-                        {/* Product Info */}
-                        <div className="p-6 h-full flex flex-col">
-                          <motion.h3 className="font-bold text-xl text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 h-14 flex items-start">
-                            {product.name}
-                          </motion.h3>
-
-                          <div className="flex items-center justify-between mb-4">
-                            <motion.div
-                              initial={{ scale: 0 }}
-                              animate={{ scale: 1 }}
-                              transition={{ delay: 0.2, type: "spring" }}
-                              className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"
-                            >
-                              ${formatPrice(product.price)}
-                            </motion.div>
-                          </div>
-
-                          <div className="flex-1">
-                            {product.description && (
-                              <motion.p
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.3 }}
-                                className="text-gray-600 text-sm line-clamp-3 leading-relaxed h-16 overflow-hidden"
-                              >
-                                {product.description}
-                              </motion.p>
-                            )}
-                          </div>
-
-
-
-                          {/* View Product Button */}
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-xl mt-auto"
-                          >
-                            <span className="flex items-center justify-center">
-                              <motion.svg
-                                whileHover={{ x: 2 }}
-                                className="w-5 h-5 mr-2"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                />
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                                />
-                              </motion.svg>
-                              View Product
-                            </span>
-                          </motion.button>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </motion.div>
-              )}
-
-              {/* Show All Products Button */}
-              {filteredProducts.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                  className="text-center mt-16"
-                >
-                  <motion.button
-                    variants={buttonVariants}
-                    whileHover="hover"
-                    whileTap="tap"
-                    onClick={() => navigate("/login")}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-12 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
-                  >
-                    View All Products
-                  </motion.button>
-                </motion.div>
-              )}
-            </>
-          )}
+      {/* Info */}
+      <div style={{ padding: "20px 20px 24px", flex: 1, display: "flex", flexDirection: "column", gap: 10 }}>
+        <h3 style={{ fontFamily: "var(--font-display)", fontSize: 16, fontWeight: 600, color: "var(--c-ink)", lineHeight: 1.3 }} className="line-clamp-2">
+          {product.name}
+        </h3>
+        {product.description && (
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--c-muted)", lineHeight: 1.6 }} className="line-clamp-3">
+            {product.description}
+          </p>
+        )}
+        <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 14, borderTop: "1px solid #f0ede6" }}>
+          <span style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 700, color: "var(--c-accent)" }}>
+            ${formatPrice(product.price)}
+          </span>
+          <span style={{ fontFamily: "var(--font-body)", fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--c-gold)", fontWeight: 500 }}>
+            In Stock
+          </span>
         </div>
-      </section>
+      </div>
+    </motion.article>
+  );
+};
 
-      {/* Features Section (Omitted for brevity) */}
-      <section id="why-choose-myshop" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSectionHeader title="Why Choose PriceTag?" />
-
+/* ─── Features Strip ─────────────────────────────────────── */
+const FeaturesStrip = () => {
+  const features = [
+    { icon: "📦", title: "Free Shipping", desc: "On orders over $50 worldwide" },
+    { icon: "🔒", title: "Secure Payment", desc: "256-bit SSL encrypted checkout" },
+    { icon: "↩", title: "Easy Returns", desc: "30-day hassle-free returns" },
+    { icon: "⭐", title: "Guaranteed Quality", desc: "Every product hand-vetted" },
+  ];
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+  return (
+    <section ref={ref} style={{ background: "var(--c-warm)", padding: "72px 5vw", borderTop: "1px solid #e8e4dc", borderBottom: "1px solid #e8e4dc" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 40 }}>
+        {features.map((f, i) => (
           <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, threshold: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            key={i}
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: i * 0.12 }}
+            style={{ display: "flex", gap: 20, alignItems: "flex-start" }}
           >
-            {[
-              {
-                icon: "🚚",
-                title: "Free Shipping",
-                description:
-                  "Free shipping on orders over $50. Fast and reliable delivery worldwide.",
-              },
-              {
-                icon: "🔒",
-                title: "Secure Payment",
-                description:
-                  "Your payment information is secure with our encrypted checkout process.",
-              },
-              {
-                icon: "⭐",
-                title: "Quality Products",
-                description:
-                  "Handpicked premium products with satisfaction guarantee.",
-              },
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                variants={cardVariants}
-                whileHover="hover"
-                className="text-center p-8 rounded-2xl bg-gradient-to-br from-gray-50 to-white border border-gray-100 hover:shadow-xl transition-all duration-300"
-              >
-                <motion.div
-                  animate={{
-                    y: [0, -10, 0],
-                    rotate: [0, 5, -5, 0],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: index * 0.5,
-                  }}
-                  className="text-6xl mb-6"
-                >
-                  {feature.icon}
-                </motion.div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
+            <span style={{ fontSize: 28, flexShrink: 0 }}>{f.icon}</span>
+            <div>
+              <div style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 600, color: "var(--c-ink)", marginBottom: 4 }}>{f.title}</div>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "var(--c-muted)", lineHeight: 1.6 }}>{f.desc}</div>
+            </div>
           </motion.div>
-        </div>
-      </section>
+        ))}
+      </div>
+    </section>
+  );
+};
 
-      {/* Newsletter Section (Omitted for brevity) */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20 overflow-hidden relative">
-        {/* Animated background elements */}
-        <motion.div
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute top-10 right-10 w-20 h-20 bg-white/10 rounded-full blur-xl"
-        />
-        <motion.div
-          animate={{
-            x: [0, -80, 0],
-            y: [0, 60, 0],
-            rotate: [0, -180, -360],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute bottom-10 left-10 w-16 h-16 bg-yellow-400/20 rounded-full blur-lg"
-        />
-
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-          >
-            <motion.h2
-              variants={itemVariants}
-              className="text-3xl md:text-4xl font-bold mb-4"
-            >
-              Stay in the Loop
-            </motion.h2>
-            <motion.p
-              variants={itemVariants}
-              className="text-xl text-blue-100 mb-8"
-            >
-              Get exclusive offers, new product updates, and shopping tips
-              delivered to your inbox.
+/* ─── Newsletter ─────────────────────────────────────────── */
+const Newsletter = () => {
+  const [email, setEmail] = useState("");
+  const [sent, setSent] = useState(false);
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+  return (
+    <section ref={ref} style={{ background: "var(--c-charcoal)", padding: "100px 5vw" }}>
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        style={{ maxWidth: 560, margin: "0 auto", textAlign: "center" }}
+      >
+        <p style={{ fontFamily: "var(--font-body)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--c-gold)", marginBottom: 16 }}>Stay Informed</p>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, color: "#fff", lineHeight: 1.2, marginBottom: 16 }}>
+          Exclusive offers,<br /><em style={{ color: "var(--c-gold)" }}>before anyone else.</em>
+        </h2>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "rgba(255,255,255,0.55)", marginBottom: 36, lineHeight: 1.7 }}>
+          Join our list for new arrivals, flash sales, and curated picks delivered monthly.
+        </p>
+        <AnimatePresence mode="wait">
+          {sent ? (
+            <motion.p key="thanks" initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--c-gold)" }}>
+              ✓ You're on the list.
             </motion.p>
-
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
-            >
-              <motion.input
-                whileFocus={{ scale: 1.05 }}
+          ) : (
+            <motion.div key="form" style={{ display: "flex", gap: 0 }}>
+              <input
                 type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-6 py-4 rounded-xl text-gray-900 focus:outline-none focus:ring-4 focus:ring-blue-300 text-lg"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                style={{ flex: 1, padding: "14px 20px", fontFamily: "var(--font-body)", fontSize: 14, border: "none", background: "rgba(255,255,255,0.1)", color: "#fff", outline: "none" }}
               />
               <motion.button
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
-                className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg"
+                whileHover={{ background: "#b8913d" }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => { if (email) setSent(true); }}
+                style={{ padding: "14px 28px", background: "var(--c-gold)", color: "var(--c-ink)", border: "none", fontFamily: "var(--font-body)", fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 500, cursor: "pointer" }}
               >
                 Subscribe
               </motion.button>
             </motion.div>
-          </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </section>
+  );
+};
+
+/* ─── Footer ─────────────────────────────────────────────── */
+const Footer = () => (
+  <footer id="contact-us" style={{ background: "#0a0908", color: "rgba(255,255,255,0.5)", padding: "60px 5vw 30px" }}>
+    <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "48px 32px", marginBottom: 56 }}>
+        <div>
+          <div style={{ fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 700, color: "#fff", marginBottom: 12 }}>
+            Price<span style={{ color: "var(--c-gold)" }}>Tag</span>
+          </div>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, lineHeight: 1.7, color: "rgba(255,255,255,0.4)" }}>
+            Premium mobile accessories, curated for those who care about quality.
+          </p>
         </div>
-      </section>
-
-      {/* Footer (Omitted for brevity) */}
-      <footer id="contact-us" className="bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, threshold: 0.1 }}
-            variants={containerVariants}
-            className="grid grid-cols-1 md:grid-cols-4 gap-8"
-          >
-            {/* Company Info */}
-            <motion.div variants={itemVariants} className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <motion.div
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg"
-                >
-                  <span className="text-white font-bold text-lg">PT</span>
-                </motion.div>
-                <span className="text-2xl font-bold">PriceTag</span>
-              </div>
-              <p className="text-gray-400">
-                Your trusted partner for premium quality products at unbeatable
-                prices.
-              </p>
-            </motion.div>
-
-            {/* Quick Links */}
-            <motion.div variants={itemVariants}>
-              <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-              <ul className="space-y-2 text-gray-400">
-                {["About Us", "Contact", "FAQ", "Shipping Info"].map(
-                  (link, index) => (
-                    <motion.li
-                      key={link}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <motion.a
-                        href="#"
-                        whileHover={{ x: 5, color: "#ffffff" }}
-                        className="hover:text-white transition-colors"
-                      >
-                        {link}
-                      </motion.a>
-                    </motion.li>
-                  )
-                )}
-              </ul>
-            </motion.div>
-
-            {/* Customer Service */}
-            <motion.div variants={itemVariants}>
-              <h3 className="text-lg font-semibold mb-4">Customer Service</h3>
-              <ul className="space-y-2 text-gray-400">
-                {[
-                  "Help Center",
-                  "Return Policy",
-                  "Size Guide",
-                  "Track Order",
-                ].map((link, index) => (
-                  <motion.li
-                    key={link}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 + 0.2 }}
-                    viewport={{ once: true }}
-                  >
-                    <motion.a
-                      href="#"
-                      whileHover={{ x: 5, color: "#ffffff" }}
-                      className="hover:text-white transition-colors"
-                    >
-                      {link}
-                    </motion.a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Social Links */}
-            <motion.div variants={itemVariants}>
-              <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-              <div className="flex space-x-4">
-                {["facebook", "twitter", "instagram", "linkedin"].map(
-                  (social, index) => (
-                    <motion.a
-                      key={social}
-                      href="#"
-                      initial={{ opacity: 0, scale: 0 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      whileHover={{
-                        scale: 1.2,
-                        backgroundColor: "#3B82F6",
-                        rotate: 360,
-                      }}
-                      transition={{
-                        delay: index * 0.1,
-                        duration: 0.3,
-                      }}
-                      viewport={{ once: true }}
-                      className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
-                    >
-                      <span className="text-sm font-semibold">
-                        {social[0].toUpperCase()}
-                      </span>
-                    </motion.a>
-                  )
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
-
-          <motion.hr
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="my-8 border-gray-800"
-          />
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-            className="flex flex-col md:flex-row justify-between items-center"
-          >
-            <motion.p variants={itemVariants} className="text-gray-400 text-sm">
-              © 2025 PriceTag. All rights reserved.
-            </motion.p>
-            <motion.div
-              variants={itemVariants}
-              className="flex space-x-6 mt-4 md:mt-0"
-            >
-              {["Privacy Policy", "Terms of Service"].map((link, index) => (
-                <motion.a
-                  key={link}
-                  href="#"
-                  whileHover={{ y: -2, color: "#ffffff" }}
-                  transition={{ duration: 0.2 }}
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  {link}
-                </motion.a>
+        {[
+          { title: "Company", links: ["About Us", "Press", "Careers", "Contact"] },
+          { title: "Support", links: ["Help Center", "Return Policy", "Track Order", "Shipping Info"] },
+          { title: "Legal", links: ["Privacy Policy", "Terms of Service", "Cookie Policy"] },
+        ].map((col, i) => (
+          <div key={i}>
+            <h4 style={{ fontFamily: "var(--font-body)", fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 16 }}>{col.title}</h4>
+            <ul style={{ listStyle: "none" }}>
+              {col.links.map((l, j) => (
+                <li key={j} style={{ marginBottom: 10 }}>
+                  <a href="#" style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
+                    onMouseEnter={e => e.target.style.color = "var(--c-gold)"}
+                    onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.55)"}
+                  >{l}</a>
+                </li>
               ))}
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* Animated background particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{
-                y: [0, -100, 0],
-                x: [0, Math.random() * 100 - 50, 0],
-                opacity: [0, 1, 0],
-              }}
-              transition={{
-                duration: 4 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-                ease: "easeInOut",
-              }}
-              className="absolute w-2 h-2 bg-blue-400/30 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                bottom: 0,
-              }}
-            />
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 24, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
+        <span style={{ fontFamily: "var(--font-body)", fontSize: 12 }}>© 2025 PriceTag. All rights reserved.</span>
+        <div style={{ display: "flex", gap: 16 }}>
+          {["F", "X", "IG", "LI"].map((s, i) => (
+            <a key={i} href="#" style={{ width: 32, height: 32, border: "1px solid rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontSize: 11, color: "rgba(255,255,255,0.4)", textDecoration: "none", transition: "all 0.2s" }}
+              onMouseEnter={e => { e.target.style.borderColor = "var(--c-gold)"; e.target.style.color = "var(--c-gold)"; }}
+              onMouseLeave={e => { e.target.style.borderColor = "rgba(255,255,255,0.15)"; e.target.style.color = "rgba(255,255,255,0.4)"; }}
+            >{s}</a>
           ))}
         </div>
-      </footer>
+      </div>
     </div>
+  </footer>
+);
+
+/* ─── Main ────────────────────────────────────────────────── */
+const HomePage = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const { data: products = [], isLoading } = useGetAllProductsQuery();
+  const { token, role } = useSelector((state) => state.auth);
+  const isLoggedIn = Boolean(token);
+  const navigate = useNavigate();
+
+  const formatPrice = (price) =>
+    typeof price === "number" ? price.toFixed(2) : parseFloat(price || 0).toFixed(2);
+
+  const handleScrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const navHeight = document.querySelector("nav")?.offsetHeight || 0;
+      window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY - navHeight, behavior: "smooth" });
+    }
+  };
+
+  const filteredProducts = products.filter((p) =>
+    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <>
+      <FontImport />
+      <div style={{ minHeight: "100vh", background: "var(--c-cream)", color: "var(--c-ink)" }}>
+        <Ticker />
+        <Navbar isLoggedIn={isLoggedIn} role={role} onScrollToSection={handleScrollToSection} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+        <Hero onScrollToProducts={() => handleScrollToSection("featured-products")} />
+        <StatsBar />
+
+        {/* Products Section */}
+        <section id="featured-products" style={{ padding: "100px 5vw" }}>
+          <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+            {/* Section header */}
+            <div style={{ textAlign: "center", marginBottom: 64 }}>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                style={{ fontFamily: "var(--font-body)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--c-gold)", marginBottom: 12 }}
+              >
+                Handpicked for You
+              </motion.p>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3.2rem)", fontWeight: 700, color: "var(--c-ink)", marginBottom: 16 }}
+              >
+                Featured Products
+              </motion.h2>
+              <motion.div
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                style={{ width: 48, height: 2, background: "var(--c-gold)", margin: "0 auto" }}
+              />
+            </div>
+
+            <CategoryFilter active={activeCategory} onChange={setActiveCategory} />
+
+            {isLoading ? (
+              <div style={{ textAlign: "center", padding: "80px 0" }}>
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  style={{ width: 40, height: 40, border: "2px solid var(--c-gold)", borderTopColor: "transparent", borderRadius: "50%", margin: "0 auto 16px" }}
+                />
+                <p style={{ fontFamily: "var(--font-body)", color: "var(--c-muted)", fontSize: 14 }}>Loading products…</p>
+              </div>
+            ) : filteredProducts.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "80px 0" }}>
+                <p style={{ fontFamily: "var(--font-display)", fontSize: 24, color: "var(--c-muted)" }}>No products found</p>
+              </div>
+            ) : (
+              <>
+                <div id="products" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 24 }}>
+                  {filteredProducts.map((product, index) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      index={index}
+                      formatPrice={formatPrice}
+                      onClick={() => navigate("/login")}
+                    />
+                  ))}
+                </div>
+                {filteredProducts.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    style={{ textAlign: "center", marginTop: 64 }}
+                  >
+                    <motion.button
+                      whileHover={{ background: "var(--c-accent)", color: "#fff" }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => navigate("/login")}
+                      style={{ padding: "14px 48px", fontFamily: "var(--font-body)", fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", border: "1px solid var(--c-accent)", background: "transparent", color: "var(--c-accent)", transition: "all 0.25s" }}
+                    >
+                      View All Products
+                    </motion.button>
+                  </motion.div>
+                )}
+              </>
+            )}
+          </div>
+        </section>
+
+        <FeaturesStrip />
+
+        {/* Why PriceTag Section */}
+        <section id="why-choose-myshop" style={{ padding: "100px 5vw", background: "#fff" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px 60px", alignItems: "center" }}>
+              <motion.div
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <p style={{ fontFamily: "var(--font-body)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--c-gold)", marginBottom: 16 }}>Our Promise</p>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 700, color: "var(--c-ink)", lineHeight: 1.2, marginBottom: 24 }}>
+                  Why Discerning<br />Buyers Choose Us
+                </h2>
+                <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "var(--c-muted)", lineHeight: 1.8 }}>
+                  We source only the finest mobile accessories from trusted manufacturers. Every product undergoes rigorous quality checks before reaching your hands. No compromises, no imitations.
+                </p>
+              </motion.div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+                {[
+                  { num: "01", title: "Curated Selection", desc: "Only products that meet our strict quality bar" },
+                  { num: "02", title: "Expert Support", desc: "Real humans ready to help, 7 days a week" },
+                  { num: "03", title: "Fast Delivery", desc: "Nationwide coverage, orders ship same day" },
+                  { num: "04", title: "Easy Returns", desc: "Not happy? Return within 30 days, no questions" },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    style={{ padding: "24px 20px", border: "1px solid #e8e4dc" }}
+                  >
+                    <div style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 700, color: "var(--c-gold-light)", marginBottom: 10 }}>{item.num}</div>
+                    <div style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 600, color: "var(--c-ink)", marginBottom: 6 }}>{item.title}</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "var(--c-muted)", lineHeight: 1.6 }}>{item.desc}</div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <Newsletter />
+        <Footer />
+      </div>
+    </>
   );
 };
 
