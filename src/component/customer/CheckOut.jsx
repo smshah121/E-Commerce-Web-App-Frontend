@@ -27,6 +27,16 @@ const CheckoutPage = () => {
   const [processingOrder, setProcessingOrder] = useState(false); // Renamed from processingPayment
   const [orderError, setOrderError] = useState(null); // Renamed from paymentError
 
+
+  // State for address fields
+  const [address, setAddress] = useState({
+    street: '',
+    city: '',
+    state: '',
+    postalCode: '',
+    country: ''
+  });
+
    const handlePayOnline = async () => {
      if (
     !address.street ||
@@ -87,14 +97,7 @@ console.log("Order created:", order);
     alert("Payment initiation failed. Please try again.");
   }
 };
-  // State for address fields
-  const [address, setAddress] = useState({
-    street: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: ''
-  });
+  
 
   // Redirect if not logged in or cart is empty
   useEffect(() => {
