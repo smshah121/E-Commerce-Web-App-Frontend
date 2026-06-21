@@ -34,6 +34,7 @@ function App() {
     <Route path="/checkout" element={<CheckoutPage/>} />
     <Route path="/my-orders/:orderId" element={<OrderDetail/>} />
     <Route path="/payment-success" element={<PaymentSuccessPage />} />
+    <Route path="/payment-success/*" element={<PaymentSuccessPage />} />
    </Routes>
    
   )
