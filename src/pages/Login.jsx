@@ -44,8 +44,8 @@ const Login = () => {
         // DEBUG: Log navigation decision
         console.log('🧭 Navigation logic:');
         console.log('   res.role === "customer":', res.role === 'customer');
-        console.log('   res.role === "admin":', res.role === 'admin');
-        console.log('   About to navigate to:', res.role === 'customer' ? 'customer-dashboard' : res.role === 'admin' ? 'admin-dashboard' : 'dashboard');
+        console.log('   res.role === "seller":', res.role === 'seller');
+        console.log('   About to navigate to:', res.role === 'customer' ? 'customer-dashboard' : res.role === 'seller' ? 'admin-dashboard' : 'dashboard');
         
         if (res.role === 'customer') {
             console.log('➡️ Navigating to customer dashboard');
