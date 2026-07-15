@@ -114,7 +114,7 @@ const Signup = () => {
                     onChange={(e) => setRole(e.target.value)}
                     required
                   >
-                    <option value="admin">Admin</option>
+                    <option value="seller">Seller</option>
                     <option value="customer">Customer</option>
                   </select>
                 </div>
