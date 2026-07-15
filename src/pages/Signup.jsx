@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useSignupMutation } from "../feature/auth/authApi";
 
 const Signup = () => {
-  const [role, setRole] = useState("customer");
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +13,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await signup({ name, email, password,role }).unwrap();
+      const res = await signup({ name, email, password }).unwrap();
       localStorage.setItem("token", res.access_token);
       localStorage.setItem("role", res.role);
       localStorage.setItem("id", res.id);
@@ -104,21 +104,7 @@ const Signup = () => {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">
-                    Role
-                  </label>
-                  <select
-                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    required
-                  >
-                    <option value="seller">Seller</option>
-                    <option value="customer">Customer</option>
-                  </select>
-                </div>
-
+               
                 <button
                   type="submit"
                   disabled={isLoading}
