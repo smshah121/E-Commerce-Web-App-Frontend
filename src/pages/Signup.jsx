@@ -13,7 +13,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await signup({ name, email, password }).unwrap();
+      const res = await signup({ name, email, password,role }).unwrap();
       localStorage.setItem("token", res.access_token);
       localStorage.setItem("role", res.role);
       localStorage.setItem("id", res.id);
