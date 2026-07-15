@@ -50,7 +50,7 @@ const Login = () => {
         if (res.role === 'customer') {
             console.log('➡️ Navigating to customer dashboard');
             navigate('/customer-dashboard');
-        } else if (res.role === 'admin') {
+        } else if (res.role === 'seller') {
             console.log('➡️ Navigating to admin dashboard');
             navigate('/admin-dashboard');
         } else {
