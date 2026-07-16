@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { TbLogout } from "react-icons/tb";
 import { CgProfile } from "react-icons/cg";
-import { FaBoxOpen } from "react-icons/fa";
+import { FaBoxOpen, FaStore } from "react-icons/fa"; // Imported correctly from react-icons/fa
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import { FiSearch } from "react-icons/fi";
@@ -63,7 +63,7 @@ const CustomerNavbar = () => {
           {/* Enhanced Premium Logo */}
           <div className="flex-shrink-0">
             <Link 
-              to="/customer-dashboard" 
+              to="/" 
               className="flex items-center space-x-3 group"
             >
               <div className="relative">
@@ -101,7 +101,7 @@ const CustomerNavbar = () => {
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+            <div className="ml-10 flex items-center space-x-6">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
@@ -111,17 +111,25 @@ const CustomerNavbar = () => {
                   {link.name}
                 </Link>
               ))}
+              
+              {/* Desktop Become a Seller Button (Active when logged in) */}
+              {isLoggedIn && (
+                <Link
+                  to="/become-seller"
+                  className="px-4 py-2 rounded-xl text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 border border-purple-200 hover:border-transparent hover:text-white hover:bg-gradient-to-r hover:from-indigo-600 hover:via-purple-600 hover:to-pink-500 transition-all duration-300 hover:shadow-md transform hover:scale-105"
+                >
+                  Become a Seller
+                </Link>
+              )}
             </div>
           </div>
 
           {/* Right side buttons - Search, Cart, and Menu */}
           <div className="flex items-center space-x-4">
             {/* Enhanced Search Button */}
-            <a href="#search">
-              <button className="p-3 rounded-xl transition-all duration-300 hover:scale-110 text-gray-600 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-lg">
+            <button className="p-3 rounded-xl transition-all duration-300 hover:scale-110 text-gray-600 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-lg">
               <FiSearch className="w-5 h-5" />
             </button>
-              </a>
 
             {/* Enhanced Cart Button */}
             <button
@@ -167,6 +175,16 @@ const CustomerNavbar = () => {
                             <div className="text-xs text-gray-500">Overview of your account</div>
                           </div>
                         </button>
+                        
+                        {/* Dropdown Link: Become a Seller */}
+                        <button onClick={() => { navigate('/become-seller'); setShowDropdown(false); }} className="flex items-center w-full px-6 py-4 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 text-sm text-gray-700 hover:text-indigo-600 transition-all duration-300">
+                          <FaStore className="w-5 h-5 mr-4 text-indigo-500" />
+                          <div className="flex-1 text-left">
+                            <div className="font-semibold">Become a Seller</div>
+                            <div className="text-xs text-gray-500">Register your custom store</div>
+                          </div>
+                        </button>
+
                         <button onClick={handleCartClick} className="flex items-center w-full px-6 py-4 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 text-sm text-gray-700 hover:text-indigo-600 transition-all duration-300">
                           <AiOutlineShoppingCart className="w-5 h-5 mr-4 text-indigo-500" />
                           <div className="flex-1 text-left">
@@ -258,6 +276,17 @@ const CustomerNavbar = () => {
                 {link.name}
               </Link>
             ))}
+
+            {/* Mobile Link: Become a Seller */}
+            {isLoggedIn && (
+              <Link
+                to="/become-seller"
+                className="block px-4 py-3 rounded-xl text-base font-semibold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 border border-purple-100 hover:border-transparent transition-all duration-300"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Become a Seller
+              </Link>
+            )}
             
             <button
               onClick={handleCartClick}

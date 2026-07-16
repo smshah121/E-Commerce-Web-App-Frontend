@@ -16,6 +16,7 @@ import ProductDetail from './component/customer/ProductDetail'
 import CheckoutPage from './component/customer/CheckOut'
 import OrderDetail from './component/customer/OrderDetail'
 import PaymentSuccessPage from './component/customer/PaymentSuccess'
+import BecomeSeller from "./component/customer/BecomeSeller"
 
 function App() {
   
@@ -35,6 +36,7 @@ function App() {
     <Route path="/my-orders/:orderId" element={<OrderDetail/>} />
     <Route path="/payment-success" element={<PaymentSuccessPage />} />
     <Route path="/payment-success/*" element={<PaymentSuccessPage />} />
+    <Route path="/become-seller" element={<BecomeSeller/>}/>
    </Routes>
    
   )
