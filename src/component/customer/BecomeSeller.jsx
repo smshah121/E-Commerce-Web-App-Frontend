@@ -1,5 +1,5 @@
 import  { useState } from "react";
-import { useCreateSellerApplicationMutation } from "../../feature/seller-application/seller-application"; // Update with your actual import path
+import { useCreateSellerApplicationMutation } from "../../feature/seller-application/sellerApplicationApi"; // Update with your actual import path
 
 const BecomeSeller = () => {
   // 1. Initialize the RTK Query mutation hook
