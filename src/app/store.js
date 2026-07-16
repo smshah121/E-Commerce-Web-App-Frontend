@@ -7,6 +7,8 @@ import { orderApi } from "../feature/order/orderApi";
 import cartReducer from '../feature/cart/cartSlice';
 import searchReducer from "../feature/search/searchSlice"
 import { paymentApi } from "../feature/payment/paymentApi";
+
+import {sellerApplicationApi} from "../feature/seller-application/sellerApplicationApi"
 export const store = configureStore({
     reducer: {
         search: searchReducer,
@@ -16,7 +18,9 @@ export const store = configureStore({
         [paymentApi.reducerPath]:paymentApi.reducer,
         [userApi.reducerPath]:userApi.reducer,
         [productApi.reducerPath]:productApi.reducer,
-        [orderApi.reducerPath]:orderApi.reducer
+        [orderApi.reducerPath]:orderApi.reducer,
+        [sellerApplicationApi.reducerPath]:sellerApplicationApi.reducer
+
 
     },
 
@@ -26,6 +30,7 @@ export const store = configureStore({
             userApi.middleware,
             productApi.middleware,
             orderApi.middleware,
-            paymentApi.middleware
+            paymentApi.middleware,
+            sellerApplicationApi.middleware
         )
 })
