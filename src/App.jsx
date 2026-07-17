@@ -18,6 +18,7 @@ import OrderDetail from './component/customer/OrderDetail'
 import PaymentSuccessPage from './component/customer/PaymentSuccess'
 import BecomeSeller from "./component/customer/BecomeSeller"
 import AdminDashboard from "./component/admin/AdminDashboard"
+import OAuthSuccess from './pages/OAuthSuccess'
 function App() {
   
 
@@ -38,6 +39,8 @@ function App() {
     <Route path="/payment-success/*" element={<PaymentSuccessPage />} />
     <Route path="/become-seller" element={<BecomeSeller/>}/>
     <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
+     <Route path="/oauth-success" element={<OAuthSuccess/>} />
+        <Route path="/oauth-success/*" element={<OAuthSuccess/>} />
    </Routes>
    
   )
