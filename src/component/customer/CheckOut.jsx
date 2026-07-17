@@ -226,10 +226,8 @@ console.log("Order created:", order);
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="bg-white rounded-xl shadow-lg p-6 md:p-10"
           >
-            <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">Checkout</h1>
-            <p className="text-center text-gray-600 mb-8">
-  Choose your preferred payment method to complete your order.
-</p>
+            <h1 className="text-5xl font-bold text-gray-900 mb-4 text-center">Checkout</h1>
+          
             {/* Order Summary */}
             <div className="mb-8 border-b border-gray-200 pb-6">
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">Order Summary</h2>
