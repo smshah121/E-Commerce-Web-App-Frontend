@@ -1,6 +1,6 @@
 import  { useState } from "react";
 import { useCreateSellerApplicationMutation } from "../../feature/seller-application/sellerApplicationApi"; // Update with your actual import path
-
+import { Link } from "react-router-dom";
 const BecomeSeller = () => {
   // 1. Initialize the RTK Query mutation hook
   const [createApplication, { isLoading, isSuccess, isError, error }] =
@@ -75,6 +75,30 @@ const BecomeSeller = () => {
 
   return (
     <div className="max-w-xl mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
+
+        {isSuccess && (
+        <div className="absolute top-6 left-6">
+          <Link
+            to="/dashboard"
+            className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 transition duration-200"
+          >
+            <svg
+              className="w-4 h-4 mr-1.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            Back to Dashboard
+          </Link>
+        </div>
+      )}
       <h2 className="text-2xl font-bold mb-2 text-gray-800">Become a Seller</h2>
       <p className="text-gray-600 mb-6">
         Submit your business details below. Our team will review your application and get back to you shortly.
