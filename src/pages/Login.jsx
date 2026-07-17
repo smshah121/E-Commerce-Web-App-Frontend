@@ -78,7 +78,7 @@ const Login = () => {
 const handleGoogleLogin = () => {
     console.log('🌐 Redirecting to Google Auth...');
     // Redirect path to your NestJS Google passport endpoint (usually '/auth/google')
-    window.location.href =  `${import.meta.env.VITE_API_URL}/auth/google`
+    window.location.href =  `${import.meta.env.VITE_API_URL}auth/google`
   };
 
   return (
