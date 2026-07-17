@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom'; // added useLocation
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TbLogout } from "react-icons/tb";
@@ -17,9 +17,15 @@ const CustomerNavbar = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation(); // URL path detect karne ke liye
+  
   const { totalQuantity } = useSelector((state) => state.cart);
   const { token } = useSelector((state) => state.auth);
   const isLoggedIn = Boolean(token);
+
+  // Agar user dashboard par NAHI hai, toh navbar direct white rahega
+  const isDarkPage = location.pathname === '/customer-dashboard' || location.pathname === '/';
+  const shouldBeWhite = isScrolled || !isDarkPage;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,7 +63,7 @@ const CustomerNavbar = () => {
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-500 border-b ${
-      isScrolled 
+      shouldBeWhite 
         ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100' 
         : 'bg-[#0b0f19] border-slate-900 shadow-none'
     }`}>
@@ -77,12 +83,12 @@ const CustomerNavbar = () => {
               
               <div className="flex flex-col">
                 <span className={`text-xl font-black tracking-tight transition-colors duration-500 ${
-                  isScrolled ? 'text-slate-900' : 'text-white'
+                  shouldBeWhite ? 'text-slate-900' : 'text-white'
                 }`}>
                   PriceTag
                 </span>
                 <span className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
-                  Accessories Hub
+                  Hardware Hub
                 </span>
               </div>
             </Link>
@@ -91,14 +97,14 @@ const CustomerNavbar = () => {
           {/* Desktop Navigation Links */}
           <div className="hidden md:block">
             <div className={`ml-10 flex items-center space-x-1 transition-colors duration-500 ${
-              isScrolled ? 'text-slate-600' : 'text-slate-300'
+              shouldBeWhite ? 'text-slate-600' : 'text-slate-300'
             }`}>
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
                   className={`px-4 py-2 rounded-xl text-sm font-semibold tracking-wide transition-all duration-200 ${
-                    isScrolled 
+                    shouldBeWhite 
                       ? 'hover:text-blue-600 hover:bg-slate-100' 
                       : 'hover:text-white hover:bg-white/5'
                   }`}
@@ -111,9 +117,9 @@ const CustomerNavbar = () => {
                 <Link
                   to="/become-seller"
                   className={`ml-3 px-4 py-2 rounded-xl text-sm font-bold border transition-all duration-300 ${
-                    isScrolled
+                    shouldBeWhite
                       ? 'text-indigo-600 border-indigo-200 bg-indigo-50/50 hover:bg-indigo-600 hover:text-white hover:border-transparent shadow-sm'
-                      : 'text-indigo-400 border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:text-cyan-300 hover:border-cyan-500/50'
+                      : 'text-cyan-400 border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:text-cyan-300 hover:border-cyan-500/50'
                   }`}
                 >
                   Become a Seller
@@ -125,7 +131,7 @@ const CustomerNavbar = () => {
           {/* User Controls and Action Buttons */}
           <div className="flex items-center space-x-3">
             <button className={`p-2.5 rounded-xl transition-all duration-200 ${
-              isScrolled 
+              shouldBeWhite 
                 ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' 
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}>
@@ -135,7 +141,7 @@ const CustomerNavbar = () => {
             <button
               onClick={handleCartClick}
               className={`relative p-2.5 rounded-xl transition-all duration-200 ${
-                isScrolled 
+                shouldBeWhite 
                   ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' 
                   : 'text-slate-400 hover:text-white hover:bg-white/5'
               }`}
@@ -143,7 +149,7 @@ const CustomerNavbar = () => {
               <AiOutlineShoppingCart className="w-5 h-5" />
               {totalQuantity > 0 && (
                 <span className={`absolute top-1 right-1 text-[10px] rounded-full h-4.5 w-4.5 flex items-center justify-center font-black shadow-lg transition-colors duration-500 ${
-                  isScrolled 
+                  shouldBeWhite 
                     ? 'bg-blue-600 text-white' 
                     : 'bg-emerald-500 text-slate-950'
                 }`}>
@@ -157,7 +163,7 @@ const CustomerNavbar = () => {
                 <button 
                   onClick={() => setShowDropdown(!showDropdown)}
                   className={`flex items-center space-x-2 p-1.5 pr-3 rounded-xl border transition-all duration-200 ${
-                    isScrolled
+                    shouldBeWhite
                       ? 'bg-slate-50 border-slate-200/80 hover:bg-slate-100'
                       : 'bg-slate-900 border-white/5 hover:border-white/10'
                   }`}
@@ -166,7 +172,7 @@ const CustomerNavbar = () => {
                     <HiOutlineMenuAlt3 className="w-4 h-4" />
                   </div>
                   <span className={`text-xs font-bold transition-colors duration-500 ${
-                    isScrolled ? 'text-slate-700' : 'text-slate-300'
+                    shouldBeWhite ? 'text-slate-700' : 'text-slate-300'
                   }`}>Menu</span>
                 </button>
 
@@ -181,16 +187,16 @@ const CustomerNavbar = () => {
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.15 }}
                         className={`absolute right-0 mt-3 w-72 shadow-2xl rounded-2xl z-20 overflow-hidden border ${
-                          isScrolled
+                          shouldBeWhite
                             ? 'bg-white border-slate-200/80'
                             : 'bg-[#0f1422] border-slate-800 backdrop-blur-xl'
                         }`}
                       >
                         <div className="py-1">
                           <div className={`px-5 py-3.5 border-b ${
-                            isScrolled ? 'bg-slate-50 border-slate-100' : 'bg-slate-900/60 border-slate-800/60'
+                            shouldBeWhite ? 'bg-slate-50 border-slate-100' : 'bg-slate-900/60 border-slate-800/60'
                           }`}>
-                            <p className={`text-sm font-bold tracking-wide ${isScrolled ? 'text-slate-900' : 'text-white'}`}>Account Control</p>
+                            <p className={`text-sm font-bold tracking-wide ${shouldBeWhite ? 'text-slate-900' : 'text-white'}`}>Account Control</p>
                             <p className="text-xs text-slate-500">Manage node configurations</p>
                           </div>
                           
@@ -205,7 +211,7 @@ const CustomerNavbar = () => {
                               key={item.name}
                               onClick={() => { navigate(item.path); setShowDropdown(false); }} 
                               className={`flex items-center w-full px-5 py-3 text-xs font-bold transition-all duration-150 ${
-                                isScrolled 
+                                shouldBeWhite 
                                   ? 'text-slate-700 hover:bg-slate-50 hover:text-blue-600' 
                                   : 'text-slate-300 hover:bg-white/5 hover:text-white'
                               }`}
@@ -215,12 +221,12 @@ const CustomerNavbar = () => {
                             </button>
                           ))}
 
-                          <hr className={isScrolled ? 'my-1 border-slate-100' : 'my-1 border-slate-800'} />
+                          <hr className={shouldBeWhite ? 'my-1 border-slate-100' : 'my-1 border-slate-800'} />
                           
                           <button 
                             onClick={handleLogout} 
                             className={`flex items-center w-full px-5 py-3 text-xs font-bold transition-all duration-150 ${
-                              isScrolled 
+                              shouldBeWhite 
                                 ? 'text-slate-500 hover:bg-red-50 hover:text-red-600' 
                                 : 'text-slate-400 hover:bg-red-500/10 hover:text-red-400'
                             }`}
@@ -237,7 +243,7 @@ const CustomerNavbar = () => {
             ) : (
               <div className="hidden sm:flex items-center space-x-2">
                 <button onClick={handleLoginClick} className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                  isScrolled ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100' : 'text-slate-300 hover:text-white hover:bg-white/5'
+                  shouldBeWhite ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100' : 'text-slate-300 hover:text-white hover:bg-white/5'
                 }`}>
                   Sign In
                 </button>
@@ -252,7 +258,7 @@ const CustomerNavbar = () => {
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={`p-2.5 rounded-xl transition-all ${
-                  isScrolled 
+                  shouldBeWhite 
                     ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' 
                     : 'text-slate-400 hover:text-white hover:bg-white/5'
                 }`}
@@ -268,7 +274,7 @@ const CustomerNavbar = () => {
       <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
         isMobileMenuOpen ? 'max-h-screen border-t' : 'max-h-0 border-t-0'
       } ${
-        isScrolled 
+        shouldBeWhite 
           ? 'bg-white/95 backdrop-blur-xl border-slate-200' 
           : 'bg-[#0b0f19]/95 backdrop-blur-xl border-slate-800'
       }`}>
@@ -278,13 +284,13 @@ const CustomerNavbar = () => {
               type="text"
               placeholder="Search accessories ecosystem..."
               className={`w-full pl-10 pr-4 py-2.5 border rounded-xl text-sm focus:outline-none focus:border-blue-500/50 ${
-                isScrolled 
+                shouldBeWhite 
                   ? 'bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400' 
                   : 'bg-slate-900 border-white/5 text-white placeholder:text-slate-600'
               }`}
             />
             <FiSearch className={`absolute left-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 ${
-              isScrolled ? 'text-slate-400' : 'text-slate-600'
+              shouldBeWhite ? 'text-slate-400' : 'text-slate-600'
             }`} />
           </div>
 
@@ -293,7 +299,7 @@ const CustomerNavbar = () => {
               key={link.name}
               to={link.href}
               className={`block px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                isScrolled ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' : 'text-slate-400 hover:text-white hover:bg-white/5'
+                shouldBeWhite ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' : 'text-slate-400 hover:text-white hover:bg-white/5'
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -305,7 +311,7 @@ const CustomerNavbar = () => {
             <Link
               to="/become-seller"
               className={`block px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                isScrolled ? 'text-indigo-600 hover:bg-indigo-50/50' : 'text-cyan-400 hover:bg-cyan-50/5'
+                shouldBeWhite ? 'text-indigo-600 hover:bg-indigo-50/50' : 'text-cyan-400 hover:bg-cyan-50/5'
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -316,7 +322,7 @@ const CustomerNavbar = () => {
           <button
             onClick={handleCartClick}
             className={`w-full flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-              isScrolled ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' : 'text-slate-400 hover:text-white hover:bg-white/5'
+              shouldBeWhite ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
           >
             <AiOutlineShoppingCart className="w-4 h-4 mr-3 text-emerald-500" />
@@ -324,11 +330,11 @@ const CustomerNavbar = () => {
           </button>
 
           {isLoggedIn && (
-            <div className={`pt-2 border-t space-y-1 ${isScrolled ? 'border-slate-100' : 'border-slate-900'}`}>
+            <div className={`pt-2 border-t space-y-1 ${shouldBeWhite ? 'border-slate-100' : 'border-slate-900'}`}>
               <button
                 onClick={() => { navigate('/my-profile'); setIsMobileMenuOpen(false); }}
                 className={`w-full flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                  isScrolled ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' : 'text-slate-400 hover:text-white hover:bg-white/5'
+                  shouldBeWhite ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' : 'text-slate-400 hover:text-white hover:bg-white/5'
                 }`}
               >
                 <CgProfile className="w-4 h-4 mr-3 text-indigo-500" />
@@ -337,7 +343,7 @@ const CustomerNavbar = () => {
               <button
                 onClick={handleLogout}
                 className={`w-full flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                  isScrolled ? 'text-red-500 hover:bg-red-50' : 'text-red-400 hover:bg-red-500/5'
+                  shouldBeWhite ? 'text-red-500 hover:bg-red-50' : 'text-red-400 hover:bg-red-500/5'
                 }`}
               >
                 <TbLogout className="w-4 h-4 mr-3" />
@@ -347,11 +353,11 @@ const CustomerNavbar = () => {
           )}
 
           {!isLoggedIn && (
-            <div className={`pt-4 border-t flex flex-col gap-2 ${isScrolled ? 'border-slate-100' : 'border-slate-900'}`}>
+            <div className={`pt-4 border-t flex flex-col gap-2 ${shouldBeWhite ? 'border-slate-100' : 'border-slate-900'}`}>
               <button
                 onClick={handleLoginClick}
                 className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-all ${
-                  isScrolled ? 'text-slate-700 hover:bg-slate-50' : 'text-slate-300 hover:bg-white/5'
+                  shouldBeWhite ? 'text-slate-700 hover:bg-slate-50' : 'text-slate-300 hover:bg-white/5'
                 }`}
               >
                 Sign In
