@@ -59,7 +59,7 @@ const CustomerNavbar = () => {
   return (
     <nav className={`fixed w-full z-50 transition-all duration-500 border-b ${
       isScrolled 
-        ? 'bg-slate-950/80 backdrop-blur-xl border-slate-800/60 shadow-[0_4px_30px_rgba(0,0,0,0.5)]' 
+        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100' 
         : 'bg-[#0b0f19] border-slate-900 shadow-none'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
