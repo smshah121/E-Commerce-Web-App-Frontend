@@ -75,11 +75,38 @@ const BecomeSeller = () => {
 
   return (
     <div className="max-w-xl mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
+        
+        <div classname="absolute top-6 left-6">
+            <Link 
+            to="/customer-dashboard"
+             className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 transition duration-200"
+            
+            >
+                <svg
+              className="w-4 h-4 mr-1.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
+            </svg>
+            Back to Dashboard
+
+
+            </Link>
+
+            
+         </div>   
 
         {isSuccess && (
         <div className="absolute top-6 left-6">
           <Link
-            to="/dashboard"
+            to="/customer-dashboard"
             className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 transition duration-200"
           >
             <svg

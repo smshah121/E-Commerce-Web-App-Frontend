@@ -290,15 +290,25 @@ const HomePage = () => {
       </section>
 
       {/* Footer Ecosystem */}
-      <footer id="contact-us" className="bg-slate-950 text-slate-400 py-12 border-t border-slate-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
-          <div className="flex items-center space-x-2 text-white font-bold text-lg">
-            <span className="bg-blue-600 text-white px-2 py-1 rounded">PT</span>
-            <span>PriceTag</span>
-          </div>
-          <p>© 2026 PriceTag. Architecture System Infrastructure.</p>
-        </div>
-      </footer>
+      {/* Footer Ecosystem */}
+<footer id="contact-us" className="bg-slate-950 text-slate-400 py-12 border-t border-slate-900">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+    <div className="flex items-center space-x-3 text-white font-bold text-lg group">
+      {/* Premium Gradient Frame for your SVG */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-xl shadow-md transition-all duration-300">
+        <svg 
+          className="w-6 h-6 text-white transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" 
+          fill="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
+        </svg>
+      </div>
+      <span className="tracking-tight">PriceTag</span>
+    </div>
+    <p>© 2026 PriceTag. Architecture System Infrastructure.</p>
+  </div>
+</footer>
     </div>
   );
 };
