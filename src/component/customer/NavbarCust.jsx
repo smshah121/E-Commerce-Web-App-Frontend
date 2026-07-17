@@ -23,7 +23,8 @@ const CustomerNavbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      // Triggers the state update when scrolling out of the initial view boundary
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -58,12 +59,12 @@ const CustomerNavbar = () => {
   return (
     <nav className={`fixed w-full z-50 transition-all duration-500 border-b ${
       isScrolled 
-        ? 'bg-[#0b0f19]/90 backdrop-blur-xl border-slate-800/80 shadow-[0_4px_30px_rgba(0,0,0,0.4)]' 
+        ? 'bg-slate-950/80 backdrop-blur-xl border-slate-800/60 shadow-[0_4px_30px_rgba(0,0,0,0.5)]' 
         : 'bg-[#0b0f19] border-slate-900 shadow-none'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Brand Premium Logo Matching Dashboard Concept */}
+          {/* Brand Premium Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center space-x-3 group">
               <div className="relative">
@@ -140,7 +141,7 @@ const CustomerNavbar = () => {
                   <span className="text-xs font-bold text-slate-300">Menu</span>
                 </button>
 
-                {/* Dropdown Menu Container styled perfectly with dark glassmorphism */}
+                {/* Dropdown Menu Container */}
                 <AnimatePresence>
                   {showDropdown && (
                     <>
