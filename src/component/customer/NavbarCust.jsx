@@ -82,7 +82,7 @@ const CustomerNavbar = () => {
                   PriceTag
                 </span>
                 <span className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
-                  Hardware Hub
+                  Accessories Hub
                 </span>
               </div>
             </Link>
@@ -113,7 +113,7 @@ const CustomerNavbar = () => {
                   className={`ml-3 px-4 py-2 rounded-xl text-sm font-bold border transition-all duration-300 ${
                     isScrolled
                       ? 'text-indigo-600 border-indigo-200 bg-indigo-50/50 hover:bg-indigo-600 hover:text-white hover:border-transparent shadow-sm'
-                      : 'text-cyan-400 border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:text-cyan-300 hover:border-cyan-500/50'
+                      : 'text-indigo-400 border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:text-cyan-300 hover:border-cyan-500/50'
                   }`}
                 >
                   Become a Seller
