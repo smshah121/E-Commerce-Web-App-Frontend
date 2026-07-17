@@ -75,6 +75,12 @@ const Login = () => {
     }
 };
 
+const handleGoogleLogin = () => {
+    console.log('🌐 Redirecting to Google Auth...');
+    // Redirect path to your NestJS Google passport endpoint (usually '/auth/google')
+    window.location.href =  `${import.meta.env.VITE_API_URL}/auth/google`
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
       {/* Animated Background Elements */}
@@ -264,6 +270,31 @@ const Login = () => {
                     )}
                   </button>
                 </form>
+
+                  {/* --- Visual Divider --- */}
+                <div className="relative my-6">
+                  <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                    <div className="w-full border-t border-gray-200"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm font-semibold">
+                    <span className="px-4 bg-white/90 text-gray-500 rounded-full">Or continue with</span>
+                  </div>
+                </div>
+
+                {/* --- Google OAuth Button --- */}
+                <button
+                  type="button"
+                  onClick={handleGoogleLogin}
+                  className="w-full flex justify-center items-center py-3.5 px-6 border border-gray-200 rounded-2xl bg-white hover:bg-gray-50 hover:shadow-md transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99]"
+                >
+                  <svg className="w-5.5 h-5.5 mr-3" viewBox="0 0 24 24">
+                    <path
+                      fill="#EA4335"
+                      d="M12.24 10.285V14.4h6.887c-.275 1.565-1.88 4.604-6.887 4.604-4.33 0-7.859-3.578-7.859-8s3.53-8 7.859-8c2.46 0 4.105 1.025 5.047 1.926l3.227-3.107C18.29 1.98 15.45 1 12.24 1 5.48 1 0 6.373 0 13s5.48 12 12.24 12c7.06 0 11.758-4.887 11.758-11.74 0-.79-.08-1.39-.18-1.975H12.24z"
+                    />
+                  </svg>
+                  <span className="text-gray-700 font-bold text-sm">Sign in with Google</span>
+                </button>
 
            
 
