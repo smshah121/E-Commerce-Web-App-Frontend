@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import { addToCart } from '../../feature/cart/cartSlice';
+import { FiSearch, FiShoppingCart, FiCheckCircle } from 'react-icons/fi';
 
 const ProductGrid = ({ products }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const navigate = useNavigate(); 
   const [addedItems, setAddedItems] = useState(new Set());
   const [searchTerm, setSearchTerm] = useState('');
-  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
-
 
   const handleAddToCart = (product, event) => {
-    // Stop event propagation to prevent navigating to product detail when clicking "Add to Cart"
     event.stopPropagation();
     dispatch(addToCart(product));
     setAddedItems(prev => new Set([...prev, product.id]));
@@ -26,7 +24,6 @@ const ProductGrid = ({ products }) => {
   };
 
   const handleProductClick = (productId) => {
-    // Navigate to the product detail page when the card is clicked
     navigate(`/product/${productId}`);
   };
 
@@ -34,163 +31,127 @@ const ProductGrid = ({ products }) => {
     return typeof price === 'number' ? price.toFixed(2) : parseFloat(price || 0).toFixed(2);
   };
 
-  // Filter logic
   const filteredProducts = products?.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-      {/* Hero Section */}
-      <div id='search' className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Discover Amazing Products
-          </h1>
-          <p className="text-xl md:text-2xl text-blue-100 mb-8">
-            Premium quality, unbeatable prices
-          </p>
+    <div className="min-h-screen bg-white text-slate-900 antialiased selection:bg-blue-500 selection:text-white">
+      {/* Sub-Header Actions Component Area */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 pb-6 border-b border-slate-100">
+          <div>
+            <h3 className="text-xl font-extrabold tracking-tight text-slate-900">Featured Hardware</h3>
+            <p className="text-sm text-slate-400 font-medium mt-1">Handpicked premium peripherals and modules.</p>
+          </div>
 
-          {/* Centered Search Bar */}
-          <div className="max-w-2xl mx-auto">
-            <div className="relative">
+          {/* Centered Luxury Tech Search Bar */}
+          <div className="w-full md:max-w-md">
+            <div className="relative group">
               <input
                 type="text"
-                placeholder="Search for products..."
+                placeholder="Filter dynamic components..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-6 py-4 text-gray-900 placeholder-gray-500 bg-white rounded-2xl shadow-2xl border-0 focus:ring-4 focus:ring-blue-300 focus:outline-none text-lg transition-all duration-300"
+                className="w-full pl-11 pr-4 py-3 text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 rounded-xl border border-slate-200/80 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white focus:outline-none transition-all duration-300 font-medium"
               />
-              <div className="absolute inset-y-0 right-0 flex items-center pr-6">
-                <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+              <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                <FiSearch className="w-4 h-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Products Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Products</h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full"></div>
-          <p className="text-gray-600 mt-4">Handpicked items just for you</p>
-        </div>
-
-        {/* Products Grid or No Results */}
+      {/* Main Grid Content Area */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
         {!filteredProducts || filteredProducts.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="w-32 h-32 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-              <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2M4 13h2" />
+          <div className="text-center py-24 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
+            <div className="w-20 h-20 mx-auto mb-6 bg-slate-100 rounded-2xl flex items-center justify-center border border-slate-200/60">
+              <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2M4 13h2" />
               </svg>
             </div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-2">No products found</h3>
-            <p className="text-gray-500 text-lg">Try adjusting your search terms</p>
+            <h3 className="text-lg font-bold text-slate-800 tracking-tight">No elements matched filter</h3>
+            <p className="text-slate-400 text-sm mt-1 max-w-xs mx-auto">Verify your syntax or parameters and check alternative categories.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
             {filteredProducts.map(product => (
               <div
                 key={product.id}
-                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden border border-gray-100 cursor-pointer flex flex-col" // Added flex flex-col here
+                className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl hover:border-slate-200/80 transition-all duration-400 flex flex-col cursor-pointer overflow-hidden relative"
                 onClick={() => handleProductClick(product.id)}
               >
-                {/* Image Container */}
-                <div className="relative overflow-hidden w-full h-64 flex items-center justify-center bg-gray-100">
-  {product.images?.length > 0 ? (
-    <img
-      src={product.images[0].image} // Use Cloudinary URL directly
-      alt={product.name}
-      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-      onError={(e) => {
-        e.target.src = 'data:image/svg+xml;base64,...'; // fallback image
-      }}
-    />
-  ) : (
-    <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-      <div className="text-center">
-        <svg
-          className="w-16 h-16 text-gray-400 mx-auto mb-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1}
-            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-          />
-        </svg>
-        <span className="text-gray-500 text-sm font-medium">No Image Available</span>
-      </div>
-    </div>
-                  )}
-
-                  {/* Success Badge */}
-                  {addedItems.has(product.id) && (
-                    <div className="absolute top-4 right-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-sm px-3 py-1 rounded-full shadow-lg animate-bounce z-10">
-                      <svg className="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                {/* Media Presentation Wrapper */}
+                <div className="relative w-full h-64 bg-slate-50 flex items-center justify-center overflow-hidden border-b border-slate-100">
+                  {product.images?.length > 0 ? (
+                    <img
+                      src={product.images[0].image} 
+                      alt={product.name}
+                      className="w-full h-full object-cover transform group-hover:scale-102 transition-transform duration-500 ease-out"
+                      onError={(e) => {
+                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y4ZmFmYyIvPjwvc3ZnPg==';
+                      }}
+                    />
+                  ) : (
+                    <div className="text-center">
+                      <svg className="w-12 h-12 text-slate-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.25} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
-                      Added!
+                      <span className="text-slate-400 text-xs font-semibold uppercase tracking-wider">No Module Asset</span>
                     </div>
                   )}
 
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  {/* Absolute State Badges */}
+                  {addedItems.has(product.id) && (
+                    <div className="absolute top-3 right-3 bg-emerald-500 text-white text-xs font-bold px-2.5 py-1 rounded-lg flex items-center shadow-md shadow-emerald-500/10 z-10 animate-fade-in">
+                      <FiCheckCircle className="mr-1 w-3.5 h-3.5" />
+                      Synced
+                    </div>
+                  )}
+                  
+                  {/* Action Micro-Overlay */}
+                  <div className="absolute inset-0 bg-slate-950/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
-                {/* Product Info */}
-                <div className="p-6 flex flex-col flex-grow">
-  <h3
-    className="font-bold text-xl mb-2 text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300"
-    title={product.name}
-  >
-    {product.name}
-  </h3>
+                {/* Content Descriptor Metrics block */}
+                <div className="p-5 flex flex-col flex-grow">
+                  <h4 className="font-bold text-base text-slate-900 tracking-tight line-clamp-1 group-hover:text-blue-600 transition-colors duration-200 mb-1" title={product.name}>
+                    {product.name}
+                  </h4>
 
-  <div className="flex items-center justify-between mb-4">
-    <div className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-      ${formatPrice(product.price)}
-    </div>
-  </div>
+                  <div className="text-lg font-black text-slate-900 tracking-tight mb-2">
+                    ${formatPrice(product.price)}
+                  </div>
 
-  {product.description && (
-    <p className="text-gray-600 text-sm mb-6 line-clamp-3 leading-relaxed flex-grow">
-      {product.description}
-    </p>
-  )}
+                  {product.description ? (
+                    <p className="text-slate-400 text-xs line-clamp-2 leading-relaxed mb-5 font-medium flex-grow">
+                      {product.description}
+                    </p>
+                  ) : (
+                    <div className="flex-grow mb-5" />
+                  )}
 
-
-
-                  {/* Add to Cart Button */}
+                  {/* High Performance Add Action Control */}
                   <button
                     onClick={(e) => handleAddToCart(product, e)}
-                    className={`mt-auto w-full py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg ${ // Added mt-auto
+                    className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs tracking-wide transition-all duration-300 flex items-center justify-center gap-2 ${
                       addedItems.has(product.id)
-                        ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-green-200'
-                        : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-blue-200 hover:shadow-xl'
+                        ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/10'
+                        : 'bg-slate-900 text-white hover:bg-blue-600 shadow-sm group-hover:shadow-md'
                     }`}
                   >
                     {addedItems.has(product.id) ? (
-                      <span className="flex items-center justify-center">
-                        <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                        Added to Cart
-                      </span>
+                      <>
+                        <FiCheckCircle className="w-4 h-4" />
+                        <span>Added to Ecosystem</span>
+                      </>
                     ) : (
-                      <span className="flex items-center justify-center">
-                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
-                        </svg>
-                        Add to Cart
-                      </span>
+                      <>
+                        <FiShoppingCart className="w-4 h-4" />
+                        <span>Deploy to Cart</span>
+                      </>
                     )}
                   </button>
                 </div>
