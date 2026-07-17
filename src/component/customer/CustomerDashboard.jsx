@@ -106,7 +106,7 @@ const CustomerDashboard = () => {
             <motion.div initial="hidden" animate="visible" variants={containerVariants} className="space-y-4">
               <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl font-black tracking-tight leading-none">
                 Welcome,{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-400 font-extrabold drop-shadow-[0_2px_10px_rgba(6,182,212,0.15)]">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 font-extrabold drop-shadow-[0_2px_10px_rgba(147,51,234,0.15)]">
                   {userLoading ? "Explorer" : user?.name || "Explorer"}
                 </span>
               </motion.h1>
