@@ -22,7 +22,7 @@ const HomePage = () => {
   const y = useTransform(scrollY, [0, 500], [0, 100]);
 
   const handleActionClick = () => {
-    navigate(isLoggedIn ? "/products" : "/login");
+    navigate("/login");
   };
 
   const formatPrice = (price) => {
@@ -86,8 +86,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-slate-50/50 text-slate-900 selection:bg-blue-500 selection:text-white antialiased">
       <Navbar
-        isLoggedIn={isLoggedIn}
-        role={role}
+        
         onScrollToSection={handleScrollToSection}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -131,7 +130,7 @@ const HomePage = () => {
                   onClick={handleActionClick}
                   className="px-8 py-4 bg-slate-800 hover:bg-slate-700/80 text-slate-200 font-semibold rounded-xl border border-slate-700 transition-all duration-200"
                 >
-                  {isLoggedIn ? "Dashboard" : "Sign In Account"}
+                  Sign In Account
                 </button>
               </div>
             </motion.div>
