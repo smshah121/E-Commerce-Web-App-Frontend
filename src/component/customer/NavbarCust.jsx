@@ -23,7 +23,6 @@ const CustomerNavbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Triggers the state update when scrolling out of the initial view boundary
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
@@ -77,7 +76,9 @@ const CustomerNavbar = () => {
               </div>
               
               <div className="flex flex-col">
-                <span className="text-xl font-black text-white tracking-tight">
+                <span className={`text-xl font-black tracking-tight transition-colors duration-500 ${
+                  isScrolled ? 'text-slate-900' : 'text-white'
+                }`}>
                   PriceTag
                 </span>
                 <span className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
@@ -89,12 +90,18 @@ const CustomerNavbar = () => {
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-1 text-slate-300">
+            <div className={`ml-10 flex items-center space-x-1 transition-colors duration-500 ${
+              isScrolled ? 'text-slate-600' : 'text-slate-300'
+            }`}>
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="px-4 py-2 rounded-xl text-sm font-semibold tracking-wide transition-all duration-200 hover:text-white hover:bg-white/5"
+                  className={`px-4 py-2 rounded-xl text-sm font-semibold tracking-wide transition-all duration-200 ${
+                    isScrolled 
+                      ? 'hover:text-blue-600 hover:bg-slate-100' 
+                      : 'hover:text-white hover:bg-white/5'
+                  }`}
                 >
                   {link.name}
                 </Link>
@@ -103,7 +110,11 @@ const CustomerNavbar = () => {
               {isLoggedIn && (
                 <Link
                   to="/become-seller"
-                  className="ml-3 px-4 py-2 rounded-xl text-sm font-bold text-cyan-400 border border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:text-cyan-300 hover:border-cyan-500/50 transition-all duration-300"
+                  className={`ml-3 px-4 py-2 rounded-xl text-sm font-bold border transition-all duration-300 ${
+                    isScrolled
+                      ? 'text-indigo-600 border-indigo-200 bg-indigo-50/50 hover:bg-indigo-600 hover:text-white hover:border-transparent shadow-sm'
+                      : 'text-cyan-400 border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:text-cyan-300 hover:border-cyan-500/50'
+                  }`}
                 >
                   Become a Seller
                 </Link>
@@ -113,17 +124,29 @@ const CustomerNavbar = () => {
 
           {/* User Controls and Action Buttons */}
           <div className="flex items-center space-x-3">
-            <button className="p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+            <button className={`p-2.5 rounded-xl transition-all duration-200 ${
+              isScrolled 
+                ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' 
+                : 'text-slate-400 hover:text-white hover:bg-white/5'
+            }`}>
               <FiSearch className="w-5 h-5" />
             </button>
 
             <button
               onClick={handleCartClick}
-              className="relative p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200"
+              className={`relative p-2.5 rounded-xl transition-all duration-200 ${
+                isScrolled 
+                  ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' 
+                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`}
             >
               <AiOutlineShoppingCart className="w-5 h-5" />
               {totalQuantity > 0 && (
-                <span className="absolute top-1 right-1 bg-emerald-500 text-slate-950 text-[10px] rounded-full h-4.5 w-4.5 flex items-center justify-center font-black shadow-lg">
+                <span className={`absolute top-1 right-1 text-[10px] rounded-full h-4.5 w-4.5 flex items-center justify-center font-black shadow-lg transition-colors duration-500 ${
+                  isScrolled 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-emerald-500 text-slate-950'
+                }`}>
                   {totalQuantity}
                 </span>
               )}
@@ -133,12 +156,18 @@ const CustomerNavbar = () => {
               <div className="relative">
                 <button 
                   onClick={() => setShowDropdown(!showDropdown)}
-                  className="flex items-center space-x-2 p-1.5 pr-3 rounded-xl bg-slate-900 border border-white/5 hover:border-white/10 transition-all duration-200"
+                  className={`flex items-center space-x-2 p-1.5 pr-3 rounded-xl border transition-all duration-200 ${
+                    isScrolled
+                      ? 'bg-slate-50 border-slate-200/80 hover:bg-slate-100'
+                      : 'bg-slate-900 border-white/5 hover:border-white/10'
+                  }`}
                 >
                   <div className="w-8 h-8 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center text-white">
                     <HiOutlineMenuAlt3 className="w-4 h-4" />
                   </div>
-                  <span className="text-xs font-bold text-slate-300">Menu</span>
+                  <span className={`text-xs font-bold transition-colors duration-500 ${
+                    isScrolled ? 'text-slate-700' : 'text-slate-300'
+                  }`}>Menu</span>
                 </button>
 
                 {/* Dropdown Menu Container */}
@@ -151,56 +180,53 @@ const CustomerNavbar = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-0 mt-3 w-72 bg-[#0f1422] border border-slate-800 shadow-2xl rounded-2xl z-20 overflow-hidden backdrop-blur-xl"
+                        className={`absolute right-0 mt-3 w-72 shadow-2xl rounded-2xl z-20 overflow-hidden border ${
+                          isScrolled
+                            ? 'bg-white border-slate-200/80'
+                            : 'bg-[#0f1422] border-slate-800 backdrop-blur-xl'
+                        }`}
                       >
                         <div className="py-1">
-                          <div className="px-5 py-3.5 bg-slate-900/60 border-b border-slate-800/60">
-                            <p className="text-sm font-bold text-white tracking-wide">Account Control</p>
+                          <div className={`px-5 py-3.5 border-b ${
+                            isScrolled ? 'bg-slate-50 border-slate-100' : 'bg-slate-900/60 border-slate-800/60'
+                          }`}>
+                            <p className={`text-sm font-bold tracking-wide ${isScrolled ? 'text-slate-900' : 'text-white'}`}>Account Control</p>
                             <p className="text-xs text-slate-500">Manage node configurations</p>
                           </div>
                           
-                          <button onClick={() => { navigate('/customer-dashboard'); setShowDropdown(false); }} className="flex items-center w-full px-5 py-3 hover:bg-white/5 text-slate-300 hover:text-white transition-all duration-150">
-                            <CgProfile className="w-4 h-4 mr-3 text-blue-400" />
-                            <div className="flex-1 text-left">
-                              <div className="text-xs font-bold">Dashboard</div>
-                            </div>
-                          </button>
+                          {[
+                            { name: 'Dashboard', icon: <CgProfile className="w-4 h-4 mr-3 text-blue-500" />, path: '/customer-dashboard' },
+                            { name: 'Become a Seller', icon: <FaStore className="w-4 h-4 mr-3 text-cyan-500" />, path: '/become-seller' },
+                            { name: 'My Cart', icon: <AiOutlineShoppingCart className="w-4 h-4 mr-3 text-emerald-500" />, path: '/my-cart' },
+                            { name: 'My Orders', icon: <FaBoxOpen className="w-4 h-4 mr-3 text-purple-500" />, path: '/my-orders' },
+                            { name: 'My Profile', icon: <CgProfile className="w-4 h-4 mr-3 text-indigo-500" />, path: '/my-profile' },
+                          ].map((item) => (
+                            <button 
+                              key={item.name}
+                              onClick={() => { navigate(item.path); setShowDropdown(false); }} 
+                              className={`flex items-center w-full px-5 py-3 text-xs font-bold transition-all duration-150 ${
+                                isScrolled 
+                                  ? 'text-slate-700 hover:bg-slate-50 hover:text-blue-600' 
+                                  : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                              }`}
+                            >
+                              {item.icon}
+                              <div className="flex-1 text-left">{item.name}</div>
+                            </button>
+                          ))}
+
+                          <hr className={isScrolled ? 'my-1 border-slate-100' : 'my-1 border-slate-800'} />
                           
-                          <button onClick={() => { navigate('/become-seller'); setShowDropdown(false); }} className="flex items-center w-full px-5 py-3 hover:bg-white/5 text-slate-300 hover:text-white transition-all duration-150">
-                            <FaStore className="w-4 h-4 mr-3 text-cyan-400" />
-                            <div className="flex-1 text-left">
-                              <div className="text-xs font-bold">Become a Seller</div>
-                            </div>
-                          </button>
-
-                          <button onClick={handleCartClick} className="flex items-center w-full px-5 py-3 hover:bg-white/5 text-slate-300 hover:text-white transition-all duration-150">
-                            <AiOutlineShoppingCart className="w-4 h-4 mr-3 text-emerald-400" />
-                            <div className="flex-1 text-left">
-                              <div className="text-xs font-bold">My Cart</div>
-                            </div>
-                          </button>
-
-                          <button onClick={() => { navigate('/my-orders'); setShowDropdown(false); }} className="flex items-center w-full px-5 py-3 hover:bg-white/5 text-slate-300 hover:text-white transition-all duration-150">
-                            <FaBoxOpen className="w-4 h-4 mr-3 text-purple-400" />
-                            <div className="flex-1 text-left">
-                              <div className="text-xs font-bold">My Orders</div>
-                            </div>
-                          </button>
-
-                          <button onClick={() => { navigate('/my-profile'); setShowDropdown(false); }} className="flex items-center w-full px-5 py-3 hover:bg-white/5 text-slate-300 hover:text-white transition-all duration-150">
-                            <CgProfile className="w-4 h-4 mr-3 text-indigo-400" />
-                            <div className="flex-1 text-left">
-                              <div className="text-xs font-bold">My Profile</div>
-                            </div>
-                          </button>
-
-                          <hr className="my-1 border-slate-800" />
-                          
-                          <button onClick={handleLogout} className="flex items-center w-full px-5 py-3 hover:bg-red-500/10 text-slate-400 hover:text-red-400 transition-all duration-150">
-                            <TbLogout className="w-4 h-4 mr-3 text-red-400" />
-                            <div className="flex-1 text-left">
-                              <div className="text-xs font-bold">Secure Logout</div>
-                            </div>
+                          <button 
+                            onClick={handleLogout} 
+                            className={`flex items-center w-full px-5 py-3 text-xs font-bold transition-all duration-150 ${
+                              isScrolled 
+                                ? 'text-slate-500 hover:bg-red-50 hover:text-red-600' 
+                                : 'text-slate-400 hover:bg-red-500/10 hover:text-red-400'
+                            }`}
+                          >
+                            <TbLogout className="w-4 h-4 mr-3 text-red-500" />
+                            <div className="flex-1 text-left">Secure Logout</div>
                           </button>
                         </div>
                       </motion.div>
@@ -210,7 +236,9 @@ const CustomerNavbar = () => {
               </div>
             ) : (
               <div className="hidden sm:flex items-center space-x-2">
-                <button onClick={handleLoginClick} className="px-4 py-2 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-200">
+                <button onClick={handleLoginClick} className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                  isScrolled ? 'text-slate-700 hover:text-slate-900 hover:bg-slate-100' : 'text-slate-300 hover:text-white hover:bg-white/5'
+                }`}>
                   Sign In
                 </button>
                 <button onClick={handleSignupClick} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-bold shadow-md shadow-blue-600/10 transition-all duration-200">
@@ -223,7 +251,11 @@ const CustomerNavbar = () => {
             <div className="md:hidden">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+                className={`p-2.5 rounded-xl transition-all ${
+                  isScrolled 
+                    ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' 
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                }`}
               >
                 {isMobileMenuOpen ? <HiOutlineX className="w-5 h-5" /> : <HiOutlineMenuAlt3 className="w-5 h-5" />}
               </button>
@@ -233,24 +265,36 @@ const CustomerNavbar = () => {
       </div>
 
       {/* Cyber Responsive Mobile Menu System */}
-      <div className={`md:hidden transition-all duration-300 ease-in-out border-slate-800 overflow-hidden ${
-        isMobileMenuOpen ? 'max-h-screen border-t bg-[#0b0f19]/95 backdrop-blur-xl' : 'max-h-0 border-t-0'
+      <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+        isMobileMenuOpen ? 'max-h-screen border-t' : 'max-h-0 border-t-0'
+      } ${
+        isScrolled 
+          ? 'bg-white/95 backdrop-blur-xl border-slate-200' 
+          : 'bg-[#0b0f19]/95 backdrop-blur-xl border-slate-800'
       }`}>
         <div className="px-4 pt-4 pb-8 space-y-2">
           <div className="relative mb-4">
             <input
               type="text"
               placeholder="Search accessories ecosystem..."
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-white/5 rounded-xl text-white placeholder:text-slate-600 focus:outline-none focus:border-blue-500/50 text-sm"
+              className={`w-full pl-10 pr-4 py-2.5 border rounded-xl text-sm focus:outline-none focus:border-blue-500/50 ${
+                isScrolled 
+                  ? 'bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400' 
+                  : 'bg-slate-900 border-white/5 text-white placeholder:text-slate-600'
+              }`}
             />
-            <FiSearch className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-slate-600 w-4 h-4" />
+            <FiSearch className={`absolute left-3.5 top-1/2 transform -translate-y-1/2 w-4 h-4 ${
+              isScrolled ? 'text-slate-400' : 'text-slate-600'
+            }`} />
           </div>
 
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.href}
-              className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200"
+              className={`block px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                isScrolled ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {link.name}
@@ -260,7 +304,9 @@ const CustomerNavbar = () => {
           {isLoggedIn && (
             <Link
               to="/become-seller"
-              className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-cyan-400 hover:bg-cyan-500/5 transition-all duration-200"
+              className={`block px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                isScrolled ? 'text-indigo-600 hover:bg-indigo-50/50' : 'text-cyan-400 hover:bg-cyan-50/5'
+              }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Become a Seller
@@ -269,24 +315,30 @@ const CustomerNavbar = () => {
           
           <button
             onClick={handleCartClick}
-            className="w-full flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200"
+            className={`w-full flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+              isScrolled ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' : 'text-slate-400 hover:text-white hover:bg-white/5'
+            }`}
           >
-            <AiOutlineShoppingCart className="w-4 h-4 mr-3 text-emerald-400" />
+            <AiOutlineShoppingCart className="w-4 h-4 mr-3 text-emerald-500" />
             My Cart ({totalQuantity})
           </button>
 
           {isLoggedIn && (
-            <div className="pt-2 border-t border-slate-900 space-y-1">
+            <div className={`pt-2 border-t space-y-1 ${isScrolled ? 'border-slate-100' : 'border-slate-900'}`}>
               <button
                 onClick={() => { navigate('/my-profile'); setIsMobileMenuOpen(false); }}
-                className="w-full flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200"
+                className={`w-full flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                  isScrolled ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-50' : 'text-slate-400 hover:text-white hover:bg-white/5'
+                }`}
               >
-                <CgProfile className="w-4 h-4 mr-3 text-indigo-400" />
+                <CgProfile className="w-4 h-4 mr-3 text-indigo-500" />
                 My Profile
               </button>
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold text-red-400 hover:bg-red-500/5 transition-all duration-200"
+                className={`w-full flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                  isScrolled ? 'text-red-500 hover:bg-red-50' : 'text-red-400 hover:bg-red-500/5'
+                }`}
               >
                 <TbLogout className="w-4 h-4 mr-3" />
                 Logout
@@ -295,10 +347,12 @@ const CustomerNavbar = () => {
           )}
 
           {!isLoggedIn && (
-            <div className="pt-4 border-t border-slate-900 flex flex-col gap-2">
+            <div className={`pt-4 border-t flex flex-col gap-2 ${isScrolled ? 'border-slate-100' : 'border-slate-900'}`}>
               <button
                 onClick={handleLoginClick}
-                className="w-full py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-white/5 transition-all"
+                className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                  isScrolled ? 'text-slate-700 hover:bg-slate-50' : 'text-slate-300 hover:bg-white/5'
+                }`}
               >
                 Sign In
               </button>
