@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { motion, AnimatePresence } from 'framer-motion';
 import { TbLogout } from "react-icons/tb";
 import { CgProfile } from "react-icons/cg";
-import { FaBoxOpen, FaStore } from "react-icons/fa"; // Imported correctly from react-icons/fa
+import { FaBoxOpen, FaStore } from "react-icons/fa"; 
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import { FiSearch } from "react-icons/fi";
@@ -55,45 +56,31 @@ const CustomerNavbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md ${
-      isScrolled ? 'shadow-lg border-b border-gray-100' : 'shadow-sm border-b border-transparent'
+    <nav className={`fixed w-full z-50 transition-all duration-500 border-b ${
+      isScrolled 
+        ? 'bg-[#0b0f19]/90 backdrop-blur-xl border-slate-800/80 shadow-[0_4px_30px_rgba(0,0,0,0.4)]' 
+        : 'bg-[#0b0f19] border-slate-900 shadow-none'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20">
-          {/* Enhanced Premium Logo */}
+        <div className="flex justify-between items-center h-20">
+          {/* Brand Premium Logo Matching Dashboard Concept */}
           <div className="flex-shrink-0">
-            <Link 
-              to="/" 
-              className="flex items-center space-x-3 group"
-            >
+            <Link to="/" className="flex items-center space-x-3 group">
               <div className="relative">
-                {/* Main logo container with premium styling */}
-                <div className="relative w-12 h-12 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-2xl group-hover:shadow-3xl transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3">
-                  {/* Inner glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"></div>
-                  
-                  {/* Price tag icon design */}
-                  <div className="relative z-10 flex items-center justify-center">
-                    <svg className="w-7 h-7 text-white transform transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
-                    </svg>
-                  </div>
-                  
-                  {/* Animated sparkle effect */}
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full opacity-75 animate-ping"></div>
+                <div className="relative w-11 h-11 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.25)] group-hover:shadow-[0_0_25px_rgba(37,99,235,0.45)] transition-all duration-500 transform group-hover:scale-105">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-xl"></div>
+                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
+                  </svg>
                 </div>
-                
-                {/* Outer glow effect */}
-                <div className="absolute -inset-2 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-2xl blur-lg opacity-20 group-hover:opacity-40 transition-all duration-500 animate-pulse"></div>
               </div>
               
-              {/* Premium Typography */}
               <div className="flex flex-col">
-                <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent transition-all duration-300 group-hover:from-indigo-600 group-hover:via-purple-600 group-hover:to-pink-500">
+                <span className="text-xl font-black text-white tracking-tight">
                   PriceTag
                 </span>
-                <span className="text-xs font-medium text-gray-500 tracking-wider uppercase group-hover:text-purple-500 transition-colors duration-300">
-                  Premium Shopping
+                <span className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
+                  Hardware Hub
                 </span>
               </div>
             </Link>
@@ -101,22 +88,21 @@ const CustomerNavbar = () => {
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-6">
+            <div className="ml-10 flex items-center space-x-1 text-slate-300">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 text-gray-700 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-lg"
+                  className="px-4 py-2 rounded-xl text-sm font-semibold tracking-wide transition-all duration-200 hover:text-white hover:bg-white/5"
                 >
                   {link.name}
                 </Link>
               ))}
               
-              {/* Desktop Become a Seller Button (Active when logged in) */}
               {isLoggedIn && (
                 <Link
                   to="/become-seller"
-                  className="px-4 py-2 rounded-xl text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 border border-purple-200 hover:border-transparent hover:text-white hover:bg-gradient-to-r hover:from-indigo-600 hover:via-purple-600 hover:to-pink-500 transition-all duration-300 hover:shadow-md transform hover:scale-105"
+                  className="ml-3 px-4 py-2 rounded-xl text-sm font-bold text-cyan-400 border border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 hover:text-cyan-300 hover:border-cyan-500/50 transition-all duration-300"
                 >
                   Become a Seller
                 </Link>
@@ -124,214 +110,205 @@ const CustomerNavbar = () => {
             </div>
           </div>
 
-          {/* Right side buttons - Search, Cart, and Menu */}
-          <div className="flex items-center space-x-4">
-            {/* Enhanced Search Button */}
-            <button className="p-3 rounded-xl transition-all duration-300 hover:scale-110 text-gray-600 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-lg">
+          {/* User Controls and Action Buttons */}
+          <div className="flex items-center space-x-3">
+            <button className="p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200">
               <FiSearch className="w-5 h-5" />
             </button>
 
-            {/* Enhanced Cart Button */}
             <button
               onClick={handleCartClick}
-              className="relative p-3 rounded-xl transition-all duration-300 hover:scale-110 group text-gray-600 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-lg"
+              className="relative p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200"
             >
-              <AiOutlineShoppingCart className="w-6 h-6" />
-              {/* Premium Cart badge */}
+              <AiOutlineShoppingCart className="w-5 h-5" />
               {totalQuantity > 0 && (
-                <span className="absolute -top-2 -right-2 bg-gradient-to-r from-pink-500 to-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold shadow-lg animate-bounce">
+                <span className="absolute top-1 right-1 bg-emerald-500 text-slate-950 text-[10px] rounded-full h-4.5 w-4.5 flex items-center justify-center font-black shadow-lg">
                   {totalQuantity}
                 </span>
               )}
             </button>
 
-            {/* Enhanced User Menu Button */}
             {isLoggedIn ? (
               <div className="relative">
                 <button 
                   onClick={() => setShowDropdown(!showDropdown)}
-                  className="flex items-center space-x-3 px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105 text-gray-700 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-lg"
+                  className="flex items-center space-x-2 p-1.5 pr-3 rounded-xl bg-slate-900 border border-white/5 hover:border-white/10 transition-all duration-200"
                 >
-                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                    <HiOutlineMenuAlt3 className="w-5 h-5 text-white" />
+                  <div className="w-8 h-8 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center text-white">
+                    <HiOutlineMenuAlt3 className="w-4 h-4" />
                   </div>
-                  <span className="text-sm font-semibold">Menu</span>
+                  <span className="text-xs font-bold text-slate-300">Menu</span>
                 </button>
 
-                {/* Enhanced Dropdown Menu */}
-                {showDropdown && (
-                  <>
-                    <div className="fixed inset-0 z-10" onClick={() => setShowDropdown(false)}></div>
-                    <div className="absolute right-0 mt-3 w-72 bg-white/95 backdrop-blur-md shadow-2xl rounded-2xl border border-gray-100 z-20 overflow-hidden">
-                      <div className="py-2">
-                        <div className="px-6 py-4 bg-gradient-to-r from-indigo-50 to-purple-50 border-b border-gray-100">
-                          <p className="text-lg font-bold text-gray-900 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text">Account Menu</p>
-                          <p className="text-sm text-gray-600">Manage your premium experience</p>
-                        </div>
-                        <button onClick={() => { navigate('/customer-dashboard'); setShowDropdown(false); }} className="flex items-center w-full px-6 py-4 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 text-sm text-gray-700 hover:text-indigo-600 transition-all duration-300">
-                          <CgProfile className="w-5 h-5 mr-4 text-purple-500" />
-                          <div className="flex-1 text-left">
-                            <div className="font-semibold">Dashboard</div>
-                            <div className="text-xs text-gray-500">Overview of your account</div>
+                {/* Dropdown Menu Container styled perfectly with dark glassmorphism */}
+                <AnimatePresence>
+                  {showDropdown && (
+                    <>
+                      <div className="fixed inset-0 z-10" onClick={() => setShowDropdown(false)}></div>
+                      <motion.div 
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute right-0 mt-3 w-72 bg-[#0f1422] border border-slate-800 shadow-2xl rounded-2xl z-20 overflow-hidden backdrop-blur-xl"
+                      >
+                        <div className="py-1">
+                          <div className="px-5 py-3.5 bg-slate-900/60 border-b border-slate-800/60">
+                            <p className="text-sm font-bold text-white tracking-wide">Account Control</p>
+                            <p className="text-xs text-slate-500">Manage node configurations</p>
                           </div>
-                        </button>
-                        
-                        {/* Dropdown Link: Become a Seller */}
-                        <button onClick={() => { navigate('/become-seller'); setShowDropdown(false); }} className="flex items-center w-full px-6 py-4 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 text-sm text-gray-700 hover:text-indigo-600 transition-all duration-300">
-                          <FaStore className="w-5 h-5 mr-4 text-indigo-500" />
-                          <div className="flex-1 text-left">
-                            <div className="font-semibold">Become a Seller</div>
-                            <div className="text-xs text-gray-500">Register your custom store</div>
-                          </div>
-                        </button>
+                          
+                          <button onClick={() => { navigate('/customer-dashboard'); setShowDropdown(false); }} className="flex items-center w-full px-5 py-3 hover:bg-white/5 text-slate-300 hover:text-white transition-all duration-150">
+                            <CgProfile className="w-4 h-4 mr-3 text-blue-400" />
+                            <div className="flex-1 text-left">
+                              <div className="text-xs font-bold">Dashboard</div>
+                            </div>
+                          </button>
+                          
+                          <button onClick={() => { navigate('/become-seller'); setShowDropdown(false); }} className="flex items-center w-full px-5 py-3 hover:bg-white/5 text-slate-300 hover:text-white transition-all duration-150">
+                            <FaStore className="w-4 h-4 mr-3 text-cyan-400" />
+                            <div className="flex-1 text-left">
+                              <div className="text-xs font-bold">Become a Seller</div>
+                            </div>
+                          </button>
 
-                        <button onClick={handleCartClick} className="flex items-center w-full px-6 py-4 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 text-sm text-gray-700 hover:text-indigo-600 transition-all duration-300">
-                          <AiOutlineShoppingCart className="w-5 h-5 mr-4 text-indigo-500" />
-                          <div className="flex-1 text-left">
-                            <div className="font-semibold">My Cart</div>
-                            <div className="text-xs text-gray-500">{totalQuantity} premium items</div>
-                          </div>
-                        </button>
-                        <button onClick={() => { navigate('/my-orders'); setShowDropdown(false); }} className="flex items-center w-full px-6 py-4 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 text-sm text-gray-700 hover:text-indigo-600 transition-all duration-300">
-                          <FaBoxOpen className="w-5 h-5 mr-4 text-green-500" />
-                          <div className="flex-1 text-left">
-                            <div className="font-semibold">My Orders</div>
-                            <div className="text-xs text-gray-500">Track your purchases</div>
-                          </div>
-                        </button>
-                        <button onClick={() => { navigate('/my-profile'); setShowDropdown(false); }} className="flex items-center w-full px-6 py-4 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 text-sm text-gray-700 hover:text-indigo-600 transition-all duration-300">
-                          <CgProfile className="w-5 h-5 mr-4 text-purple-500" />
-                          <div className="flex-1 text-left">
-                            <div className="font-semibold">My Profile</div>
-                            <div className="text-xs text-gray-500">Account settings</div>
-                          </div>
-                        </button>
-                        <hr className="my-2 border-gray-200" />
-                        <button onClick={handleLogout} className="flex items-center w-full px-6 py-4 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 text-sm text-gray-700 hover:text-red-600 transition-all duration-300">
-                          <TbLogout className="w-5 h-5 mr-4 text-red-500" />
-                          <div className="flex-1 text-left">
-                            <div className="font-semibold">Logout</div>
-                            <div className="text-xs text-gray-500">Sign out securely</div>
-                          </div>
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                )}
+                          <button onClick={handleCartClick} className="flex items-center w-full px-5 py-3 hover:bg-white/5 text-slate-300 hover:text-white transition-all duration-150">
+                            <AiOutlineShoppingCart className="w-4 h-4 mr-3 text-emerald-400" />
+                            <div className="flex-1 text-left">
+                              <div className="text-xs font-bold">My Cart</div>
+                            </div>
+                          </button>
+
+                          <button onClick={() => { navigate('/my-orders'); setShowDropdown(false); }} className="flex items-center w-full px-5 py-3 hover:bg-white/5 text-slate-300 hover:text-white transition-all duration-150">
+                            <FaBoxOpen className="w-4 h-4 mr-3 text-purple-400" />
+                            <div className="flex-1 text-left">
+                              <div className="text-xs font-bold">My Orders</div>
+                            </div>
+                          </button>
+
+                          <button onClick={() => { navigate('/my-profile'); setShowDropdown(false); }} className="flex items-center w-full px-5 py-3 hover:bg-white/5 text-slate-300 hover:text-white transition-all duration-150">
+                            <CgProfile className="w-4 h-4 mr-3 text-indigo-400" />
+                            <div className="flex-1 text-left">
+                              <div className="text-xs font-bold">My Profile</div>
+                            </div>
+                          </button>
+
+                          <hr className="my-1 border-slate-800" />
+                          
+                          <button onClick={handleLogout} className="flex items-center w-full px-5 py-3 hover:bg-red-500/10 text-slate-400 hover:text-red-400 transition-all duration-150">
+                            <TbLogout className="w-4 h-4 mr-3 text-red-400" />
+                            <div className="flex-1 text-left">
+                              <div className="text-xs font-bold">Secure Logout</div>
+                            </div>
+                          </button>
+                        </div>
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
               </div>
             ) : (
-              <div className="flex items-center space-x-3">
-                <button onClick={handleLoginClick} className="px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 text-indigo-600 hover:text-indigo-700 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50">
+              <div className="hidden sm:flex items-center space-x-2">
+                <button onClick={handleLoginClick} className="px-4 py-2 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-200">
                   Sign In
                 </button>
-                <button onClick={handleSignupClick} className="px-6 py-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-600 text-white rounded-xl text-sm font-bold transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl">
+                <button onClick={handleSignupClick} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-bold shadow-md shadow-blue-600/10 transition-all duration-200">
                   Get Started
                 </button>
               </div>
             )}
-          </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-3 rounded-xl transition-all duration-300 text-gray-600 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50"
-            >
-              {isMobileMenuOpen ? (
-                <HiOutlineX className="w-6 h-6" />
-              ) : (
-                <HiOutlineMenuAlt3 className="w-6 h-6" />
-              )}
-            </button>
+            {/* Mobile Expand Trigger */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+              >
+                {isMobileMenuOpen ? <HiOutlineX className="w-5 h-5" /> : <HiOutlineMenuAlt3 className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Enhanced Mobile Menu Content */}
-      <div className={`md:hidden transition-all duration-300 ease-in-out ${
-        isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+      {/* Cyber Responsive Mobile Menu System */}
+      <div className={`md:hidden transition-all duration-300 ease-in-out border-slate-800 overflow-hidden ${
+        isMobileMenuOpen ? 'max-h-screen border-t bg-[#0b0f19]/95 backdrop-blur-xl' : 'max-h-0 border-t-0'
       }`}>
-        <div className="bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-xl">
-          <div className="px-4 pt-4 pb-6 space-y-1">
-            <div className="relative mb-4">
-              <input
-                type="text"
-                placeholder="Search premium products..."
-                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 font-medium"
-              />
-              <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            </div>
-
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className={`block px-4 py-3 rounded-xl text-base font-semibold transition-all duration-300 ${
-                  link.current
-                    ? 'text-indigo-600 bg-gradient-to-r from-indigo-50 to-purple-50'
-                    : 'text-gray-700 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50'
-                }`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
-
-            {/* Mobile Link: Become a Seller */}
-            {isLoggedIn && (
-              <Link
-                to="/become-seller"
-                className="block px-4 py-3 rounded-xl text-base font-semibold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 border border-purple-100 hover:border-transparent transition-all duration-300"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Become a Seller
-              </Link>
-            )}
-            
-            <button
-              onClick={handleCartClick}
-              className="w-full flex items-center px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 transition-all duration-300"
-            >
-              <AiOutlineShoppingCart className="w-5 h-5 mr-3" />
-              My Cart ({totalQuantity})
-            </button>
-
-            {isLoggedIn && (
-              <>
-                <button
-                  onClick={() => { navigate('/my-profile'); setIsMobileMenuOpen(false); }}
-                  className="w-full flex items-center px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 transition-all duration-300"
-                >
-                  <CgProfile className="w-5 h-5 mr-3" />
-                  My Profile
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="w-full flex items-center px-4 py-3 rounded-xl text-base font-semibold text-red-600 hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 transition-all duration-300"
-                >
-                  <TbLogout className="w-5 h-5 mr-3" />
-                  Logout
-                </button>
-              </>
-            )}
-
-            {!isLoggedIn && (
-              <div className="pt-4 border-t border-gray-200 space-y-3">
-                <button
-                  onClick={handleLoginClick}
-                  className="w-full px-4 py-3 text-indigo-600 hover:text-indigo-700 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 rounded-xl text-base font-semibold transition-all duration-300"
-                >
-                  Sign In
-                </button>
-                <button
-                  onClick={handleSignupClick}
-                  className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-600 text-white rounded-xl text-base font-bold transition-all duration-300 transform hover:scale-105 shadow-xl"
-                >
-                  Get Started
-                </button>
-              </div>
-            )}
+        <div className="px-4 pt-4 pb-8 space-y-2">
+          <div className="relative mb-4">
+            <input
+              type="text"
+              placeholder="Search accessories ecosystem..."
+              className="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-white/5 rounded-xl text-white placeholder:text-slate-600 focus:outline-none focus:border-blue-500/50 text-sm"
+            />
+            <FiSearch className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-slate-600 w-4 h-4" />
           </div>
+
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              to={link.href}
+              className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.name}
+            </Link>
+          ))}
+
+          {isLoggedIn && (
+            <Link
+              to="/become-seller"
+              className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-cyan-400 hover:bg-cyan-500/5 transition-all duration-200"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Become a Seller
+            </Link>
+          )}
+          
+          <button
+            onClick={handleCartClick}
+            className="w-full flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200"
+          >
+            <AiOutlineShoppingCart className="w-4 h-4 mr-3 text-emerald-400" />
+            My Cart ({totalQuantity})
+          </button>
+
+          {isLoggedIn && (
+            <div className="pt-2 border-t border-slate-900 space-y-1">
+              <button
+                onClick={() => { navigate('/my-profile'); setIsMobileMenuOpen(false); }}
+                className="w-full flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-200"
+              >
+                <CgProfile className="w-4 h-4 mr-3 text-indigo-400" />
+                My Profile
+              </button>
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold text-red-400 hover:bg-red-500/5 transition-all duration-200"
+              >
+                <TbLogout className="w-4 h-4 mr-3" />
+                Logout
+              </button>
+            </div>
+          )}
+
+          {!isLoggedIn && (
+            <div className="pt-4 border-t border-slate-900 flex flex-col gap-2">
+              <button
+                onClick={handleLoginClick}
+                className="w-full py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-white/5 transition-all"
+              >
+                Sign In
+              </button>
+              <button
+                onClick={handleSignupClick}
+                className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm shadow-md shadow-blue-600/10 transition-all"
+              >
+                Get Started
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </nav>
