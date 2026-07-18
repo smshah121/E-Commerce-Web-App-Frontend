@@ -26,6 +26,9 @@ const OauthSuccess = () => {
       if (role.toLowerCase() === 'customer') {
         navigate('/customer-dashboard');
       } 
+      else if (role.toLowerCase() === 'seller') {
+        navigate('/seller-dashboard');
+      } 
     } else {
       alert('OAuth authorization handshake failed.');
       navigate('/');
