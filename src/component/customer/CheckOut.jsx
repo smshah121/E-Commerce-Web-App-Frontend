@@ -16,7 +16,7 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
-  const { token, userId } = useSelector((state) => state.auth); // Get userId from auth state
+  const { token } = useSelector((state) => state.auth); // Get userId from auth state
   const isLoggedIn = Boolean(token);
   const [createPayment, { isLoading }] = useCreatePaymentMutation();
 
@@ -141,6 +141,7 @@ const CheckoutPage = () => {
   setOrderError(err?.data?.message || "Failed to place order.");
 } finally {
   setProcessingOrder(false);
+}
 }
 
   if (!isLoggedIn) {
