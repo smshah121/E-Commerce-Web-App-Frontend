@@ -20,7 +20,7 @@ const CheckoutPage = () => {
   const isLoggedIn = Boolean(token);
   const [createPayment, { isLoading }] = useCreatePaymentMutation();
 
-  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
+
 
   const [createOrder]=useCreateOrderMutation()
   const [orderPlaced, setOrderPlaced] = useState(false);
@@ -38,7 +38,7 @@ const CheckoutPage = () => {
   });
 
    const handlePayOnline = async () => {
-     if (
+  if (
     !address.street ||
     !address.city ||
     !address.state ||
@@ -50,55 +50,39 @@ const CheckoutPage = () => {
   }
 
   try {
-    // ✅ STEP 1: Create Order FIRST
-   const order = await createOrder({
-  items: cartItems.map(item => ({
-    productId: item.id,
-    quantity: item.quantity,
-  })),
+    // Step 1: Create Order
+    const order = await createOrder({
+      items: cartItems.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+      })),
 
-  subtotal: cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  ),
-  shipping: 0,
-  tax: 0,
-  total: cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  ),
+      subtotal,
+      shipping,
+      tax,
+      total,
 
-  address: {
-    street: address.street,
-    city: address.city,
-    state: address.state,
-    postalCode: address.postalCode,
-    country: address.country,
-  },
+      address,
 
-  customerId: userId, // only if backend requires it
-}).unwrap();
-
-console.log("Order created:", order);
-    // ✅ STEP 2: Create Stripe session using real order.id
-    const res = await createPayment({
-      orderId: order.id, // 👈 FIXED
+      paymentMethod: "ONLINE", // ✅ Important
     }).unwrap();
 
-    // ✅ STEP 3: Redirect to Stripe
+    // Step 2: Create Stripe Checkout Session
+    const res = await createPayment({
+      orderId: order.id,
+    }).unwrap();
+
+    // Step 3: Redirect to Stripe
     if (res.url) {
       window.location.href = res.url;
     } else {
-      alert("Payment session not created. Try again.");
+      alert("Payment session not created.");
     }
-
   } catch (err) {
     console.error(err);
-    alert("Payment initiation failed. Please try again.");
+    alert("Payment initiation failed.");
   }
 };
-  
-
   // Redirect if not logged in or cart is empty
   useEffect(() => {
     if (!isLoggedIn) {
@@ -133,48 +117,31 @@ console.log("Order created:", order);
       return;
     }
 
-    try {
-      const response = await fetch(`${API_URL}/orders`, { // Assuming your orders endpoint is /orders
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-           items: cartItems.map(item => ({ // Map cart items to a simplified structure for the backend
-             productId: item.id, // Assuming 'id' is productId
-             name: item.name,
-             price: item.price,
-             quantity: item.quantity,
-             images: item.images // Pass images if needed by backend
-           })),
-           subtotal,
-           shipping,
-           tax, // This will be 0.00
-           total,
-           address, // Send the address object directly
-           customerId: userId, // Changed from userId to customerId to match backend entity/DTO
-           orderedAt: new Date().toISOString(), // Add order timestamp
-           status: 'pending' // Initial status
-        })
-      });
-      const result = await response.json();
+   try {
+  await createOrder({
+    items: cartItems.map(item => ({
+      productId: item.id,
+      quantity: item.quantity,
+    })),
 
-      if (response.ok) {
-        setOrderPlaced(true);
-        dispatch(clearCart()); // Clear cart after successful order placement
-        setProcessingOrder(false);
-        // You might navigate to an order confirmation page here
-        // navigate('/order-confirmation', { state: { orderId: result.id } }); // Use result.id for the new order ID
-      } else {
-        throw new Error(result.message || 'Failed to place order.');
-      }
+    subtotal,
+    shipping,
+    tax,
+    total,
 
-    } catch (err) {
-      setOrderError(err.message || 'Order placement failed. Please try again.');
-      setProcessingOrder(false);
-    }
-  };
+    address,
+
+    paymentMethod: "COD",
+  }).unwrap();
+
+  setOrderPlaced(true);
+  dispatch(clearCart());
+
+} catch (err) {
+  setOrderError(err?.data?.message || "Failed to place order.");
+} finally {
+  setProcessingOrder(false);
+}
 
   if (!isLoggedIn) {
     return null; // Or a loading spinner while redirecting
