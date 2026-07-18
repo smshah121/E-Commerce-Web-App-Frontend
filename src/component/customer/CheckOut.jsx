@@ -16,11 +16,11 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
-  const { token } = useSelector((state) => state.auth); // Get userId from auth state
+  const { token, userId } = useSelector((state) => state.auth); // Get userId from auth state
   const isLoggedIn = Boolean(token);
   const [createPayment, { isLoading }] = useCreatePaymentMutation();
 
-
+  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
 
   const [createOrder]=useCreateOrderMutation()
   const [orderPlaced, setOrderPlaced] = useState(false);
@@ -117,8 +117,8 @@ const CheckoutPage = () => {
       return;
     }
 
-   try {
-  await createOrder({
+    try {
+      await createOrder({
     items: cartItems.map(item => ({
       productId: item.id,
       quantity: item.quantity,
@@ -137,12 +137,15 @@ const CheckoutPage = () => {
   setOrderPlaced(true);
   dispatch(clearCart());
 
-} catch (err) {
+    } catch (err) {
   setOrderError(err?.data?.message || "Failed to place order.");
 } finally {
   setProcessingOrder(false);
 }
-}
+
+
+    
+  };
 
   if (!isLoggedIn) {
     return null; // Or a loading spinner while redirecting
