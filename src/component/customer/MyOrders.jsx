@@ -34,6 +34,27 @@ const MyOrders = () => {
     }
   };
 
+
+
+  const getPaymentStatusColor = (status) => {
+  switch (status?.toLowerCase()) {
+    case "paid":
+      return "bg-green-100 text-green-800";
+
+    case "pending":
+      return "bg-yellow-100 text-yellow-800";
+
+    case "failed":
+      return "bg-red-100 text-red-800";
+
+    case "refunded":
+      return "bg-purple-100 text-purple-800";
+
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
+};
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -192,22 +213,34 @@ const MyOrders = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
-                          order.status
-                        )}`}
-                      >
-                        {order.status || "Pending"}
-                      </span>
-                      <div className="text-right">
-                        <p className="text-sm text-gray-600">Total</p>
-                        <p className="text-lg font-bold text-gray-900">
-                          ${parseFloat(order.total)?.toFixed(2) || "0.00"}{" "}
-                          {/* Use parseFloat here */}
-                        </p>
-                      </div>
-                    </div>
+                    <div className="flex flex-wrap items-center gap-3">
+
+  <span
+    className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
+      order.status
+    )}`}
+  >
+    {order.status}
+  </span>
+
+  
+
+  <span
+    className={`px-3 py-1 rounded-full text-sm font-medium ${getPaymentStatusColor(
+      order.paymentStatus
+    )}`}
+  >
+    Payment: {order.paymentStatus}
+  </span>
+
+  <div className="text-right ml-auto">
+    <p className="text-sm text-gray-600">Total</p>
+    <p className="text-lg font-bold text-gray-900">
+      ${parseFloat(order.total)?.toFixed(2) || "0.00"}
+    </p>
+  </div>
+
+</div>
                   </div>
                 </div>
 
@@ -222,6 +255,37 @@ const MyOrders = () => {
                     {order.postalCode}, {order.country}
                   </p>
                 </div>
+                {/* Payment Information */}
+<div className="px-6 py-4 border-b border-gray-200">
+  <h4 className="font-semibold text-gray-900 mb-3">
+    Payment Information
+  </h4>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+    <div>
+      <p className="text-sm text-gray-500">Payment Method</p>
+      <p className="font-medium text-gray-900">
+        {order.paymentMethod === "ONLINE"
+          ? "Online Payment"
+          : "Cash on Delivery"}
+      </p>
+    </div>
+
+    <div>
+      <p className="text-sm text-gray-500">Payment Status</p>
+
+      <span
+        className={`inline-block mt-1 px-3 py-1 rounded-full text-sm font-medium ${getPaymentStatusColor(
+          order.paymentStatus
+        )}`}
+      >
+        {order.paymentStatus}
+      </span>
+    </div>
+
+  </div>
+</div>
 
                 {/* Order Items Preview */}
                 <div className="px-6 py-4">
