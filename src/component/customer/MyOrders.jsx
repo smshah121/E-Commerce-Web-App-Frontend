@@ -225,13 +225,7 @@ const MyOrders = () => {
 
   
 
-  <span
-    className={`px-3 py-1 rounded-full text-sm font-medium ${getPaymentStatusColor(
-      order.paymentStatus
-    )}`}
-  >
-    Payment: {order.paymentStatus}
-  </span>
+  
 
   <div className="text-right ml-auto">
     <p className="text-sm text-gray-600">Total</p>
