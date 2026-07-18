@@ -150,7 +150,7 @@ const OrderListForAdmin = () => {
                   <FaDollarSign className="text-lg text-green-500" />
                   <div>
                     <p className="font-semibold">Payment</p>
-                    <p className="text-sm text-gray-700">Cash On Delivery</p>
+                    <p className="text-sm text-gray-700">{order.paymentMethod}</p>
                   </div>
                 </div>
               </div>
@@ -199,7 +199,8 @@ const OrderListForAdmin = () => {
               </div>
 
               <div className="mt-6 border-t border-gray-200 pt-4">
-                <UpdateOrderStatus orderId={order.id} currentStatus={order.status} />
+                <UpdateOrderStatus orderId={order.id} currentStatus={order.status} paymentMethod={order.paymentMethod}
+  currentPaymentStatus={order.paymentStatus}/>
               </div>
             </motion.div>
           ))}

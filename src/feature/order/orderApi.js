@@ -42,6 +42,16 @@ export const orderApi = createApi({
 }),
 
 
+updatePaymentStatus: builder.mutation({
+  query: ({ orderId, paymentStatus }) => ({
+    url: `/orders/${orderId}/payment-status`,
+    method: "PATCH",
+    body: { paymentStatus },
+  }),
+  invalidatesTags: ["Orders"],
+}),
+
+
     // features/order/orderApi.js
 getBuyersByProduct: builder.query({
   query: (productId) => `/order-item/buyers/${productId}`,
@@ -67,5 +77,6 @@ export const {
   useGetAllOrdersQuery,
   useGetOrderByIdQuery,
   useGetMyOrderQuery,
-  useGetBuyersByProductQuery
+  useGetBuyersByProductQuery,
+  useUpdatePaymentStatusMutation,
 } = orderApi;
