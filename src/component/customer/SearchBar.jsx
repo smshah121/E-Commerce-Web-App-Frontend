@@ -55,7 +55,7 @@ const SearchBar = ({ searchTerm, setSearchTerm, onSearchSubmit }) => {
         {/* Premium Action Trigger */}
         <button
           onClick={handleSearchClick}
-          className="px-5 py-2.5 bg-slate-900 hover:bg-blue-600 text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-sm shrink-0 hover:-translate-y-0.5 active:translate-y-0"
+          className="px-5 py-2.5 bg-slate-900 hover:bg-indigo-600 text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-sm shrink-0 hover:-translate-y-0.5 active:translate-y-0"
         >
           Search
         </button>
