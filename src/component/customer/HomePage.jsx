@@ -253,7 +253,7 @@ const HomePage = () => {
                           <span className="text-xl font-black text-slate-900">
                             ${formatPrice(product.price)}
                           </span>
-                          <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200">
+                          <span className="text-xs font-semibold text-indigo-500 bg-indigo-100 px-2.5 py-1 rounded-md group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-200">
                             Buy Now
                           </span>
                         </div>
