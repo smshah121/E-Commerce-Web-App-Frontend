@@ -54,7 +54,7 @@ const ProductGrid = ({ products }) => {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 pb-8 border-b border-slate-100">
           
           {/* Section Heading */}
-          <div>
+          {/* <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-blue-600" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
@@ -69,7 +69,7 @@ const ProductGrid = ({ products }) => {
             <p className="mt-2 text-sm text-slate-500 max-w-lg">
               Discover premium tech accessories from trusted sellers.
             </p>
-          </div>
+          </div> */}
 
           {/* Search */}
           <div className="w-full lg:w-[380px]">
