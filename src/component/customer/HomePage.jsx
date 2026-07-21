@@ -115,8 +115,8 @@ const HomePage = () => {
                   Unbeatable Deal.
                 </span>
               </h1>
-              <p className="text-base sm:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
-                Welcome to <span className="text-white font-semibold">PriceTag</span>. Discover quality tech accessories from trusted sellers, all in one marketplace. Shop your favorites, explore new products, and find your next great deal.
+              <p> className="text-base sm:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed"
+                Welcome to <span className="text-white font-semibold">PriceTag</span>. Discover quality tech accessories from trusted sellers, all in one marketplace. Shop your favorites, explore new products, and find your next great deal.</p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
                 <button
