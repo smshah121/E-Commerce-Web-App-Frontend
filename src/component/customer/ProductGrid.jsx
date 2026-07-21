@@ -50,7 +50,7 @@ const ProductGrid = ({ products }) => {
   return (
     <section className="min-h-screen bg-white text-slate-900 antialiased">
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  pb-8">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 pb-8 border-b border-slate-100">
           
           {/* Section Heading */}
