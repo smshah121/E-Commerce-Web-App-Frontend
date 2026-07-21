@@ -107,7 +107,7 @@ const HomePage = () => {
               className="lg:col-span-6 space-y-6 text-center lg:text-left"
             >
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 backdrop-blur-sm">
-                🔥 Premium Mobile Ecosystem Accessories
+                The Tech Accessories Marketplace
               </span>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-none">
                 Discover Your Next <br />
@@ -116,8 +116,7 @@ const HomePage = () => {
                 </span>
               </h1>
               <p className="text-base sm:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed">
-                Welcome to <span className="text-white font-semibold">PriceTag</span>. Handpicked audio assets, MagSafe components, and hyper-speed chargers optimized for modern device matrices.
-              </p>
+                Welcome to <span className="text-white font-semibold">PriceTag</span>. Discover quality tech accessories from trusted sellers, all in one marketplace. Shop your favorites, explore new products, and find your next great deal.
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
                 <button

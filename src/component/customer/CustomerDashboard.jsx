@@ -112,7 +112,7 @@ const CustomerDashboard = () => {
               </motion.h1>
               
               <motion.p variants={itemVariants} className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-light tracking-wide">
-                Equip your ecosystem with next-gen precision mobile engineering.
+                Explore Premium Tech Accessories
               </motion.p>
             </motion.div>
               
@@ -157,7 +157,6 @@ const CustomerDashboard = () => {
               {[
                 { label: "Premium Devices Available", val: `${products.length}+`, icon: <FiTrendingUp className="text-cyan-400 text-xl" />, border: "hover:border-cyan-500/30" },
                 { label: "Active Items in Cart", val: totalQuantity, icon: <FiShoppingBag className="text-emerald-400 text-xl" />, border: "hover:border-emerald-500/30" },
-                { label: "Satisfied Power Users", val: "50k+", icon: <FiUsers className="text-purple-400 text-xl" />, border: "hover:border-purple-500/30" }
               ].map((stat, i) => (
                 <motion.div
                   key={i}
@@ -180,8 +179,8 @@ const CustomerDashboard = () => {
         <section className="py-20 bg-gradient-to-b from-white to-slate-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <AnimatedSectionHeader 
-              title="Explore Our Core Hardware"
-              subtitle="Futuristic peripherals engineered to advance your mobile capabilities."
+              title="Explore Our Tech Accessories"
+              subtitle="Discover quality accessories from trusted sellers."
             />
 
             {/* Smart Filter & Controls Bar */}

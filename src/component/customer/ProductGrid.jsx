@@ -41,7 +41,7 @@ const ProductGrid = ({ products }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 pb-6 border-b border-slate-100">
           <div>
-            <h3 className="text-xl font-extrabold tracking-tight text-slate-900">Featured Hardware</h3>
+            <h3 className="text-xl font-extrabold tracking-tight text-slate-900">Featured Products</h3>
             <p className="text-sm text-slate-400 font-medium mt-1">Handpicked premium peripherals and modules.</p>
           </div>
 
@@ -50,7 +50,7 @@ const ProductGrid = ({ products }) => {
             <div className="relative group">
               <input
                 type="text"
-                placeholder="Filter dynamic components..."
+                placeholder="Search accessories..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-11 pr-4 py-3 text-sm text-slate-900 placeholder-slate-400 bg-slate-50/50 rounded-xl border border-slate-200/80 focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white focus:outline-none transition-all duration-300 font-medium"
@@ -126,7 +126,7 @@ const ProductGrid = ({ products }) => {
                   </div>
 
                   {product.description ? (
-                    <p className="text-slate-400 text-xs line-clamp-2 leading-relaxed mb-5 font-medium flex-grow">
+                    <p className="text-slate-400 text-xs line-clamp-3 leading-relaxed mb-5 font-medium flex-grow">
                       {product.description}
                     </p>
                   ) : (
@@ -150,7 +150,7 @@ const ProductGrid = ({ products }) => {
                     ) : (
                       <>
                         <FiShoppingCart className="w-4 h-4" />
-                        <span>Deploy to Cart</span>
+                        <span>Add to Cart →</span>
                       </>
                     )}
                   </button>
