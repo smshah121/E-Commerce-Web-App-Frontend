@@ -68,31 +68,35 @@ const ProductGrid = ({ products }) => {
           
 
           {/* Search */}
-          <div className="w-full lg:w-[380px]">
-            <div className="relative group">
-              <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors duration-300 group-focus-within:text-blue-600" />
+            <div className="w-full flex flex-col sm:flex-row gap-3">
+    
+    {/* Search */}
+    <div className="relative group flex-1">
+      <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors duration-300 group-focus-within:text-blue-600" />
 
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 bg-slate-50 border border-slate-200 rounded-xl outline-none transition-all duration-300 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
-              />
-            </div>
+      <input
+        type="text"
+        placeholder="Search products..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="w-full pl-11 pr-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 bg-slate-50 border border-slate-200 rounded-xl outline-none transition-all duration-300 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+      />
+    </div>
 
-             <div>
-    <select
-      value={priceFilter}
-      onChange={(e) => setPriceFilter(e.target.value)}
-      className="w-full px-4 py-3.5 text-sm font-semibold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl outline-none cursor-pointer transition-all duration-300 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
-    >
-      <option value="default">Sort by: Recommended</option>
-      <option value="low-high">Price: Low to High</option>
-      <option value="high-low">Price: High to Low</option>
-    </select>
+    {/* Sort */}
+    <div className="w-full sm:w-[220px]">
+      <select
+        value={priceFilter}
+        onChange={(e) => setPriceFilter(e.target.value)}
+        className="w-full px-4 py-3.5 text-sm font-semibold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl outline-none cursor-pointer transition-all duration-300 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+      >
+        <option value="default">Sort by: Recommended</option>
+        <option value="low-high">Price: Low to High</option>
+        <option value="high-low">Price: High to Low</option>
+      </select>
+    </div>
+
   </div>
-          </div>
         </div>
 
         {/* Results / Filter Row */}
