@@ -42,7 +42,7 @@ const ProductGrid = ({ products }) => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 pb-6 border-b border-slate-100">
           <div>
             <h3 className="text-xl font-extrabold tracking-tight text-slate-900">Featured Products</h3>
-            <p className="text-sm text-slate-400 font-medium mt-1">Handpicked premium peripherals and modules.</p>
+          
           </div>
 
           {/* Centered Luxury Tech Search Bar */}

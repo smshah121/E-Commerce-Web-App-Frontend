@@ -153,7 +153,7 @@ const CustomerDashboard = () => {
             </motion.div>
           
             {/* Tech Infographics Stats */}
-            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="mt-4 flex items-center justify-center  gap-4 max-w-4xl mx-auto">
               {[
                 { label: "Premium Devices Available", val: `${products.length}+`, icon: <FiTrendingUp className="text-cyan-400 text-xl" />, border: "hover:border-cyan-500/30" },
                 { label: "Active Items in Cart", val: totalQuantity, icon: <FiShoppingBag className="text-emerald-400 text-xl" />, border: "hover:border-emerald-500/30" },
