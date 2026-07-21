@@ -117,7 +117,7 @@ const ProductGrid = ({ products }) => {
 
                 {/* Content Descriptor Metrics block */}
                 <div className="p-5 flex flex-col flex-grow">
-                  <h4 className="font-bold text-base text-slate-900 tracking-tight line-clamp-1 group-hover:text-blue-600 transition-colors duration-200 mb-1" title={product.name}>
+                  <h4 className="font-bold text-base text-slate-900 tracking-tight line-clamp-1 group-hover:text-gradient-to-r from-blue-600 to-purple-600 transition-colors duration-200 mb-1" title={product.name}>
                     {product.name}
                   </h4>
 
@@ -139,7 +139,7 @@ const ProductGrid = ({ products }) => {
                     className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs tracking-wide transition-all duration-300 flex items-center justify-center gap-2 ${
                       addedItems.has(product.id)
                         ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/10'
-                        : 'bg-slate-900 text-white hover:bg-blue-600 shadow-sm group-hover:shadow-md'
+                        : 'bg-slate-900 text-white hover:bg-gradient-to-r from-blue-600 to-purple-600 shadow-sm group-hover:shadow-md'
                     }`}
                   >
                     {addedItems.has(product.id) ? (
