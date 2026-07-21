@@ -54,17 +54,7 @@ const ProductGrid = ({ products }) => {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 pb-8 border-b border-slate-100">
           
           {/* Section Heading */}
-          <div>
-            <div className="flex items-center space-x-3 bg-slate-50/80 px-4 py-2 rounded-xl border border-slate-100 w-full sm:w-auto focus-within:ring-2 focus-within:ring-blue-500/20 transition-all">
-                            <MdSort className="text-slate-400 text-lg flex-shrink-0" />
-                            <select className="bg-transparent border-none text-sm font-semibold text-slate-700 focus:outline-none w-full cursor-pointer">
-                              <option>Sort by: Newest Arrivals</option>
-                              <option>Price: Low to High</option>
-                              <option>Price: High to Low</option>
-                          
-                            </select>
-                          </div>
-            
+         
 
           {/* Search */}
           <div className="w-full lg:w-[380px]">

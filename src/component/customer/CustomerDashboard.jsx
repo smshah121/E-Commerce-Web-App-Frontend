@@ -183,8 +183,8 @@ const CustomerDashboard = () => {
               subtitle="Discover quality accessories from trusted sellers."
             />
 
-            {/* Smart Filter & Controls Bar */}
-            <motion.div
+            Smart Filter & Controls Bar
+            {/* <motion.div
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -193,7 +193,7 @@ const CustomerDashboard = () => {
             >
             
               
-            </motion.div>
+            </motion.div> */}
 
             {isLoading ? (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center py-24">
