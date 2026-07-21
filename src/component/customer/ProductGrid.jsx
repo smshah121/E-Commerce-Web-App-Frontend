@@ -16,7 +16,7 @@ const ProductGrid = ({ products }) => {
 
   const [addedItems, setAddedItems] = useState(new Set());
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [priceFilter, setPriceFilter] = useState('default');
   const handleAddToCart = (product, event) => {
     event.stopPropagation();
 
@@ -43,9 +43,21 @@ const ProductGrid = ({ products }) => {
       : parseFloat(price || 0).toFixed(2);
   };
 
-  const filteredProducts = products?.filter((product) =>
+  const filteredProducts = products
+  ?.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  )
+  ?.sort((a, b) => {
+    if (priceFilter === 'low-high') {
+      return Number(a.price) - Number(b.price);
+    }
+
+    if (priceFilter === 'high-low') {
+      return Number(b.price) - Number(a.price);
+    }
+
+    return 0;
+  });
 
   return (
     <section className="min-h-screen bg-white text-slate-900 antialiased">
@@ -68,6 +80,18 @@ const ProductGrid = ({ products }) => {
                 className="w-full pl-11 pr-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 bg-slate-50 border border-slate-200 rounded-xl outline-none transition-all duration-300 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
               />
             </div>
+
+             <div className="w-full sm:w-[200px]">
+    <select
+      value={priceFilter}
+      onChange={(e) => setPriceFilter(e.target.value)}
+      className="w-full px-4 py-3.5 text-sm font-semibold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl outline-none cursor-pointer transition-all duration-300 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+    >
+      <option value="default">Sort by: Recommended</option>
+      <option value="low-high">Price: Low to High</option>
+      <option value="high-low">Price: High to Low</option>
+    </select>
+  </div>
           </div>
         </div>
 
