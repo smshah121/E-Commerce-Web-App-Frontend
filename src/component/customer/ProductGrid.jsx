@@ -81,7 +81,7 @@ const ProductGrid = ({ products }) => {
               />
             </div>
 
-             <div className="w-full sm:w-[200px]">
+             <div>
     <select
       value={priceFilter}
       onChange={(e) => setPriceFilter(e.target.value)}
