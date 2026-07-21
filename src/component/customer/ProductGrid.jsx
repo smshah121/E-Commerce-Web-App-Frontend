@@ -201,7 +201,7 @@ const ProductGrid = ({ products }) => {
                       </p>
                     )}
 
-                    <div className="mt-auto pt-5">
+                    <div className="mt-auto">
                       <button
                       onClick={(e) => handleAddToCart(product, e)}
                       className={`mt-5 w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-300 ${
