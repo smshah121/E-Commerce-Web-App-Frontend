@@ -239,7 +239,7 @@ const HomePage = () => {
                       {/* Content Block */}
                       <div className="p-5 flex flex-col flex-1 space-y-3">
                         <div className="space-y-1 flex-1">
-                          <h3 className="font-bold text-lg text-slate-900 tracking-tight line-clamp-1 group-hover:text-blue-600 transition-colors duration-200">
+                          <h3 className="font-bold text-lg text-slate-900 tracking-tight line-clamp-1 group-hover:text-indigo-600 transition-colors duration-200">
                             {product.name}
                           </h3>
                           {product.description && (
