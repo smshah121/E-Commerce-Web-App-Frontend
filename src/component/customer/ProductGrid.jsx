@@ -50,11 +50,26 @@ const ProductGrid = ({ products }) => {
   return (
     <section className="min-h-screen bg-white text-slate-900 antialiased">
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 pb-8 border-b border-slate-100">
           
           {/* Section Heading */}
-         
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-2 h-2 rounded-full bg-blue-600" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
+                Marketplace
+              </span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-950">
+              Featured Products
+            </h2>
+
+            <p className="mt-2 text-sm text-slate-500 max-w-lg">
+              Discover premium tech accessories from trusted sellers.
+            </p>
+          </div>
 
           {/* Search */}
           <div className="w-full lg:w-[380px]">

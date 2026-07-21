@@ -183,17 +183,8 @@ const CustomerDashboard = () => {
               subtitle="Discover quality accessories from trusted sellers."
             />
 
-            Smart Filter & Controls Bar
-            {/* <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-12 bg-white p-4 rounded-2xl shadow-sm border border-slate-100"
-            >
-            
-              
-            </motion.div> */}
+            {/* Smart Filter & Controls Bar */}
+          
 
             {isLoading ? (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center py-24">
