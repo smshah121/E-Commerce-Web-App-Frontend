@@ -181,7 +181,7 @@ const ProductGrid = ({ products }) => {
                   </div>
 
                   {/* Product Content */}
-                  <div className="p-5  flex flex-col h-[250px]">
+                  <div className="p-5 flex flex-col h-[200px]">
                     <div className="flex items-start justify-between gap-3">
                       <h3
                         className="font-bold text-base text-slate-900 line-clamp-2 leading-snug group-hover:text-[#6a25eb] transition-colors duration-300"
