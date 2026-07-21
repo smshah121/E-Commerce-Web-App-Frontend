@@ -174,7 +174,7 @@ const HomePage = () => {
       <section id="featured-products" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSectionHeader
           title="Featured Collection"
-          subtitle="Engineered for efficiency. Browse architectural mobile hardware accessories."
+          subtitle="Explore premium accessories designed for your everyday tech."
         />
 
         {isLoading ? (
