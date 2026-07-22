@@ -205,6 +205,12 @@ const HomePage = () => {
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch"
               >
                 {filteredProducts.map((product) => {
+                  console.log('PRODUCT:', product);
+  console.log('SELLER:', product.seller);
+  console.log(
+    'SELLER APPLICATION:',
+    product.seller?.sellerApplication
+  );
                   const image = product.images?.[0]?.image || null;
 
                   return (
