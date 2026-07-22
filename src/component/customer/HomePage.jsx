@@ -14,6 +14,11 @@ const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: products = [], isLoading } = useGetAllProductsQuery();
 
+  const storeName =
+  product.seller?.storeName ||
+  product.seller?.store?.name ||
+  product.store?.name ||
+  "PriceTag";
   const { token, role } = useSelector((state) => state.auth);
   const isLoggedIn = Boolean(token);
 
@@ -242,6 +247,10 @@ const HomePage = () => {
                           <h3 className="font-bold text-lg text-slate-900 tracking-tight line-clamp-1 group-hover:text-indigo-600 transition-colors duration-200">
                             {product.name}
                           </h3>
+                          {/* Store / Seller */}
+                    <p className="text-xs font-semibold text-slate-400">
+                      {storeName}
+                    </p>
                           {product.description && (
                             <p className="text-slate-500 text-sm line-clamp-2 leading-relaxed">
                               {product.description}
