@@ -14,8 +14,7 @@ const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: products = [], isLoading } = useGetAllProductsQuery();
 
-  const storeName =
-  products.seller?.sellerApplication?.storeName || "PriceTag";
+  
   const { token, role } = useSelector((state) => state.auth);
   const isLoggedIn = Boolean(token);
 
@@ -251,9 +250,9 @@ const HomePage = () => {
                             {product.name}
                           </h3>
                           {/* Store / Seller */}
-                    <p className="text-xs font-semibold text-slate-400">
-                      {storeName}
-                    </p>
+                   <p className="text-xs font-semibold text-slate-400">
+  {product.seller?.sellerApplication?.storeName || 'PriceTag'}
+</p>
                           {product.description && (
                             <p className="text-slate-500 text-sm line-clamp-2 leading-relaxed">
                               {product.description}
