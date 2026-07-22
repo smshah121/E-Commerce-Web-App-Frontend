@@ -15,7 +15,7 @@ const HomePage = () => {
   const { data: products = [], isLoading } = useGetAllProductsQuery();
 
   const storeName =
-  products.admin?.sellerApplication?.storeName || "PriceTag";
+  products.seller?.sellerApplication?.storeName || "PriceTag";
   const { token, role } = useSelector((state) => state.auth);
   const isLoggedIn = Boolean(token);
 
