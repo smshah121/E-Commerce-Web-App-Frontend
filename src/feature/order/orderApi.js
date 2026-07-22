@@ -38,7 +38,7 @@ export const orderApi = createApi({
     }),
 
     getOrdersForAdmin: builder.query({
-  query: () => '/orders/admin',
+  query: () => '/orders/seller',
 }),
 
 
