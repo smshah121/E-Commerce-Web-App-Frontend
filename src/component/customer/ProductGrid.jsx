@@ -189,6 +189,11 @@ const ProductGrid = ({ products }) => {
                         {product.name}
                       </h3>
 
+                       {/* Store / Seller */}
+                   <p className="text-xs font-semibold text-slate-400">
+  {product.seller?.sellerApplication?.storeName || 'PriceTag'}
+</p>
+
                       <span className="shrink-0 text-lg font-black text-slate-950">
                         ${formatPrice(product.price)}
                       </span>
