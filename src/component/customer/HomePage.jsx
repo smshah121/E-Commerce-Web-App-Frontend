@@ -424,12 +424,12 @@ const HomePage = () => {
   <div className="p-5 flex flex-col flex-1">
 
     {/* Store Name */}
-    <p className="text-xs font-semibold uppercase tracking-wider text-indigo-600 mb-2">
+    <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
       {product.seller?.sellerApplication?.storeName || "PriceTag"}
     </p>
 
     {/* Product Name */}
-    <h3 className="text-lg font-bold text-slate-900 leading-snug line-clamp-1 group-hover:text-indigo-600 transition-colors duration-200">
+   <h3 className="text-lg font-bold text-slate-900 leading-snug line-clamp-1 group-hover:text-slate-600 transition-colors duration-200">
       {product.name}
     </h3>
 
@@ -454,9 +454,9 @@ const HomePage = () => {
       </div>
 
       {/* Buy Button */}
-      <span className="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold group-hover:bg-indigo-600 transition-colors duration-300">
-        Buy Now
-      </span>
+      <span className="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold group-hover:bg-black transition-colors duration-300">
+  Buy Now
+</span>
     </div>
   </div>
 </motion.div>
