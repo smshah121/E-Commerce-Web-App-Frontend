@@ -28,15 +28,20 @@ const HomePage = () => {
 
 
   const uniqueStores = [
-  ...new Map(
-    products
+ ...new Map(
+    filteredProducts
       .filter(
         (product) =>
           product.seller?.sellerApplication?.storeName
       )
       .map((product) => [
         product.seller.id,
-        product.seller.sellerApplication,
+        {
+          id: product.seller.id,
+          storeName: product.seller.sellerApplication.storeName,
+          storeDescription:
+            product.seller.sellerApplication.storeDescription,
+        },
       ])
   ).values(),
 ];
