@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // Removed: import { useGetAllProductsQuery } from '../../feature/product/productApi';
@@ -46,219 +47,405 @@ const Navbar = ({ isLoggedIn, role, onScrollToSection, searchTerm, setSearchTerm
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100' 
-        : 'bg-transparent'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20">
-          {/* Enhanced Premium Logo */}
-          <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center space-x-3 group">
-              <div className="relative">
-                {/* Main logo container with premium styling */}
-                <div className="relative w-12 h-12 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-2xl group-hover:shadow-3xl transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3">
-                  {/* Inner glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl"></div>
-                  
-                  {/* Price tag icon design */}
-                  <div className="relative z-10 flex items-center justify-center">
-                    <svg className="w-7 h-7 text-white transform transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
-                    </svg>
-                  </div>
-                  
-                  {/* Animated sparkle effect */}
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full opacity-75 animate-ping"></div>
-                </div>
-                
-                {/* Outer glow effect */}
-                <div className="absolute -inset-2 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-2xl blur-lg opacity-20 group-hover:opacity-40 transition-all duration-500 animate-pulse"></div>
-              </div>
-              
-              {/* Premium Typography with dynamic colors */}
-              <div className="flex flex-col">
-                <span className={`text-2xl md:text-3xl font-bold transition-all duration-300 ${
-                  isScrolled 
-                    ? 'bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent group-hover:from-indigo-600 group-hover:via-purple-600 group-hover:to-pink-500'
-                    : 'bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent group-hover:from-yellow-300 group-hover:via-white group-hover:to-yellow-300'
-                }`}>
-                  PriceTag
-                </span>
-                <span className={`text-xs font-medium tracking-wider uppercase transition-colors duration-300 ${
-                  isScrolled 
-                    ? 'text-gray-500 group-hover:text-purple-500'
-                    : 'text-white/70 group-hover:text-yellow-300'
-                }`}>
-                  Premium Shopping
-                </span>
-              </div>
-            </Link>
-          </div>
+    <nav
+  className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+    isScrolled
+      ? "bg-black/85 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+      : "bg-transparent"
+  }`}
+>
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-between h-16 md:h-20 gap-6">
 
-          {/* Desktop Navigation with SearchBar in the center */}
-          {/* The search bar is now properly positioned in the desktop view */}
-          <motion.div
-                        variants={heroTextVariants}
-                        transition={{ delay: 0.4 }}
-                        className="max-w-xl mx-auto hidden md:block w-full" // Added 'hidden md:block w-full' for placement
-                      >
-                        <SearchBar
-                            // 2. Pass the props down to SearchBar
-                          searchTerm={searchTerm} 
-                          setSearchTerm={setSearchTerm} 
-                        />
-                      </motion.div>
-          
-
-          {/* Right side Auth + Cart */}
-          <div className="hidden md:flex items-center space-x-4">
-            {/* Enhanced Cart Button */}
-            <button 
-              onClick={handleCartClick}
-              className={`relative p-3 rounded-xl transition-all duration-300 hover:scale-110 group ${
-                isScrolled
-                  ? 'text-gray-600 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 hover:shadow-lg'
-                  : 'text-white/90 hover:text-white hover:bg-white/10 hover:shadow-lg'
-              }`}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
-              </svg>
-              {/* Premium Cart badge */}
-              <span className="absolute -top-2 -right-2 bg-gradient-to-r from-pink-500 to-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-bold shadow-lg animate-bounce">
-                0
-              </span>
-            </button>
-
-            {!isLoggedIn && (
-              <div className="flex items-center space-x-3">
-                <button
-                  onClick={handleLoginClick}
-                  className={`px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 ${
-                    isScrolled
-                      ? 'text-indigo-600 hover:text-indigo-700 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50'
-                      : 'text-white hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  Sign In
-                </button>
-                <button
-                  onClick={handleSignupClick}
-                  className="px-6 py-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-600 text-white rounded-xl text-sm font-bold transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl"
-                >
-                  Get Started
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`p-3 rounded-xl transition-all duration-300 ${
-                isScrolled
-                  ? 'text-gray-600 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50'
-                  : 'text-white/90 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {isMobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Enhanced Mobile Menu */}
-      <div className={`md:hidden transition-all duration-300 ease-in-out ${
-        isMobileMenuOpen 
-          ? 'max-h-96 opacity-100' 
-          : 'max-h-0 opacity-0 overflow-hidden'
-      }`}>
-        <div className="bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-xl">
-            {/* 3. Added SearchBar to the mobile menu for functionality */}
-            <div className='px-4 pt-4'>
-                <SearchBar
-                    searchTerm={searchTerm} 
-                    setSearchTerm={setSearchTerm} 
+      {/* ================= LOGO ================= */}
+      <div className="flex-shrink-0">
+        <Link
+          to="/"
+          className="flex items-center gap-3 group"
+        >
+          {/* Logo Icon */}
+          <div className="relative">
+            <div
+              className="
+                relative
+                w-10 h-10 md:w-11 md:h-11
+                rounded-xl
+                bg-white
+                flex items-center justify-center
+                shadow-[0_0_25px_rgba(255,255,255,0.12)]
+                transition-all duration-300
+                group-hover:scale-105
+              "
+            >
+              <svg
+                className="w-6 h-6 text-black"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a1.994 1.994 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
                 />
+              </svg>
             </div>
 
-          <div className="px-4 pt-2 pb-6 space-y-1">
-            {navLinks.map((link) =>
-              link.isInternal ? (
-                <a
-                  key={link.name}
-                  href={`#${link.href}`}
-                  className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 transition-all duration-300"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onScrollToSection(link.href);
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  {link.name}
-                </a>
-              ) : (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 transition-all duration-300"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              )
-            )}
+            {/* Subtle glow */}
+            <div
+              className="
+                absolute
+                -inset-2
+                rounded-xl
+                bg-white/10
+                blur-xl
+                opacity-0
+                group-hover:opacity-100
+                transition-opacity duration-500
+              "
+            />
+          </div>
 
-            {/* Enhanced Mobile Cart */}
-            <button
-              onClick={() => {
-                handleCartClick();
-                setIsMobileMenuOpen(false);
-              }}
-              className="w-full flex items-center px-4 py-3 rounded-xl text-base font-semibold text-gray-700 hover:text-indigo-600 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 transition-all duration-300"
-            >
-              <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
-              </svg>
-              Premium Cart (0)
-            </button>
+          {/* Brand */}
+          <div className="hidden sm:flex flex-col">
+            <span className="text-xl md:text-2xl font-bold tracking-tight text-white">
+              PriceTag
+            </span>
 
-            {/* Enhanced Mobile Auth Buttons */}
-            {!isLoggedIn && (
-              <div className="pt-4 border-t border-gray-200 space-y-3">
-                <button
-                  onClick={() => {
-                    handleLoginClick();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full px-4 py-3 text-indigo-600 hover:text-indigo-700 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 rounded-xl text-base font-semibold transition-all duration-300"
-                >
-                  Sign In
-                </button>
-                <button
-                  onClick={() => {
-                    handleSignupClick();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full px-4 py-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-600 text-white rounded-xl text-base font-bold transition-all duration-300 transform hover:scale-105 shadow-xl"
-                >
-                  Get Started
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </nav>
+            <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-white/40">
+              Marketplace
+            </span>
+          </div>
+        </Link>
+      </div>
+
+
+      {/* ================= DESKTOP SEARCH ================= */}
+      <motion.div
+        variants={heroTextVariants}
+        transition={{ delay: 0.2 }}
+        className="hidden md:block flex-1 max-w-xl"
+      >
+        <SearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          isNavbar
+        />
+      </motion.div>
+
+
+      {/* ================= RIGHT ACTIONS ================= */}
+      <div className="hidden md:flex items-center gap-2">
+
+        {/* Cart */}
+        <button
+          onClick={handleCartClick}
+          className="
+            relative
+            p-3
+            rounded-xl
+            text-white/70
+            hover:text-white
+            hover:bg-white/5
+            transition-all duration-300
+          "
+        >
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.8}
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4"
+            />
+          </svg>
+
+          {/* Cart Badge */}
+          <span
+            className="
+              absolute
+              -top-1
+              -right-1
+              min-w-4
+              h-4
+              px-1
+              flex
+              items-center
+              justify-center
+              rounded-full
+              bg-white
+              text-black
+              text-[9px]
+              font-bold
+            "
+          >
+            0
+          </span>
+        </button>
+
+
+        {/* Sign In */}
+        {!isLoggedIn && (
+          <>
+            <button
+              onClick={handleLoginClick}
+              className="
+                px-4
+                py-2
+                rounded-lg
+                text-sm
+                font-medium
+                text-white/70
+                hover:text-white
+                hover:bg-white/5
+                transition-all duration-300
+              "
+            >
+              Sign In
+            </button>
+
+
+            {/* Get Started */}
+            <button
+              onClick={handleSignupClick}
+              className="
+                px-5
+                py-2.5
+                rounded-lg
+                bg-white
+                text-black
+                text-sm
+                font-semibold
+                shadow-[0_0_25px_rgba(255,255,255,0.08)]
+                hover:bg-gray-100
+                hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]
+                transition-all duration-300
+              "
+            >
+              Get Started
+            </button>
+          </>
+        )}
+      </div>
+
+
+      {/* ================= MOBILE MENU BUTTON ================= */}
+      <div className="md:hidden">
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="
+            p-2.5
+            rounded-xl
+            text-white
+            hover:bg-white/10
+            transition-all duration-300
+          "
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            {isMobileMenuOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  {/* ================= MOBILE MENU ================= */}
+  <div
+    className={`md:hidden transition-all duration-300 overflow-hidden ${
+      isMobileMenuOpen
+        ? "max-h-[600px] opacity-100"
+        : "max-h-0 opacity-0"
+    }`}
+  >
+    <div className="bg-black/95 backdrop-blur-2xl border-t border-white/10">
+
+      <div className="px-4 py-5 space-y-4">
+
+        {/* Mobile Search */}
+        <SearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          isNavbar
+        />
+
+
+        {/* Navigation Links */}
+        <div className="space-y-1 pt-2">
+
+          {navLinks.map((link) =>
+            link.isInternal ? (
+              <a
+                key={link.name}
+                href={`#${link.href}`}
+                className="
+                  block
+                  px-4
+                  py-3
+                  rounded-xl
+                  text-sm
+                  font-medium
+                  text-white/70
+                  hover:text-white
+                  hover:bg-white/5
+                  transition-all duration-300
+                "
+                onClick={(e) => {
+                  e.preventDefault();
+                  onScrollToSection(link.href);
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                {link.name}
+              </a>
+            ) : (
+              <Link
+                key={link.name}
+                to={link.href}
+                className="
+                  block
+                  px-4
+                  py-3
+                  rounded-xl
+                  text-sm
+                  font-medium
+                  text-white/70
+                  hover:text-white
+                  hover:bg-white/5
+                  transition-all duration-300
+                "
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            )
+          )}
+
+        </div>
+
+
+        {/* Mobile Cart */}
+        <button
+          onClick={() => {
+            handleCartClick();
+            setIsMobileMenuOpen(false);
+          }}
+          className="
+            w-full
+            flex
+            items-center
+            gap-3
+            px-4
+            py-3
+            rounded-xl
+            text-sm
+            font-medium
+            text-white/70
+            hover:text-white
+            hover:bg-white/5
+            transition-all duration-300
+          "
+        >
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.8}
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6"
+            />
+          </svg>
+
+          Cart
+          <span className="ml-auto text-xs text-white/40">
+            0 items
+          </span>
+        </button>
+
+
+        {/* Mobile Auth */}
+        {!isLoggedIn && (
+          <div className="pt-4 border-t border-white/10 space-y-3">
+
+            <button
+              onClick={() => {
+                handleLoginClick();
+                setIsMobileMenuOpen(false);
+              }}
+              className="
+                w-full
+                px-4
+                py-3
+                rounded-xl
+                text-sm
+                font-medium
+                text-white/80
+                border
+                border-white/10
+                hover:bg-white/5
+                transition-all duration-300
+              "
+            >
+              Sign In
+            </button>
+
+            <button
+              onClick={() => {
+                handleSignupClick();
+                setIsMobileMenuOpen(false);
+              }}
+              className="
+                w-full
+                px-4
+                py-3
+                rounded-xl
+                bg-white
+                text-black
+                text-sm
+                font-semibold
+                hover:bg-gray-100
+                transition-all duration-300
+              "
+            >
+              Get Started
+            </button>
+
+          </div>
+        )}
+
+      </div>
+    </div>
+  </div>
+</nav>
   );
 };
 
