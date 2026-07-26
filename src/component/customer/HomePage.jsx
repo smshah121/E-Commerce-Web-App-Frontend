@@ -13,6 +13,7 @@ import {
   Truck,
   ShieldCheck,
   Star,
+  ArrowRight
 } from "lucide-react";
 
 const HomePage = () => {
