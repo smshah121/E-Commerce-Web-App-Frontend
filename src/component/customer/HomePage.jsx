@@ -94,82 +94,251 @@ const HomePage = () => {
       />
 
       {/* Modern Split Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center bg-slate-900 text-white overflow-hidden pt-20">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/40 via-slate-900 to-slate-950 z-0" />
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 py-12 md:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-            
-            {/* Left Column: Context Branding */}
-            <motion.div 
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7 }}
-              className="lg:col-span-6 space-y-6 text-center lg:text-left"
-            >
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 backdrop-blur-sm">
-                The Tech Accessories Marketplace
-              </span>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-none">
-                Discover Your Next <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
-                  Unbeatable Deal.
-                </span>
-              </h1>
-              <p className="text-base sm:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0 font-normal leading-relaxed"> 
-                Welcome to <span className="text-white font-semibold">PriceTag</span>. Discover quality tech accessories from trusted sellers, all in one marketplace. Shop your favorites, explore new products, and find your next great deal.</p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
-                <button
-                  onClick={() => handleScrollToSection("featured-products")}
-                  className="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/20 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
-                >
-                  Explore Showcase
-                </button>
-                <button
-                  onClick={handleActionClick}
-                  className="px-8 py-4 bg-slate-800 hover:bg-slate-700/80 text-slate-200 font-semibold rounded-xl border border-slate-700 transition-all duration-200"
-                >
-                  Sign In Account
-                </button>
-              </div>
-            </motion.div>
+      <section className="relative min-h-[90vh] flex items-center bg-black text-white overflow-hidden pt-20">
+  {/* Background */}
+  <div className="absolute inset-0 pointer-events-none">
+    {/* Top-right blue glow */}
+    <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-blue-600/20 blur-[140px]" />
 
-            {/* Right Column: High-Impact Carousel Showcase */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="lg:col-span-6 w-full max-w-md md:max-w-xl mx-auto"
-            >
-              <div className="relative p-3 bg-slate-800/40 rounded-3xl border border-slate-700/50 backdrop-blur-md shadow-2xl">
-                <Swiper
-                  modules={[Autoplay, Pagination, EffectFade]}
-                  effect={"fade"}
-                  spaceBetween={0}
-                  slidesPerView={1}
-                  loop={true}
-                  autoplay={{ delay: 3500, disableOnInteraction: false }}
-                  pagination={{ clickable: true, dynamicBullets: true }}
-                  className="rounded-2xl overflow-hidden aspect-square sm:aspect-[4/3] lg:aspect-square bg-slate-950"
-                >
-                  {["/magsafe belkin.jpg", "/45W PowerBank.jpg", "/adaptor.jpg", "/Airpods max.jpg", "/apple earphones.jpg"].map((src, index) => (
-                    <SwiperSlide key={index} className="relative">
-                      <img
-                        src={src}
-                        alt="Featured Premium Tech Accessory"
-                        className="w-full h-full object-cover opacity-90 transition-transform duration-700 hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60" />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            </motion.div>
+    {/* Bottom-left purple glow */}
+    <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-purple-600/15 blur-[140px]" />
 
+    {/* Center white glow */}
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-white/[0.03] blur-[100px]" />
+
+    {/* Subtle grid */}
+    <div
+      className="absolute inset-0 opacity-[0.035]"
+      style={{
+        backgroundImage: `
+          linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)
+        `,
+        backgroundSize: "60px 60px",
+      }}
+    />
+
+    {/* Vignette */}
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,black_85%)]" />
+  </div>
+
+  {/* Content */}
+  <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 md:py-24">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+
+      {/* Left Content */}
+      <motion.div
+        initial={{ opacity: 0, x: -40 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.7 }}
+        className="lg:col-span-6 text-center lg:text-left"
+      >
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full
+          bg-white/[0.04] border border-white/10
+          text-sm text-gray-300 backdrop-blur-md"
+        >
+          <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.9)]" />
+          The Tech Accessories Marketplace
+        </motion.div>
+
+        {/* Heading */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-black tracking-tight leading-[0.95]">
+          Discover Your Next
+          <br />
+
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-gray-500">
+            Unbeatable Deal.
+          </span>
+        </h1>
+
+        {/* Description */}
+        <p className="mt-7 text-base sm:text-lg text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+          Welcome to{" "}
+          <span className="text-white font-semibold">
+            PriceTag
+          </span>
+          . Discover quality tech accessories from trusted sellers,
+          all in one marketplace. Shop your favorites, explore new
+          products, and find your next great deal.
+        </p>
+
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-8">
+
+          {/* Primary */}
+          <motion.button
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => handleScrollToSection("featured-products")}
+            className="
+              px-8 py-4
+              bg-white text-black
+              rounded-xl
+              font-semibold
+              shadow-[0_0_30px_rgba(255,255,255,0.12)]
+              hover:shadow-[0_0_40px_rgba(255,255,255,0.2)]
+              hover:bg-gray-100
+              transition-all duration-300
+            "
+          >
+            Explore Products
+          </motion.button>
+
+          {/* Secondary */}
+          <motion.button
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleActionClick}
+            className="
+              px-8 py-4
+              bg-white/[0.05]
+              text-white
+              rounded-xl
+              font-semibold
+              border border-white/10
+              backdrop-blur-md
+              hover:bg-white/[0.1]
+              hover:border-white/20
+              transition-all duration-300
+            "
+          >
+            Sign In Account
+          </motion.button>
+
+        </div>
+
+        {/* Trust indicators */}
+        <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 mt-10 text-sm text-gray-500">
+          <div className="flex items-center gap-2">
+            <span className="text-white">✓</span>
+            Trusted Sellers
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-white">✓</span>
+            Secure Payments
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-white">✓</span>
+            Quality Products
           </div>
         </div>
-      </section>
+      </motion.div>
+
+      {/* Right Product Showcase */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="lg:col-span-6 w-full max-w-xl mx-auto"
+      >
+        <div className="relative">
+
+          {/* Glow behind carousel */}
+          <div className="
+            absolute
+            -inset-6
+            bg-gradient-to-r
+            from-blue-600/20
+            via-purple-600/10
+            to-white/5
+            blur-[60px]
+            rounded-full
+          " />
+
+          {/* Carousel container */}
+          <div className="
+            relative
+            p-2
+            rounded-3xl
+            bg-white/[0.04]
+            border border-white/10
+            backdrop-blur-xl
+            shadow-[0_0_80px_rgba(255,255,255,0.06)]
+          ">
+            <Swiper
+              modules={[Autoplay, Pagination, EffectFade]}
+              effect="fade"
+              spaceBetween={0}
+              slidesPerView={1}
+              loop={true}
+              autoplay={{
+                delay: 3500,
+                disableOnInteraction: false,
+              }}
+              pagination={{
+                clickable: true,
+                dynamicBullets: true,
+              }}
+              className="
+                rounded-2xl
+                overflow-hidden
+                aspect-square
+                sm:aspect-[4/3]
+                lg:aspect-square
+                bg-zinc-950
+              "
+            >
+              {[
+                "/magsafe belkin.jpg",
+                "/45W PowerBank.jpg",
+                "/adaptor.jpg",
+                "/Airpods max.jpg",
+                "/apple earphones.jpg",
+              ].map((src, index) => (
+                <SwiperSlide key={index} className="relative">
+                  <img
+                    src={src}
+                    alt="Featured Premium Tech Accessory"
+                    className="
+                      w-full h-full
+                      object-cover
+                      opacity-90
+                      transition-transform
+                      duration-700
+                      hover:scale-105
+                    "
+                  />
+
+                  {/* Image overlay */}
+                  <div className="
+                    absolute inset-0
+                    bg-gradient-to-t
+                    from-black/80
+                    via-black/10
+                    to-transparent
+                  " />
+
+                  {/* Slide label */}
+                  <div className="absolute bottom-6 left-6">
+                    <span className="
+                      px-3 py-1.5
+                      rounded-full
+                      bg-black/50
+                      border border-white/10
+                      backdrop-blur-md
+                      text-xs
+                      text-gray-300
+                    ">
+                      Premium Tech
+                    </span>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </div>
+      </motion.div>
+
+    </div>
+  </div>
+</section>
 
       {/* Dynamic Native Grid Showcase */}
       <section id="featured-products" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
