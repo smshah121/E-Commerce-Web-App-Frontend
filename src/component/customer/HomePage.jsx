@@ -9,6 +9,7 @@ import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
+import { Link } from 'react-router-dom';
 import {
   Truck,
   ShieldCheck,
@@ -572,22 +573,244 @@ const HomePage = () => {
 
       {/* Footer Ecosystem */}
       {/* Footer Ecosystem */}
-<footer id="contact-us" className="bg-slate-950 text-slate-400 py-12 border-t border-slate-900">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
-    <div className="flex items-center space-x-3 text-white font-bold text-lg group">
-      {/* Premium Gradient Frame for your SVG */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-xl shadow-md transition-all duration-300">
-        <svg 
-          className="w-6 h-6 text-white transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" 
-          fill="currentColor" 
-          viewBox="0 0 24 24"
+<footer
+  id="contact-us"
+  className="border-t border-gray-200 bg-white"
+>
+  <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+
+    {/* Main Footer */}
+    <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+
+      {/* Brand */}
+      <div className="space-y-4">
+
+        <Link
+          to="/"
+          className="inline-flex items-center gap-3 group"
         >
-          <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
-        </svg>
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-900 text-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
+            <Tag className="h-5 w-5" />
+          </div>
+
+          <span className="text-xl font-bold text-gray-900">
+            PriceTag
+          </span>
+        </Link>
+
+        <p className="max-w-xs text-sm leading-relaxed text-gray-500">
+          Your trusted destination for premium quality products
+          at unbeatable prices.
+        </p>
+
+        {/* Social Icons */}
+        <div className="flex items-center gap-2 pt-2">
+
+          <a
+            href="#"
+            aria-label="Facebook"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 hover:-translate-y-0.5"
+          >
+            <Facebook className="h-4 w-4" />
+          </a>
+
+          <a
+            href="#"
+            aria-label="Twitter"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 hover:-translate-y-0.5"
+          >
+            <Twitter className="h-4 w-4" />
+          </a>
+
+          <a
+            href="#"
+            aria-label="Instagram"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 hover:-translate-y-0.5"
+          >
+            <Instagram className="h-4 w-4" />
+          </a>
+
+          <a
+            href="#"
+            aria-label="LinkedIn"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 hover:-translate-y-0.5"
+          >
+            <Linkedin className="h-4 w-4" />
+          </a>
+
+        </div>
       </div>
-      <span className="tracking-tight">PriceTag</span>
+
+
+      {/* Quick Links */}
+      <div>
+        <h3 className="mb-4 text-sm font-semibold text-gray-900">
+          Quick Links
+        </h3>
+
+        <ul className="space-y-3 text-sm">
+          <li>
+            <Link
+              to="/"
+              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+            >
+              Home
+            </Link>
+          </li>
+
+          <li>
+            <a
+              href="#featured-products"
+              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+            >
+              Products
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#about"
+              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+            >
+              About Us
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#contact-us"
+              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+            >
+              Contact
+            </a>
+          </li>
+        </ul>
+      </div>
+
+
+      {/* Customer Service */}
+      <div>
+        <h3 className="mb-4 text-sm font-semibold text-gray-900">
+          Customer Service
+        </h3>
+
+        <ul className="space-y-3 text-sm">
+          <li>
+            <a
+              href="#"
+              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+            >
+              Help Center
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#"
+              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+            >
+              Return Policy
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#"
+              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+            >
+              Shipping Information
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#"
+              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+            >
+              Track Order
+            </a>
+          </li>
+        </ul>
+      </div>
+
+
+      {/* Account */}
+      <div>
+        <h3 className="mb-4 text-sm font-semibold text-gray-900">
+          Your Account
+        </h3>
+
+        <ul className="space-y-3 text-sm">
+          <li>
+            <Link
+              to="/login"
+              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+            >
+              Sign In
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              to="/signup"
+              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+            >
+              Create Account
+            </Link>
+          </li>
+
+          <li>
+            <a
+              href="#"
+              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+            >
+              Shopping Cart
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#"
+              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+            >
+              Order History
+            </a>
+          </li>
+        </ul>
+      </div>
+
     </div>
-    <p>© 2026 PriceTag. Architecture System Infrastructure.</p>
+
+
+    {/* Divider */}
+    <div className="my-8 h-px w-full bg-gray-200" />
+
+
+    {/* Bottom Footer */}
+    <div className="flex flex-col gap-4 text-sm text-gray-500 md:flex-row md:items-center md:justify-between">
+
+      <p>
+        © {new Date().getFullYear()} PriceTag. All rights reserved.
+      </p>
+
+      <div className="flex gap-6">
+        <a
+          href="#"
+          className="transition-colors duration-200 hover:text-gray-900"
+        >
+          Privacy Policy
+        </a>
+
+        <a
+          href="#"
+          className="transition-colors duration-200 hover:text-gray-900"
+        >
+          Terms of Service
+        </a>
+      </div>
+
+    </div>
+
   </div>
 </footer>
     </div>
