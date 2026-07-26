@@ -14,7 +14,8 @@ import {
   Truck,
   ShieldCheck,
   Star,
-  ArrowRight
+  ArrowRight,
+  Tag
 } from "lucide-react";
 
 const HomePage = () => {
