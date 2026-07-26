@@ -580,7 +580,7 @@ const HomePage = () => {
       {/* Footer Ecosystem */}
 <footer
   id="contact-us"
-  className="border-t border-gray-200 bg-white"
+  className="border-t border-gray-200 bg-black"
 >
   <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 
@@ -598,12 +598,12 @@ const HomePage = () => {
             <Tag className="h-5 w-5" />
           </div>
 
-          <span className="text-xl font-bold text-gray-900">
+          <span className="text-xl font-bold text-gray-50">
             PriceTag
           </span>
         </Link>
 
-        <p className="max-w-xs text-sm leading-relaxed text-gray-500">
+        <p className="max-w-xs text-sm leading-relaxed text-white">
           Your trusted destination for premium quality products
           at unbeatable prices.
         </p>
@@ -614,7 +614,7 @@ const HomePage = () => {
           <a
             href="#"
             aria-label="Facebook"
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 hover:-translate-y-0.5"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-white transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 hover:-translate-y-0.5"
           >
             <Facebook className="h-4 w-4" />
           </a>
@@ -622,7 +622,7 @@ const HomePage = () => {
           <a
             href="#"
             aria-label="Twitter"
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 hover:-translate-y-0.5"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-white transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 hover:-translate-y-0.5"
           >
             <Twitter className="h-4 w-4" />
           </a>
@@ -630,7 +630,7 @@ const HomePage = () => {
           <a
             href="#"
             aria-label="Instagram"
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 hover:-translate-y-0.5"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-white transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 hover:-translate-y-0.5"
           >
             <Instagram className="h-4 w-4" />
           </a>
@@ -638,7 +638,7 @@ const HomePage = () => {
           <a
             href="#"
             aria-label="LinkedIn"
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 hover:-translate-y-0.5"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-white transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 hover:-translate-y-0.5"
           >
             <Linkedin className="h-4 w-4" />
           </a>
@@ -649,7 +649,7 @@ const HomePage = () => {
 
       {/* Quick Links */}
       <div>
-        <h3 className="mb-4 text-sm font-semibold text-gray-900">
+        <h3 className="mb-4 text-sm font-semibold text-gray-50">
           Quick Links
         </h3>
 
@@ -657,7 +657,7 @@ const HomePage = () => {
           <li>
             <Link
               to="/"
-              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+              className="text-gray-50 transition-colors duration-200 hover:text-gray-500"
             >
               Home
             </Link>
@@ -666,7 +666,7 @@ const HomePage = () => {
           <li>
             <a
               href="#featured-products"
-              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+              className="text-gray-50 transition-colors duration-200 hover:text-gray-500"
             >
               Products
             </a>
@@ -675,7 +675,7 @@ const HomePage = () => {
           <li>
             <a
               href="#about"
-              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+              className="text-gray-50 transition-colors duration-200 hover:text-gray-500"
             >
               About Us
             </a>
@@ -684,7 +684,7 @@ const HomePage = () => {
           <li>
             <a
               href="#contact-us"
-              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+              className="text-gray-50 transition-colors duration-200 hover:text-gray-500"
             >
               Contact
             </a>
@@ -695,7 +695,7 @@ const HomePage = () => {
 
       {/* Customer Service */}
       <div>
-        <h3 className="mb-4 text-sm font-semibold text-gray-900">
+        <h3 className="mb-4 text-sm font-semibold text-gray-500">
           Customer Service
         </h3>
 
@@ -703,7 +703,7 @@ const HomePage = () => {
           <li>
             <a
               href="#"
-              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+              className="text-gray-50 transition-colors duration-200 hover:text-gray-500"
             >
               Help Center
             </a>
@@ -712,7 +712,7 @@ const HomePage = () => {
           <li>
             <a
               href="#"
-              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+              className="text-gray-50 transition-colors duration-200 hover:text-gray-500"
             >
               Return Policy
             </a>
@@ -721,7 +721,7 @@ const HomePage = () => {
           <li>
             <a
               href="#"
-              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+              className="text-gray-50 transition-colors duration-200 hover:text-gray-500"
             >
               Shipping Information
             </a>
@@ -730,7 +730,7 @@ const HomePage = () => {
           <li>
             <a
               href="#"
-              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+              className="text-gray-50 transition-colors duration-200 hover:text-gray-500"
             >
               Track Order
             </a>
@@ -749,7 +749,7 @@ const HomePage = () => {
           <li>
             <Link
               to="/login"
-              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+              className="text-gray-50 transition-colors duration-200 hover:text-gray-500"
             >
               Sign In
             </Link>
@@ -758,7 +758,7 @@ const HomePage = () => {
           <li>
             <Link
               to="/signup"
-              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+              className="text-gray-50 transition-colors duration-200 hover:text-gray-500"
             >
               Create Account
             </Link>
@@ -767,7 +767,7 @@ const HomePage = () => {
           <li>
             <a
               href="#"
-              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+              className="text-gray-50 transition-colors duration-200 hover:text-gray-500"
             >
               Shopping Cart
             </a>
@@ -776,7 +776,7 @@ const HomePage = () => {
           <li>
             <a
               href="#"
-              className="text-gray-500 transition-colors duration-200 hover:text-gray-900"
+              className="text-gray-50 transition-colors duration-200 hover:text-gray-500"
             >
               Order History
             </a>
@@ -788,11 +788,11 @@ const HomePage = () => {
 
 
     {/* Divider */}
-    <div className="my-8 h-px w-full bg-gray-200" />
+    <div className="my-8 h-px w-full bg-white" />
 
 
     {/* Bottom Footer */}
-    <div className="flex flex-col gap-4 text-sm text-gray-500 md:flex-row md:items-center md:justify-between">
+    <div className="flex flex-col gap-4 text-sm text-gray-50 md:flex-row md:items-center md:justify-between">
 
       <p>
         © {new Date().getFullYear()} PriceTag. All rights reserved.
@@ -801,14 +801,14 @@ const HomePage = () => {
       <div className="flex gap-6">
         <a
           href="#"
-          className="transition-colors duration-200 hover:text-gray-900"
+          className="transition-colors duration-200 hover:text-gray-200"
         >
           Privacy Policy
         </a>
 
         <a
           href="#"
-          className="transition-colors duration-200 hover:text-gray-900"
+          className="transition-colors duration-200 hover:text-gray-200"
         >
           Terms of Service
         </a>
