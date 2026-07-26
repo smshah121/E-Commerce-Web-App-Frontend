@@ -27,25 +27,7 @@ const HomePage = () => {
   const { data: products = [], isLoading } = useGetAllProductsQuery();
 
 
-  const uniqueStores = [
- ...new Map(
-    filteredProducts
-      .filter(
-        (product) =>
-          product.seller?.sellerApplication?.storeName
-      )
-      .map((product) => [
-        product.seller.id,
-        {
-          id: product.seller.id,
-          storeName: product.seller.sellerApplication.storeName,
-          storeDescription:
-            product.seller.sellerApplication.storeDescription,
-        },
-      ])
-  ).values(),
-];
-
+ 
   
   const { token, role } = useSelector((state) => state.auth);
   const isLoggedIn = Boolean(token);
@@ -94,6 +76,26 @@ const HomePage = () => {
       transition: { type: "spring", stiffness: 80, damping: 15 },
     },
   };
+
+
+   const uniqueStores = [
+ ...new Map(
+    filteredProducts
+      .filter(
+        (product) =>
+          product.seller?.sellerApplication?.storeName
+      )
+      .map((product) => [
+        product.seller.id,
+        {
+          id: product.seller.id,
+          storeName: product.seller.sellerApplication.storeName,
+          storeDescription:
+            product.seller.sellerApplication.storeDescription,
+        },
+      ])
+  ).values(),
+];
 
   const AnimatedSectionHeader = ({ title, subtitle }) => {
     const ref = React.useRef(null);
