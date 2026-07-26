@@ -15,7 +15,11 @@ import {
   ShieldCheck,
   Star,
   ArrowRight,
-  Tag
+  Tag,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin
 } from "lucide-react";
 
 const HomePage = () => {
