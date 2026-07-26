@@ -9,6 +9,11 @@ import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
+import {
+  Truck,
+  ShieldCheck,
+  Star,
+} from "lucide-react";
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -469,24 +474,100 @@ const HomePage = () => {
       </section>
 
       {/* Rest of components (Features / Footer) unchanged but clean */}
-      <section className="py-20 bg-white border-y border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSectionHeader title="Operational Standards" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: "📦", title: "Free Global Shipping", description: "Complimentary priority routing protection applied to all packages over $50." },
-              { icon: "🛡️", title: "Encrypted Transactions", description: "Direct layer handshake guarantees credential token security during transit." },
-              { icon: "💎", title: "Quality Benchmarks", description: "All structural accessories carry structural device matching assurances." },
-            ].map((feature, index) => (
-              <div key={index} className="text-center p-6 rounded-2xl bg-slate-50/50 border border-slate-100">
-                <span className="text-4xl block mb-4">{feature.icon}</span>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">{feature.title}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed">{feature.description}</p>
+     <section id="why-choose-myshop" className="py-24 bg-white">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    {/* Section Header */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="mx-auto mb-14 max-w-2xl text-center"
+    >
+      <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-gray-500">
+        Why PriceTag?
+      </p>
+
+      <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        Everything you need for a better shopping experience
+      </h2>
+
+      <p className="mt-4 text-gray-500">
+        We make online shopping simple, secure, and reliable with quality
+        products and customer-focused service.
+      </p>
+    </motion.div>
+
+    {/* Feature Cards */}
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      className="grid grid-cols-1 gap-6 md:grid-cols-3"
+    >
+      {[
+        {
+          icon: Truck,
+          title: "Fast & Free Shipping",
+          description:
+            "Enjoy reliable delivery and free shipping on qualifying orders, so your purchases reach you quickly.",
+        },
+        {
+          icon: ShieldCheck,
+          title: "Secure Shopping",
+          description:
+            "Your personal and payment information is protected with a secure and trusted checkout experience.",
+        },
+        {
+          icon: Star,
+          title: "Quality Products",
+          description:
+            "Discover carefully selected products that meet our standards for quality, value, and reliability.",
+        },
+      ].map((feature) => {
+        const Icon = feature.icon;
+
+        return (
+          <motion.div
+            key={feature.title}
+            variants={cardVariants}
+            whileHover={{
+              y: -6,
+              transition: { duration: 0.2 },
+            }}
+          >
+            <div className="group h-full rounded-2xl border border-gray-200 bg-white p-7 transition-all duration-300 hover:border-gray-300 hover:shadow-xl">
+
+              {/* Icon */}
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 text-gray-900 transition-all duration-300 group-hover:bg-gray-900 group-hover:text-white">
+                <Icon className="h-6 w-6" />
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
+              {/* Title */}
+              <h3 className="text-xl font-bold text-gray-900">
+                {feature.title}
+              </h3>
+
+              {/* Description */}
+              <p className="mt-3 text-sm leading-6 text-gray-500">
+                {feature.description}
+              </p>
+
+              {/* Learn More */}
+              <div className="mt-6 flex items-center text-sm font-medium text-gray-700 opacity-0 transition-all duration-300 group-hover:opacity-100">
+                Learn more
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </div>
+
+            </div>
+          </motion.div>
+        );
+      })}
+    </motion.div>
+  </div>
+</section>
 
       {/* Footer Ecosystem */}
       {/* Footer Ecosystem */}
