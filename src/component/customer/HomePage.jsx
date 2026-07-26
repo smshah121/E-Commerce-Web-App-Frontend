@@ -90,7 +90,7 @@ const HomePage = () => {
         <h2 className="text-3xl md:text-5xl font-black tracking-tight text-gray-900 mb-4">
           {title}
         </h2>
-        <div className="w-20 h-1.5 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full mb-4" />
+        <div className="w-20 h-1.5 bg-gray-600 mx-auto rounded-full mb-4" />
         {subtitle && <p className="text-gray-500 text-lg max-w-xl mx-auto">{subtitle}</p>}
       </motion.div>
     );
@@ -479,6 +479,84 @@ const HomePage = () => {
           </>
         )}
       </section>
+
+
+      {/* Explore Stores */}
+<section
+  id="explore-stores"
+  className="bg-white py-24"
+>
+  <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+    {/* Header */}
+    <div className="mb-14 text-center">
+      <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+        Marketplace Stores
+      </p>
+
+      <h2 className="text-3xl font-bold tracking-tight text-gray-950 sm:text-4xl">
+        Explore Trusted Stores
+      </h2>
+
+      <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-gray-500 sm:text-lg">
+        Discover products from trusted sellers and explore their collections
+        in one place.
+      </p>
+    </div>
+
+    {/* Store Grid */}
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+    >
+      {products.map((product) => (
+        <motion.div
+          key={product.id}
+          variants={cardVariants}
+          whileHover={{ y: -6 }}
+          onClick={handleActionClick}
+          className="group cursor-pointer rounded-2xl border border-gray-200 bg-white p-6 transition-all duration-300 hover:border-gray-300 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
+        >
+
+          {/* Store Icon */}
+          <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_25px_rgba(0,0,0,0.2)]">
+            <span className="text-xl font-bold">
+              {product.seller?.sellerApplication?.storeName
+                ?.charAt(0)
+                ?.toUpperCase() || "P"}
+            </span>
+          </div>
+
+          {/* Store Information */}
+          <h3 className="text-xl font-bold tracking-tight text-gray-950">
+            {product.seller?.sellerApplication?.storeName || "PriceTag"}
+          </h3>
+
+          <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-gray-500">
+            {product.seller?.sellerApplication?.storeDescription ||
+              "Explore quality products from this trusted seller."}
+          </p>
+
+          {/* Bottom */}
+          <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
+            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+              Trusted Seller
+            </span>
+
+            <span className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-gray-500">
+              Visit Store →
+            </span>
+          </div>
+
+        </motion.div>
+      ))}
+    </motion.div>
+
+  </div>
+</section>
 
       {/* Rest of components (Features / Footer) unchanged but clean */}
      <section id="why-choose-myshop" className="py-24 bg-white">
