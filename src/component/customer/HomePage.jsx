@@ -26,6 +26,21 @@ const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: products = [], isLoading } = useGetAllProductsQuery();
 
+
+  const uniqueStores = [
+  ...new Map(
+    products
+      .filter(
+        (product) =>
+          product.seller?.sellerApplication?.storeName
+      )
+      .map((product) => [
+        product.seller.id,
+        product.seller.sellerApplication,
+      ])
+  ).values(),
+];
+
   
   const { token, role } = useSelector((state) => state.auth);
   const isLoggedIn = Boolean(token);
@@ -503,6 +518,7 @@ const HomePage = () => {
         in one place.
       </p>
     </div>
+    
 
     {/* Store Grid */}
     <motion.div
@@ -512,47 +528,39 @@ const HomePage = () => {
       viewport={{ once: true, amount: 0.1 }}
       className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
     >
-      {products.map((product) => (
-        <motion.div
-          key={product.id}
-          variants={cardVariants}
-          whileHover={{ y: -6 }}
-          onClick={handleActionClick}
-          className="group cursor-pointer rounded-2xl border border-gray-200 bg-white p-6 transition-all duration-300 hover:border-gray-300 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
-        >
+      {uniqueStores.map((store) => (
+  <motion.div
+    key={store.storeName}
+    variants={cardVariants}
+    whileHover={{ y: -6 }}
+    className="group cursor-pointer rounded-2xl border border-gray-200 bg-white p-6 transition-all duration-300 hover:border-gray-300 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
+  >
+    <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-white">
+      <span className="text-xl font-bold">
+        {store.storeName?.charAt(0)?.toUpperCase() || "P"}
+      </span>
+    </div>
 
-          {/* Store Icon */}
-          <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_25px_rgba(0,0,0,0.2)]">
-            <span className="text-xl font-bold">
-              {product.seller?.sellerApplication?.storeName
-                ?.charAt(0)
-                ?.toUpperCase() || "P"}
-            </span>
-          </div>
+    <h3 className="text-xl font-bold tracking-tight text-gray-950">
+      {store.storeName || "PriceTag"}
+    </h3>
 
-          {/* Store Information */}
-          <h3 className="text-xl font-bold tracking-tight text-gray-950">
-            {product.seller?.sellerApplication?.storeName || "PriceTag"}
-          </h3>
+    <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-gray-500">
+      {store.storeDescription ||
+        "Explore quality products from this trusted seller."}
+    </p>
 
-          <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-gray-500">
-            {product.seller?.sellerApplication?.storeDescription ||
-              "Explore quality products from this trusted seller."}
-          </p>
+    <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
+      <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+        Trusted Seller
+      </span>
 
-          {/* Bottom */}
-          <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
-              Trusted Seller
-            </span>
-
-            <span className="text-sm font-semibold text-gray-900 transition-colors group-hover:text-gray-500">
-              Visit Store →
-            </span>
-          </div>
-
-        </motion.div>
-      ))}
+      <span className="text-sm font-semibold text-gray-900">
+        Visit Store →
+      </span>
+    </div>
+  </motion.div>
+))}
     </motion.div>
 
   </div>
