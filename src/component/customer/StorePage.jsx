@@ -50,54 +50,111 @@ const StorePage = () => {
           </div>
           
 
-          {isLoading ? (
-            <p>Loading products...</p>
+         {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-24 space-y-4">
+              <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+              <p className="text-gray-500 font-medium">
+                Loading products...
+              </p>
+            </div>
+          ) : storeProducts.length === 0 ? (
+            <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm max-w-md mx-auto">
+              <span className="text-4xl block mb-3">
+                🔍
+              </span>
+
+              <h3 className="text-xl font-bold text-gray-900">
+                No Products Found
+              </h3>
+
+              <p className="text-gray-500 mt-1 px-4">
+                This store currently has no products available.
+              </p>
+            </div>
           ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {storeProducts.map((product) => (
-                <div key={product.id}>
-                    
-                     <div className="p-5 flex flex-col flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">
 
-    {/* Store Name */}
-    <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-      {product.seller?.sellerApplication?.storeName || "PriceTag"}
-    </p>
+              {storeProducts.map((product) => {
+                const image = product.images?.[0]?.image || null;
 
-    {/* Product Name */}
-   <h3 className="text-lg font-bold text-slate-900 leading-snug line-clamp-1 group-hover:text-slate-600 transition-colors duration-200">
-      {product.name}
-    </h3>
+                return (
+                  <div
+                    key={product.id}
+                    className="group bg-white rounded-2xl border border-slate-200/80 hover:border-slate-300 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden relative cursor-pointer"
+                  >
 
-    {/* Description */}
-    {product.description && (
-      <p className="mt-2 text-sm text-slate-500 leading-relaxed line-clamp-2">
-        {product.description}
-      </p>
-    )}
+                    <div className="relative aspect-square w-full bg-slate-50 overflow-hidden">
 
-    {/* Bottom Product Details */}
-    <div className="mt-auto pt-5 flex items-center justify-between gap-3">
+                      {image ? (
+                        <img
+                          src={image}
+                          alt={product.name}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          loading="lazy"
+                          onError={(e) => {
+                            e.target.src =
+                              "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGx9bm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI0YzRjRGNiIvPjwvc3ZnPg==";
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <span className="text-xs text-slate-400 font-medium uppercase tracking-wide">
+                            No Image Available
+                          </span>
+                        </div>
+                      )}
 
-      {/* Price */}
-      <div>
-        <p className="text-xs text-slate-400 font-medium mb-1">
-          Price
-        </p>
-        <span className="text-xl font-black text-slate-900">
-          ${formatPrice(product.price)}
-        </span>
-      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-      {/* Buy Button */}
-      <span className="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold group-hover:bg-black transition-colors duration-300">
-  Buy Now
-</span>
-    </div>
-    </div>
-                  {/* Your existing Product Card */}
-                </div>
-              ))}
+                      <div className="absolute inset-x-0 bottom-0 p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                        <div className="w-full py-3 bg-white/95 backdrop-blur-sm text-slate-900 rounded-xl text-sm font-bold text-center shadow-lg">
+                          View Product
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div className="p-5 flex flex-col flex-1">
+
+                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
+                        {product.seller?.sellerApplication?.storeName ||
+                          "PriceTag"}
+                      </p>
+
+                      <h3 className="text-lg font-bold text-slate-900 leading-snug line-clamp-1 group-hover:text-slate-600 transition-colors duration-200">
+                        {product.name}
+                      </h3>
+
+                      {product.description && (
+                        <p className="mt-2 text-sm text-slate-500 leading-relaxed line-clamp-2">
+                          {product.description}
+                        </p>
+                      )}
+
+                      <div className="mt-auto pt-5 flex items-center justify-between gap-3">
+
+                        <div>
+                          <p className="text-xs text-slate-400 font-medium mb-1">
+                            Price
+                          </p>
+
+                          <span className="text-xl font-black text-slate-900">
+                            ${formatPrice(product.price)}
+                          </span>
+                        </div>
+
+                        <span className="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold group-hover:bg-black transition-colors duration-300">
+                          Buy Now
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                );
+              })}
+
             </div>
           )}
           
