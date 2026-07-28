@@ -585,14 +585,11 @@ const HomePage = () => {
       transition={{ duration: 0.5 }}
       className="mx-auto mb-14 max-w-2xl text-center"
     >
-      <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-gray-500">
+      <p className="mb-3 text-2xl font-semibold uppercase tracking-widest text-gray-500">
         Why PriceTag?
       </p>
 
-      <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-        Everything you need for a better shopping experience
-      </h2>
-
+      
       <p className="mt-4 text-gray-500">
         We make online shopping simple, secure, and reliable with quality
         products and customer-focused service.
