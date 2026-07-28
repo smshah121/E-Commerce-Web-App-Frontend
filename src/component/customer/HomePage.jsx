@@ -227,7 +227,7 @@ const HomePage = () => {
           <motion.button
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.98 }}
-            onClick={handleActionClick}
+            onClick={() => handleScrollToSection("explore-stores")}
             className="
               px-8 py-4
               bg-white/[0.05]
@@ -241,7 +241,7 @@ const HomePage = () => {
               transition-all duration-300
             "
           >
-            Sign In Account
+            Explore Stores
           </motion.button>
 
         </div>
