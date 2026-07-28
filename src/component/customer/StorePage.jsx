@@ -21,7 +21,7 @@ const StorePage = () => {
 
       <section className="bg-black py-20 text-white">
         <span 
-          className="px-4 mb-10 py-2 text-gray-400 hover:text-white cursor-pointer"
+          className="px-4 fixed top-0 left-0 mb-10 py-2 text-gray-400 hover:text-white cursor-pointer"
           onClick={() => navigate("/")}
         >
           Back
