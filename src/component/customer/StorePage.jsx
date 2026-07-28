@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetAllProductsQuery } from "../../feature/product/productApi";
+
 const StorePage = () => {
   const { sellerId } = useParams();
-
+  const navigate = useNavigate();
   const { data: products = [], isLoading } = useGetAllProductsQuery();
   const formatPrice = (price) => {
     return typeof price === "number"
@@ -143,7 +144,9 @@ const StorePage = () => {
                           </span>
                         </div>
 
-                        <span className="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold group-hover:bg-black transition-colors duration-300">
+                        <span 
+                        onClick={()=> navigate("/login")}
+                        className="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold group-hover:bg-black transition-colors duration-300">
                           Buy Now
                         </span>
 
