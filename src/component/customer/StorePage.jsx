@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { useGetProductsQuery } from "../../feature/product/productApi";
+import { useGetAllProductsQuery } from "../../feature/product/productApi";
 const StorePage = () => {
   const { sellerId } = useParams();
 
-  const { data: products = [], isLoading } = useGetProductsQuery();
+  const { data: products = [], isLoading } = useGetAllProductsQuery();
 
   const storeProducts = products.filter(
     (product) =>
