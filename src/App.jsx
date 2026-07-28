@@ -19,6 +19,7 @@ import PaymentSuccessPage from './component/customer/PaymentSuccess'
 import BecomeSeller from "./component/customer/BecomeSeller"
 import AdminDashboard from "./component/admin/AdminDashboard"
 import OAuthSuccess from './pages/OAuthSuccess'
+import StorePage from './component/customer/StorePage'
 function App() {
   
 
@@ -41,6 +42,10 @@ function App() {
     <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
      <Route path="/oauth-success" element={<OAuthSuccess/>} />
         <Route path="/oauth-success/*" element={<OAuthSuccess/>} />
+        <Route
+  path="/store/:sellerId"
+  element={<StorePage/>}
+/>
    </Routes>
    
   )

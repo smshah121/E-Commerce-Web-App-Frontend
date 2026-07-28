@@ -562,9 +562,11 @@ const HomePage = () => {
         Trusted Seller
       </span>
 
-      <span className="text-sm font-semibold text-gray-900">
+      <button 
+      onClick={() => navigate(`/store/${store.id}`)}
+      className="text-sm font-semibold text-gray-900">
         Visit Store →
-      </span>
+      </button>
     </div>
   </motion.div>
 ))}
