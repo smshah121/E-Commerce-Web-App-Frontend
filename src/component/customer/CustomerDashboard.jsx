@@ -96,85 +96,163 @@ const CustomerDashboard = () => {
       {/* Main Content */}
       <main className="pt-2"> 
         {/* Welcome Cyber Banner Section */}
-        <section className="relative bg-[#0b0f19] text-white py-16 md:py-24 overflow-hidden border-b border-slate-800">
-          {/* Futuristic Background Grid Patterns */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-20" />
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-600/20 rounded-full blur-[128px] pointer-events-none" />
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-600/20 rounded-full blur-[128px] pointer-events-none" />
-          
-          <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-10 z-10'>
-            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="space-y-4">
-              <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl font-black tracking-tight leading-none">
-                Welcome,{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 font-extrabold drop-shadow-[0_2px_10px_rgba(147,51,234,0.15)]">
-                  {userLoading ? "Explorer" : user?.name || "Explorer"}
-                </span>
-              </motion.h1>
-              
-              <motion.p variants={itemVariants} className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-light tracking-wide">
-                Explore Premium Tech Accessories
-              </motion.p>
-            </motion.div>
-              
-            {/* Swiper Carousel Enhancement */}
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }} className="w-full max-w-5xl mx-auto mt-4">
-              <Swiper
-                modules={[Autoplay, Pagination, EffectCoverflow]}
-                effect={"coverflow"}
-                grabCursor={true}
-                centeredSlides={true}
-                spaceBetween={20}
-                slidesPerView={1}
-                breakpoints={{
-                  640: { slidesPerView: 2 },
-                  1024: { slidesPerView: 3 },
-                }}
-                coverflowEffect={{
-                  rotate: 15,
-                  stretch: 0,
-                  depth: 100,
-                  modifier: 1,
-                  slideShadows: false,
-                }}
-                loop={true}
-                autoplay={{ delay: 3500, disableOnInteraction: false }}
-                pagination={{ clickable: true, dynamicBullets: true }}
-                className="pb-12"
-              >
-                {["/magsafe belkin.jpg", "/45W PowerBank.jpg", "/adaptor.jpg", "/Airpods max.jpg", "/apple earphones.jpg"].map((src, i) => (
-                  <SwiperSlide key={i} className="transition-transform duration-300">
-                    <div className="relative group rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-slate-900/40 backdrop-blur-md">
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 z-10" />
-                      <img src={src} alt="Gear Preview" className="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out" />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </motion.div>
-          
-            {/* Tech Infographics Stats */}
-            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="mt-4 flex items-center justify-center  gap-4 max-w-4xl mx-auto">
-              {[
-                { label: "Premium Devices Available", val: `${products.length}+`, icon: <FiTrendingUp className="text-cyan-400 text-xl" />, border: "hover:border-cyan-500/30" },
-                { label: "Active Items in Cart", val: totalQuantity, icon: <FiShoppingBag className="text-emerald-400 text-xl" />, border: "hover:border-emerald-500/30" },
-              ].map((stat, i) => (
-                <motion.div
-                  key={i}
-                  variants={itemVariants}
-                  whileHover={{ y: -4 }}
-                  className={`flex items-center space-x-4 bg-slate-900/60 p-4 rounded-xl border border-white/5 backdrop-blur-md transition-colors duration-300 ${stat.border}`}
-                >
-                  <div className="p-3 rounded-lg bg-white/5">{stat.icon}</div>
-                  <div className="text-left">
-                    <div className="text-2xl font-black text-white tracking-tight">{stat.val}</div>
-                    <p className="text-slate-400 text-xs font-medium tracking-wide uppercase">{stat.label}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>          
-        </section>
+       <section className="relative bg-black text-white py-16 md:py-24 overflow-hidden border-b border-gray-900">
+  {/* Premium Background Effects */}
+  <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-[0.025]" />
 
+  {/* Subtle Glowing Effects */}
+  <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
+  <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none" />
+  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
+
+  <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-10 z-10">
+
+    {/* Welcome Header */}
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="space-y-4"
+    >
+      <motion.p
+        variants={itemVariants}
+        className="text-xs md:text-sm font-semibold uppercase tracking-[0.25em] text-gray-500"
+      >
+        PriceTag Marketplace
+      </motion.p>
+
+      <motion.h1
+        variants={itemVariants}
+        className="text-4xl md:text-6xl font-black tracking-tight leading-none"
+      >
+        Welcome,{" "}
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-gray-500 font-extrabold">
+          {userLoading ? "Explorer" : user?.name || "Explorer"}
+        </span>
+      </motion.h1>
+
+      <motion.p
+        variants={itemVariants}
+        className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-light tracking-wide"
+      >
+        Explore Premium Tech Accessories
+      </motion.p>
+    </motion.div>
+
+    {/* Swiper Carousel */}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3, duration: 0.6 }}
+      className="w-full max-w-5xl mx-auto mt-4"
+    >
+      <Swiper
+        modules={[Autoplay, Pagination, EffectCoverflow]}
+        effect={"coverflow"}
+        grabCursor={true}
+        centeredSlides={true}
+        spaceBetween={20}
+        slidesPerView={1}
+        breakpoints={{
+          640: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+        }}
+        coverflowEffect={{
+          rotate: 15,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: false,
+        }}
+        loop={true}
+        autoplay={{
+          delay: 3500,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+        }}
+        className="pb-12"
+      >
+        {[
+          "/magsafe belkin.jpg",
+          "/45W PowerBank.jpg",
+          "/adaptor.jpg",
+          "/Airpods max.jpg",
+          "/apple earphones.jpg",
+        ].map((src, i) => (
+          <SwiperSlide
+            key={i}
+            className="transition-transform duration-300"
+          >
+            <div className="relative group rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-gray-950">
+
+              {/* Image */}
+              <img
+                src={src}
+                alt="Premium Tech Accessory"
+                className="w-full h-80 object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+
+              {/* Dark Image Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-70" />
+
+              {/* Hover Glow */}
+              <div className="absolute inset-0 border border-white/0 group-hover:border-white/20 rounded-2xl transition-all duration-500" />
+
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </motion.div>
+
+    {/* Tech Statistics */}
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="mt-4 flex items-center justify-center gap-4 max-w-4xl mx-auto"
+    >
+      {[
+        {
+          label: "Premium Devices Available",
+          val: `${products.length}+`,
+          icon: <FiTrendingUp className="text-gray-300 text-xl" />,
+        },
+        {
+          label: "Active Items in Cart",
+          val: totalQuantity,
+          icon: <FiShoppingBag className="text-gray-300 text-xl" />,
+        },
+      ].map((stat, i) => (
+        <motion.div
+          key={i}
+          variants={itemVariants}
+          whileHover={{ y: -4 }}
+          className="flex items-center space-x-4 bg-white/[0.04] p-4 rounded-xl border border-white/10 backdrop-blur-md transition-all duration-300 hover:bg-white/[0.07] hover:border-white/20"
+        >
+          {/* Icon */}
+          <div className="p-3 rounded-lg bg-white/[0.06] border border-white/10">
+            {stat.icon}
+          </div>
+
+          {/* Content */}
+          <div className="text-left">
+            <div className="text-2xl font-black text-white tracking-tight">
+              {stat.val}
+            </div>
+
+            <p className="text-gray-500 text-xs font-medium tracking-wide uppercase">
+              {stat.label}
+            </p>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+
+  </div>
+</section>
         {/* Products Grid Marketplace Section */}
         <section className="py-20 bg-gradient-to-b from-white to-slate-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
