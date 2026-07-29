@@ -81,14 +81,14 @@ const CustomerNavbar = () => {
           <div className="relative">
             <div
               className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 ${
-                isScrolled
+                shouldBeWhite
                   ? "bg-black shadow-lg"
                   : "bg-white/10 border border-white/20 shadow-[0_0_25px_rgba(255,255,255,0.08)]"
               }`}
             >
               <svg
                 className={`w-6 h-6 transition-colors duration-300 ${
-                  isScrolled ? "text-white" : "text-white"
+                  shouldBeWhite ? "text-white" : "text-white"
                 }`}
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -98,7 +98,7 @@ const CustomerNavbar = () => {
             </div>
 
             {/* Subtle glow */}
-            {!isScrolled && (
+            {!shouldBeWhite && (
               <div className="absolute inset-0 rounded-xl bg-white/10 blur-xl -z-10" />
             )}
           </div>
@@ -106,7 +106,7 @@ const CustomerNavbar = () => {
           <div className="flex flex-col">
             <span
               className={`text-xl font-black tracking-tight transition-colors duration-300 ${
-                isScrolled ? "text-gray-950" : "text-white"
+                shouldBeWhite ? "text-gray-950" : "text-white"
               }`}
             >
               PriceTag
@@ -114,7 +114,7 @@ const CustomerNavbar = () => {
 
             <span
               className={`text-[10px] font-semibold tracking-[0.15em] uppercase transition-colors duration-300 ${
-                isScrolled ? "text-gray-400" : "text-white/50"
+                shouldBeWhite ? "text-gray-400" : "text-white/50"
               }`}
             >
               Premium Shopping
@@ -132,7 +132,7 @@ const CustomerNavbar = () => {
               key={link.name}
               to={link.href}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                isScrolled
+                shouldBeWhite
                   ? "text-gray-600 hover:text-black hover:bg-gray-100"
                   : "text-white/70 hover:text-white hover:bg-white/10"
               }`}
@@ -196,7 +196,7 @@ const CustomerNavbar = () => {
             <button
               onClick={() => setShowDropdown(!showDropdown)}
               className={`flex items-center gap-2 p-1.5 pr-3 rounded-lg border transition-all duration-300 ${
-                isScrolled
+                shouldBeWhite
                   ? "bg-gray-50 border-gray-200 hover:bg-gray-100"
                   : "bg-white/5 border-white/10 hover:bg-white/10"
               }`}
@@ -335,7 +335,7 @@ const CustomerNavbar = () => {
             <button
               onClick={handleSignupClick}
               className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
-                isScrolled
+                shouldBeWhite
                   ? "bg-black text-white hover:bg-gray-800"
                   : "bg-white text-black hover:bg-gray-200"
               }`}
