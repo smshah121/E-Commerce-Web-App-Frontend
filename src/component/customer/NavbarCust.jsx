@@ -64,7 +64,7 @@ const CustomerNavbar = () => {
   return (
    <nav
   className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-    isScrolled
+    shouldBeWhite
       ? "bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm"
       : "bg-black/30 backdrop-blur-md border-b border-white/10"
   }`}
