@@ -336,10 +336,14 @@ const CustomerDashboard = () => {
         <div className="flex items-center space-x-3">
           {/* Logo */}
           <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.08)]">
-            <span className="text-black font-black text-sm tracking-tighter">
-              PT
-            </span>
-          </div>
+  <svg
+    className="w-6 h-6 text-black"
+    fill="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5 4 4.67 4.67 4 5.5 4S7 4.67 7 5.5 6.33 7 5.5 7z" />
+  </svg>
+</div>
 
           {/* Brand Name */}
           <span className="text-xl font-extrabold text-white tracking-tight">
