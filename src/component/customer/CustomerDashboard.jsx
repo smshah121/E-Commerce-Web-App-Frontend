@@ -291,92 +291,223 @@ const CustomerDashboard = () => {
       </main>
 
       {/* Futuristic Deep Space Footer */}
-      <motion.footer 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="bg-[#0b0f19] text-slate-400 relative border-t border-slate-800"
+     <motion.footer
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  viewport={{ once: true }}
+  className="relative bg-[#0b0f19] text-slate-400 border-t border-slate-800/80 overflow-hidden"
+>
+  {/* Subtle Background Glow */}
+  <div className="absolute inset-0 pointer-events-none overflow-hidden">
+    <div className="absolute -top-32 left-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl" />
+    <div className="absolute -bottom-32 right-1/4 w-96 h-96 bg-indigo-600/5 rounded-full blur-3xl" />
+
+    {/* Floating Particles */}
+    {[...Array(6)].map((_, i) => (
+      <motion.div
+        key={i}
+        animate={{
+          y: [0, -80, 0],
+          opacity: [0, 0.2, 0],
+        }}
+        transition={{
+          duration: 6 + Math.random() * 4,
+          repeat: Infinity,
+          delay: Math.random() * 2,
+        }}
+        className="absolute w-1 h-1 bg-blue-500 rounded-full"
+        style={{
+          left: `${Math.random() * 100}%`,
+          bottom: 0,
+        }}
+      />
+    ))}
+  </div>
+
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={containerVariants}
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12"
+    >
+
+      {/* Brand */}
+      <motion.div
+        variants={itemVariants}
+        className="space-y-5"
       >
-        {/* Particle Overlay */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{ y: [0, -80, 0], opacity: [0, 0.15, 0] }}
-              transition={{ duration: 6 + Math.random() * 4, repeat: Infinity, delay: Math.random() * 2 }}
-              className="absolute w-1 h-1 bg-blue-500 rounded-full"
-              style={{ left: `${Math.random() * 100}%`, bottom: 0 }}
-            />
-          ))}
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-            className="grid grid-cols-1 md:grid-cols-4 gap-10"
-          >
-            {/* Branding Elements */}
-            <motion.div variants={itemVariants} className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <div className="bg-gradient-to-tr from-blue-600 to-indigo-600 p-2.5 rounded-xl shadow-[0_0_15px_rgba(37,99,235,0.3)]">
-                  <span className="text-white font-black text-sm tracking-tighter">PT</span>
-                </div>
-                <span className="text-xl font-extrabold text-white tracking-tight">PriceTag</span>
-              </div>
-              <p className="text-sm leading-relaxed text-slate-500">
-                Your progressive hub for ultra-premium mobile hardware architectures.
-              </p>
-            </motion.div>
-
-            {/* Link Groups */}
-            {[{ title: "Systems", links: ['About Us', 'Contact', 'FAQ', 'Shipping Info'] },
-              { title: "Service Hub", links: ['Help Center', 'Return Policy', 'Size Guide', 'Track Order'] }
-             ].map((group, idx) => (
-              <motion.div key={idx} variants={itemVariants}>
-                <h3 className="text-sm font-bold text-slate-200 tracking-wider uppercase mb-4">{group.title}</h3>
-                <ul className="space-y-2.5 text-sm font-medium">
-                  {group.links.map((link) => (
-                    <li key={link}>
-                      <motion.a href="#" whileHover={{ x: 4, color: '#3b82f6' }} className="hover:text-white transition-colors block">
-                        {link}
-                      </motion.a>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-
-            {/* Newsletter Container */}
-            <motion.div variants={itemVariants} className="space-y-4">
-              <h3 className="text-sm font-bold text-slate-200 tracking-wider uppercase">System Updates</h3>
-              <p className="text-sm text-slate-500">Subscribe to ingest early access drop modules.</p>
-              <div className="flex bg-slate-900 rounded-xl p-1 border border-white/5 focus-within:border-blue-500/50 transition-all">
-                <input
-                  type="email"
-                  placeholder="Enter dynamic mail"
-                  className="w-full bg-transparent px-3 text-sm text-white focus:outline-none placeholder:text-slate-600"
-                />
-                <button className="bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-700 shadow-md transition-colors">
-                  Join
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          <hr className="my-10 border-slate-900" />
-          
-          <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-slate-600 font-medium gap-4">
-            <p>© 2026 PriceTag Corp. All rights reserved.</p>
-            <div className="flex space-x-6">
-              <a href="#" className="hover:text-slate-400 transition-colors">Privacy Protocols</a>
-              <a href="#" className="hover:text-slate-400 transition-colors">Terms of Operations</a>
+        <div className="flex items-center space-x-3">
+          <div className="relative">
+            <div className="w-11 h-11 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.25)]">
+              <svg
+                className="w-6 h-6 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
+              </svg>
             </div>
           </div>
+
+          <div className="flex flex-col">
+            <span className="text-xl font-black text-white tracking-tight">
+              PriceTag
+            </span>
+
+            <span className="text-[10px] font-semibold text-slate-500 tracking-[0.15em] uppercase">
+              Hardware Hub
+            </span>
+          </div>
         </div>
-      </motion.footer>
+
+        <p className="text-sm leading-relaxed text-slate-500 max-w-xs">
+          Your trusted marketplace for premium mobile accessories,
+          electronics, and everyday tech essentials.
+        </p>
+
+        <div className="flex items-center gap-3">
+          <a
+            href="#"
+            className="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300"
+          >
+            {/* Social Icon */}
+            <span className="text-xs font-bold">IG</span>
+          </a>
+
+          <a
+            href="#"
+            className="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300"
+          >
+            <span className="text-xs font-bold">FB</span>
+          </a>
+
+          <a
+            href="#"
+            className="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300"
+          >
+            <span className="text-xs font-bold">LI</span>
+          </a>
+        </div>
+      </motion.div>
+
+      {/* Explore */}
+      <motion.div
+        variants={itemVariants}
+      >
+        <h3 className="text-sm font-bold text-white tracking-wider uppercase mb-5">
+          Explore
+        </h3>
+
+        <ul className="space-y-3 text-sm font-medium">
+          {[
+            "About Us",
+            "All Products",
+            "Featured Collection",
+            "Become a Seller",
+          ].map((link) => (
+            <li key={link}>
+              <motion.a
+                href="#"
+                whileHover={{ x: 4 }}
+                className="inline-block text-slate-500 hover:text-blue-400 transition-colors duration-200"
+              >
+                {link}
+              </motion.a>
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+
+      {/* Customer Support */}
+      <motion.div
+        variants={itemVariants}
+      >
+        <h3 className="text-sm font-bold text-white tracking-wider uppercase mb-5">
+          Customer Support
+        </h3>
+
+        <ul className="space-y-3 text-sm font-medium">
+          {[
+            "Help Center",
+            "Contact Us",
+            "Shipping Information",
+            "Return Policy",
+          ].map((link) => (
+            <li key={link}>
+              <motion.a
+                href="#"
+                whileHover={{ x: 4 }}
+                className="inline-block text-slate-500 hover:text-blue-400 transition-colors duration-200"
+              >
+                {link}
+              </motion.a>
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+
+      {/* Newsletter */}
+      <motion.div
+        variants={itemVariants}
+        className="space-y-4"
+      >
+        <h3 className="text-sm font-bold text-white tracking-wider uppercase">
+          Stay Updated
+        </h3>
+
+        <p className="text-sm leading-relaxed text-slate-500">
+          Subscribe for new arrivals, exclusive deals, and the latest
+          updates from PriceTag.
+        </p>
+
+        <div className="flex bg-slate-900 rounded-xl p-1 border border-slate-800 focus-within:border-blue-500/50 transition-all duration-300">
+          <input
+            type="email"
+            placeholder="Your email address"
+            className="w-full min-w-0 bg-transparent px-3 py-2 text-sm text-white focus:outline-none placeholder:text-slate-600"
+          />
+
+          <button className="bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-700 shadow-md shadow-blue-600/10 transition-all duration-300">
+            Join
+          </button>
+        </div>
+      </motion.div>
+
+    </motion.div>
+
+    {/* Divider */}
+    <div className="my-10 border-t border-slate-800/80" />
+
+    {/* Bottom Footer */}
+    <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-slate-600 font-medium gap-4">
+
+      <p>
+        © 2026 PriceTag. All rights reserved.
+      </p>
+
+      <div className="flex items-center gap-6">
+        <a
+          href="#"
+          className="hover:text-slate-300 transition-colors"
+        >
+          Privacy Policy
+        </a>
+
+        <a
+          href="#"
+          className="hover:text-slate-300 transition-colors"
+        >
+          Terms & Conditions
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</motion.footer>
     </div>
   );
 };
