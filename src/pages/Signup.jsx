@@ -10,8 +10,44 @@ const Signup = () => {
   const [signup, { isLoading, error }] = useSignupMutation();
   const navigate = useNavigate();
 
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  // Password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Validation errors
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const validatePasswords = () => {
+    let isValid = true;
+
+    // Check password length
+    if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters.");
+      isValid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    // Check password match
+    if (password !== confirmPassword) {
+      setConfirmPasswordError("Passwords do not match.");
+      isValid = false;
+    } else {
+      setConfirmPasswordError("");
+    }
+
+    return isValid;
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const isValid = validatePasswords();
+
+    if (!isValid) {
+      return;
+    }
     try {
       const res = await signup({ name, email, password }).unwrap();
       localStorage.setItem("token", res.access_token);
@@ -25,23 +61,349 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white relative">
-      {/* Background Pattern */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230f172a' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}
-      ></div>
+   <div className="min-h-screen bg-white text-gray-950">
 
-      {/* Signup Form Section */}
-      <div className="relative flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full">
-          <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 px-8 py-6 border-b border-gray-100 text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+  {/* Header */}
+  <div className="border-b border-gray-100">
+    <div className="mx-auto flex max-w-7xl items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
+      <Link
+        to="/"
+        className="group flex items-center gap-3"
+      >
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-black text-white shadow-sm transition-transform duration-300 group-hover:scale-105">
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+            />
+          </svg>
+        </div>
+
+        <span className="text-2xl font-bold tracking-tight text-gray-950">
+          PriceTag
+        </span>
+      </Link>
+    </div>
+  </div>
+
+  {/* Main */}
+  <main className="flex min-h-[calc(100vh-89px)] items-center justify-center px-4 py-16 sm:px-6 lg:px-8">
+    <div className="w-full max-w-md">
+
+      {/* Heading */}
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-950 sm:text-4xl">
+          Create Your Account
+        </h1>
+
+        <p className="mt-3 text-sm leading-relaxed text-gray-500 sm:text-base">
+          Join PriceTag and start your shopping journey.
+        </p>
+      </div>
+
+      {/* Signup Card */}
+      <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_20px_60px_rgba(0,0,0,0.06)] sm:p-8">
+
+        {/* Card Header */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-950">
+            Create Account
+          </h2>
+
+          <p className="mt-1 text-sm text-gray-500">
+            Enter your details to create your PriceTag account.
+          </p>
+        </div>
+
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-5"
+        >
+
+          {/* Name */}
+          <div>
+            <label
+              htmlFor="name"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Full Name
+            </label>
+
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your full name"
+              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3.5 text-sm text-gray-950 placeholder:text-gray-400 outline-none transition-all duration-200 hover:border-gray-400 focus:border-gray-950 focus:ring-2 focus:ring-gray-950/10"
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label
+              htmlFor="email"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Email Address
+            </label>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3.5 text-sm text-gray-950 placeholder:text-gray-400 outline-none transition-all duration-200 hover:border-gray-400 focus:border-gray-950 focus:ring-2 focus:ring-gray-950/10"
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label
+              htmlFor="password"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
+
+            {/* Password Error */}
+            {passwordError && (
+              <p className="mb-2 text-sm font-medium text-red-600">
+                {passwordError}
+              </p>
+            )}
+
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="new-password"
+                required
+                value={password}
+                onChange={(e) => {
+                  const value = e.target.value;
+
+                  setPassword(value);
+
+                  if (value.length >= 8) {
+                    setPasswordError("");
+                  } else if (value.length > 0) {
+                    setPasswordError(
+                      "Password must be at least 8 characters."
+                    );
+                  }
+
+                  // Check confirm password again
+                  if (confirmPassword && value !== confirmPassword) {
+                    setConfirmPasswordError("Passwords do not match.");
+                  } else if (
+                    confirmPassword &&
+                    value === confirmPassword
+                  ) {
+                    setConfirmPasswordError("");
+                  }
+                }}
+                placeholder="Enter your password"
+                className={`w-full rounded-xl border bg-white px-4 py-3.5 pr-12 text-sm text-gray-950 placeholder:text-gray-400 outline-none transition-all duration-200 focus:ring-2 focus:ring-gray-950/10 ${
+                  passwordError
+                    ? "border-red-500 focus:border-red-500"
+                    : password.length >= 8
+                    ? "border-green-500 focus:border-green-500"
+                    : "border-gray-300 hover:border-gray-400 focus:border-gray-950"
+                }`}
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 transition-colors hover:text-gray-900"
+              >
+                {showPassword ? (
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 3.043 9.542 7-1.274 3.957-5.064 7-9.542 7-4.477 0-8.268-3.043-9.542-7z"
+                    />
+
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label
+              htmlFor="confirmPassword"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Confirm Password
+            </label>
+
+            {/* Confirm Password Error */}
+            {confirmPasswordError && (
+              <p className="mb-2 text-sm font-medium text-red-600">
+                {confirmPasswordError}
+              </p>
+            )}
+
+            <div className="relative">
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                autoComplete="new-password"
+                required
+                value={confirmPassword}
+                onChange={(e) => {
+                  const value = e.target.value;
+
+                  setConfirmPassword(value);
+
+                  if (value !== password) {
+                    setConfirmPasswordError(
+                      "Passwords do not match."
+                    );
+                  } else {
+                    setConfirmPasswordError("");
+                  }
+                }}
+                placeholder="Confirm your password"
+                className={`w-full rounded-xl border bg-white px-4 py-3.5 pr-12 text-sm text-gray-950 placeholder:text-gray-400 outline-none transition-all duration-200 focus:ring-2 ${
+                  confirmPasswordError
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500/10"
+                    : confirmPassword.length > 0 &&
+                      confirmPassword === password
+                    ? "border-green-500 focus:border-green-500 focus:ring-green-500/10"
+                    : "border-gray-300 hover:border-gray-400 focus:border-gray-950 focus:ring-gray-950/10"
+                }`}
+              />
+
+              <button
+                type="button"
+                onClick={() =>
+                  setShowConfirmPassword(!showConfirmPassword)
+                }
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 transition-colors hover:text-gray-900"
+              >
+                {showConfirmPassword ? (
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 3.043 9.542 7-1.274 3.957-5.064 7-9.542 7z"
+                    />
+
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                )}
+              </button>
+            </div>
+
+            {/* Success Message */}
+            {confirmPassword.length > 0 &&
+              confirmPassword === password &&
+              password.length >= 8 && (
+                <p className="mt-2 text-sm font-medium text-green-600">
+                  Passwords match.
+                </p>
+              )}
+          </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="rounded-xl border border-red-200 bg-red-50 p-4">
+              <p className="text-sm font-medium text-red-700">
+                {error?.data?.message ||
+                  "Unable to create account. Please try again."}
+              </p>
+            </div>
+          )}
+
+          {/* Create Account */}
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="group flex w-full items-center justify-center rounded-xl bg-black px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-gray-800 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {isLoading ? (
+              <div className="flex items-center gap-3">
+                <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                Creating your account...
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <span>Create PriceTag Account</span>
+
                 <svg
-                  className="w-8 h-8 text-white"
+                  className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -50,136 +412,57 @@ const Signup = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M12 4v16m8-8H4"
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
                   />
                 </svg>
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                Create Account
-              </h2>
-              <p className="text-gray-600">Join us and start your journey</p>
-            </div>
+            )}
+          </button>
+        </form>
 
-            <div className="px-8 py-8">
-              <form className="space-y-6" onSubmit={handleSubmit}>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Your full name"
-                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                  />
-                </div>
+       
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="Your email address"
-                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="Choose a strong password"
-                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </div>
-
-               
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                >
-                  {isLoading ? (
-                    <div className="flex items-center">
-                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
-                      Signing up...
-                    </div>
-                  ) : (
-                    <div className="flex items-center">
-                      <svg
-                        className="w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform duration-300"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
-                      Sign Up
-                    </div>
-                  )}
-                </button>
-
-                {error && (
-                  <div className="rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-700 font-medium">
-                    Signup failed. Please try again.
-                  </div>
-                )}
-              </form>
-
-              <div className="mt-8 pt-6 border-t border-gray-200 text-center">
-                <p className="text-gray-600">
-                  Already have an account?{" "}
-                  <Link
-                    to="/login"
-                    className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
-                  >
-                    Login here
-                  </Link>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-8">
+        {/* Login Link */}
+        <div className="mt-7 text-center">
+          <p className="text-sm text-gray-500">
+            Already have an account?{" "}
             <Link
-              to="/"
-              className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-300 group"
+              to="/login"
+              className="font-semibold text-gray-950 underline underline-offset-4 transition-colors hover:text-gray-600"
             >
-              <svg
-                className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform duration-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
-              </svg>
-              Back to Home
+              Sign in
             </Link>
-          </div>
+          </p>
         </div>
       </div>
+
+      {/* Back Home */}
+      <div className="mt-7 text-center">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-black"
+        >
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+
+          Back to PriceTag Home
+        </Link>
+      </div>
+
     </div>
+  </main>
+</div>
   );
 };
 
