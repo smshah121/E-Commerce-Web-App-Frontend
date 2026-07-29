@@ -88,7 +88,7 @@ const CustomerDashboard = () => {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-slate-100"
+        className="sticky top-0 z-50 backdrop-blur-md bg-white/80"
       >
         <CustomerNavbar />
       </motion.div>
