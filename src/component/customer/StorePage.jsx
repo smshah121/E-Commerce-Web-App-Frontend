@@ -1,174 +1,324 @@
+import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
+import { ArrowLeft, ShoppingBag, Store } from "lucide-react";
 import { useGetAllProductsQuery } from "../../feature/product/productApi";
 
 const StorePage = () => {
   const { sellerId } = useParams();
   const navigate = useNavigate();
-  const { data: products = [], isLoading } = useGetAllProductsQuery();
+
+  const {
+    data: products = [],
+    isLoading,
+  } = useGetAllProductsQuery();
+
   const formatPrice = (price) => {
     return typeof price === "number"
       ? price.toFixed(2)
       : parseFloat(price || 0).toFixed(2);
   };
 
+  // Get only products belonging to this seller
   const storeProducts = products.filter(
     (product) =>
       String(product.seller?.id) === String(sellerId)
   );
 
+  // Get store information from the first product
+  const storeName =
+    storeProducts[0]?.seller?.sellerApplication?.storeName ||
+    "PriceTag Store";
+
+  const storeDescription =
+    storeProducts[0]?.seller?.sellerApplication?.storeDescription ||
+    "Explore quality tech accessories from this trusted seller.";
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white text-slate-900">
 
-      <section className="bg-black py-20 text-white">
-        <span 
-          className="px-4 fixed top-0 left-0 mb-10 py-2 text-gray-400 hover:text-white cursor-pointer"
-          onClick={() => navigate("/")}
-        >
-          Back
-        </span>
-        
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            
-          <p className="text-sm font-semibold uppercase tracking-widest text-gray-400">
-            Store
-          </p>
+      {/* =========================
+          STORE HERO
+      ========================== */}
+      <section className="relative overflow-hidden bg-black text-white">
 
-          <h1 className="mt-3 text-4xl font-bold">
-            {storeProducts[0]?.seller?.sellerApplication?.storeName ||
-              "Store"}
-          </h1>
+        {/* Background Glow */}
+        <div className="pointer-events-none absolute -left-40 top-0 h-96 w-96 rounded-full bg-blue-600/20 blur-[140px]" />
 
-          <p className="mt-4 max-w-2xl text-gray-400">
-            {storeProducts[0]?.seller?.sellerApplication?.storeDescription ||
-              "Explore products from this store."}
-          </p>
+        <div className="pointer-events-none absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-indigo-600/20 blur-[140px]" />
+
+        {/* Subtle Grid */}
+        <div className="pointer-events-none absolute inset-0 opacity-[0.04]">
+          <div
+            className="h-full w-full"
+            style={{
+              backgroundImage:
+                "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)",
+              backgroundSize: "50px 50px",
+            }}
+          />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8">
+
+          {/* Back Button */}
+          <motion.button
+            initial={{ opacity: 0, x: -15 }}
+            animate={{ opacity: 1, x: 0 }}
+            onClick={() => navigate("/")}
+            className="mb-12 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-slate-300 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/10 hover:text-white"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Marketplace
+          </motion.button>
+
+          <div className="max-w-3xl">
+
+            {/* Label */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="mb-5 flex items-center gap-2"
+            >
+              <Store className="h-4 w-4 text-blue-400" />
+
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-400">
+                Marketplace Store
+              </span>
+            </motion.div>
+
+            {/* Store Name */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-4xl font-black tracking-tight sm:text-5xl md:text-6xl"
+            >
+              {storeName}
+            </motion.h1>
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg"
+            >
+              {storeDescription}
+            </motion.p>
+
+            {/* Store Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="mt-8 flex items-center gap-4"
+            >
+              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-5 py-3 backdrop-blur-sm">
+                <ShoppingBag className="h-5 w-5 text-blue-400" />
+
+                <div>
+                  <p className="text-lg font-bold text-white">
+                    {storeProducts.length}
+                  </p>
+
+                  <p className="text-xs text-slate-500">
+                    Products
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
         </div>
       </section>
 
-      <section className="py-20">
+
+      {/* =========================
+          STORE PRODUCTS
+      ========================== */}
+      <section className="bg-white py-20 md:py-24">
+
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-          <div className="mb-10">
-            <h2 className="text-3xl font-bold text-gray-950">
-              Products from this Store
-            </h2>
+          {/* Section Header */}
+          <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 
-            <p className="mt-2 text-gray-500">
-              {storeProducts.length} products available
-            </p>
-          </div>
-          
-
-         {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-24 space-y-4">
-              <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
-              <p className="text-gray-500 font-medium">
-                Loading products...
+            <div>
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
+                Store Collection
               </p>
+
+              <h2 className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                Products from {storeName}
+              </h2>
+
+              <p className="mt-3 text-sm text-slate-500">
+                Explore all products available from this seller.
+              </p>
+            </div>
+
+            <div className="text-sm font-medium text-slate-400">
+              {storeProducts.length}{" "}
+              {storeProducts.length === 1
+                ? "product"
+                : "products"}{" "}
+              available
+            </div>
+
+          </div>
+
+
+          {/* Loading */}
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-24">
+
+              <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-slate-900" />
+
+              <p className="mt-4 text-sm font-medium text-slate-500">
+                Loading store products...
+              </p>
+
             </div>
           ) : storeProducts.length === 0 ? (
-            <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm max-w-md mx-auto">
-              <span className="text-4xl block mb-3">
-                🔍
-              </span>
 
-              <h3 className="text-xl font-bold text-gray-900">
-                No Products Found
+            /* Empty State */
+            <div className="mx-auto max-w-lg rounded-2xl border border-slate-200 bg-slate-50 px-6 py-16 text-center">
+
+              <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 text-white">
+                <ShoppingBag className="h-6 w-6" />
+              </div>
+
+              <h3 className="text-xl font-bold text-slate-950">
+                No Products Available
               </h3>
 
-              <p className="text-gray-500 mt-1 px-4">
-                This store currently has no products available.
+              <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                This store currently doesn't have any products available.
+                Please check back later.
               </p>
+
+              <button
+                onClick={() => navigate("/")}
+                className="mt-6 rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-slate-800"
+              >
+                Continue Shopping
+              </button>
+
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">
+
+            /* Product Grid */
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            >
 
               {storeProducts.map((product) => {
-                const image = product.images?.[0]?.image || null;
+
+                const image =
+                  product.images?.[0]?.image || null;
 
                 return (
-                  <div
+                  <motion.div
                     key={product.id}
-                    className="group bg-white rounded-2xl border border-slate-200/80 hover:border-slate-300 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden relative cursor-pointer"
+                    whileHover={{ y: -5 }}
+                    transition={{ duration: 0.2 }}
+                    className="group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:border-slate-300 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
                   >
 
-                    <div className="relative aspect-square w-full bg-slate-50 overflow-hidden">
+                    {/* Product Image */}
+                    <div className="relative aspect-square w-full overflow-hidden bg-slate-50">
 
                       {image ? (
                         <img
                           src={image}
                           alt={product.name}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                           loading="lazy"
                           onError={(e) => {
-                            e.target.src =
-                              "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGx9bm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI0YzRjRGNiIvPjwvc3ZnPg==";
+                            e.currentTarget.style.display = "none";
                           }}
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <span className="text-xs text-slate-400 font-medium uppercase tracking-wide">
+                        <div className="flex h-full w-full items-center justify-center">
+                          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
                             No Image Available
                           </span>
                         </div>
                       )}
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
 
-                      <div className="absolute inset-x-0 bottom-0 p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                        <div className="w-full py-3 bg-white/95 backdrop-blur-sm text-slate-900 rounded-xl text-sm font-bold text-center shadow-lg">
-                          View Product
+                        <div className="w-full p-4">
+
+                          <div className="rounded-xl bg-white/95 px-4 py-3 text-center text-xs font-bold text-slate-900 shadow-lg backdrop-blur-sm">
+                            View Product
+                          </div>
+
                         </div>
+
                       </div>
 
                     </div>
 
-                    <div className="p-5 flex flex-col flex-1">
 
-                      <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
+                    {/* Product Content */}
+                    <div className="flex flex-1 flex-col p-5">
+
+                      {/* Store */}
+                      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
                         {product.seller?.sellerApplication?.storeName ||
                           "PriceTag"}
                       </p>
 
-                      <h3 className="text-lg font-bold text-slate-900 leading-snug line-clamp-1 group-hover:text-slate-600 transition-colors duration-200">
+                      {/* Product Name */}
+                      <h3 className="line-clamp-1 text-lg font-bold leading-snug text-slate-950 transition-colors duration-200 group-hover:text-slate-600">
                         {product.name}
                       </h3>
 
+                      {/* Description */}
                       {product.description && (
-                        <p className="mt-2 text-sm text-slate-500 leading-relaxed line-clamp-2">
+                        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-slate-500">
                           {product.description}
                         </p>
                       )}
 
-                      <div className="mt-auto pt-5 flex items-center justify-between gap-3">
+                      {/* Bottom */}
+                      <div className="mt-auto flex items-end justify-between gap-4 pt-6">
 
                         <div>
-                          <p className="text-xs text-slate-400 font-medium mb-1">
+                          <p className="mb-1 text-xs font-medium text-slate-400">
                             Price
                           </p>
 
-                          <span className="text-xl font-black text-slate-900">
+                          <span className="text-xl font-black text-slate-950">
                             ${formatPrice(product.price)}
                           </span>
                         </div>
 
-                        <span 
-                        onClick={()=> navigate("/login")}
-                        className="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold group-hover:bg-black transition-colors duration-300">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate("/login");
+                          }}
+                          className="rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-bold text-white transition-all duration-300 hover:bg-black"
+                        >
                           Buy Now
-                        </span>
+                        </button>
 
                       </div>
 
                     </div>
 
-                  </div>
+                  </motion.div>
                 );
               })}
 
-            </div>
+            </motion.div>
           )}
-          
 
         </div>
       </section>
