@@ -84,14 +84,9 @@ const CustomerDashboard = () => {
   return (
     <div className="min-h-screen bg-[#fafafa] text-slate-900 antialiased selection:bg-blue-500 selection:text-white">
       {/* Navigation */}
-      <motion.div
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      
-      >
+      <div>
         <CustomerNavbar />
-      </motion.div>
+      </div>
       
       {/* Main Content */}
       <main className="pt-2"> 
