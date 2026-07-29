@@ -145,7 +145,7 @@ const CustomerNavbar = () => {
             <Link
               to="/become-seller"
               className={`ml-3 px-4 py-2 rounded-lg text-sm font-semibold border transition-all duration-300 ${
-                isScrolled
+                shouldBeWhite
                   ? "text-black border-gray-300 hover:bg-black hover:text-white hover:border-black"
                   : "text-white border-white/20 bg-white/5 hover:bg-white hover:text-black"
               }`}
@@ -163,7 +163,7 @@ const CustomerNavbar = () => {
         {/* Search */}
         <button
           className={`p-2.5 rounded-lg transition-all duration-300 ${
-            isScrolled
+            shouldBeWhite
               ? "text-gray-600 hover:text-black hover:bg-gray-100"
               : "text-white/70 hover:text-white hover:bg-white/10"
           }`}
@@ -175,7 +175,7 @@ const CustomerNavbar = () => {
         <button
           onClick={handleCartClick}
           className={`relative p-2.5 rounded-lg transition-all duration-300 ${
-            isScrolled
+            shouldBeWhite
               ? "text-gray-600 hover:text-black hover:bg-gray-100"
               : "text-white/70 hover:text-white hover:bg-white/10"
           }`}
@@ -203,7 +203,7 @@ const CustomerNavbar = () => {
             >
               <div
                 className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                  isScrolled
+                  shouldBeWhite
                     ? "bg-black text-white"
                     : "bg-white text-black"
                 }`}
@@ -213,7 +213,7 @@ const CustomerNavbar = () => {
 
               <span
                 className={`text-xs font-semibold ${
-                  isScrolled ? "text-gray-700" : "text-white"
+                  shouldBeWhite ? "text-gray-700" : "text-white"
                 }`}
               >
                 Menu
@@ -324,7 +324,7 @@ const CustomerNavbar = () => {
             <button
               onClick={handleLoginClick}
               className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
-                isScrolled
+                shouldBeWhite
                   ? "text-gray-700 hover:text-black hover:bg-gray-100"
                   : "text-white/80 hover:text-white hover:bg-white/10"
               }`}
@@ -354,7 +354,7 @@ const CustomerNavbar = () => {
               setIsMobileMenuOpen(!isMobileMenuOpen)
             }
             className={`p-2.5 rounded-lg transition-all ${
-              isScrolled
+              shouldBeWhite
                 ? "text-gray-600 hover:bg-gray-100"
                 : "text-white/80 hover:bg-white/10"
             }`}
@@ -379,7 +379,7 @@ const CustomerNavbar = () => {
         ? "max-h-screen"
         : "max-h-0"
     } ${
-      isScrolled
+      shouldBeWhite
         ? "bg-white border-t border-gray-100"
         : "bg-black/95 backdrop-blur-xl border-t border-white/10"
     }`}
@@ -392,7 +392,7 @@ const CustomerNavbar = () => {
           type="text"
           placeholder="Search products..."
           className={`w-full pl-10 pr-4 py-3 rounded-xl text-sm outline-none border transition-all ${
-            isScrolled
+            shouldBeWhite
               ? "bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-gray-400"
               : "bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-white/30"
           }`}
@@ -400,7 +400,7 @@ const CustomerNavbar = () => {
 
         <FiSearch
           className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 ${
-            isScrolled
+            shouldBeWhite
               ? "text-gray-400"
               : "text-white/40"
           }`}
@@ -415,7 +415,7 @@ const CustomerNavbar = () => {
             setIsMobileMenuOpen(false)
           }
           className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-            isScrolled
+            shouldBeWhite
               ? "text-gray-600 hover:text-black hover:bg-gray-50"
               : "text-white/70 hover:text-white hover:bg-white/10"
           }`}
@@ -431,7 +431,7 @@ const CustomerNavbar = () => {
             setIsMobileMenuOpen(false)
           }
           className={`block px-4 py-3 rounded-xl text-sm font-semibold ${
-            isScrolled
+            shouldBeWhite
               ? "text-black hover:bg-gray-50"
               : "text-white hover:bg-white/10"
           }`}
@@ -443,7 +443,7 @@ const CustomerNavbar = () => {
       <button
         onClick={handleCartClick}
         className={`w-full flex items-center px-4 py-3 rounded-xl text-sm font-medium ${
-          isScrolled
+          shouldBeWhite
             ? "text-gray-600 hover:text-black hover:bg-gray-50"
             : "text-white/70 hover:text-white hover:bg-white/10"
         }`}
@@ -458,7 +458,7 @@ const CustomerNavbar = () => {
           <button
             onClick={handleLoginClick}
             className={`w-full py-3 rounded-xl text-sm font-semibold ${
-              isScrolled
+              shouldBeWhite
                 ? "text-gray-700 hover:bg-gray-50"
                 : "text-white hover:bg-white/10"
             }`}
@@ -469,7 +469,7 @@ const CustomerNavbar = () => {
           <button
             onClick={handleSignupClick}
             className={`w-full py-3 rounded-xl text-sm font-bold ${
-              isScrolled
+              shouldBeWhite
                 ? "bg-black text-white"
                 : "bg-white text-black"
             }`}
