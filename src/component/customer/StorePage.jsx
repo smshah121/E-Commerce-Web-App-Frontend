@@ -2,10 +2,23 @@ import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, ShoppingBag, Store } from "lucide-react";
 import { useGetAllProductsQuery } from "../../feature/product/productApi";
+import { useSelector } from 'react-redux';
+
 
 const StorePage = () => {
   const { sellerId } = useParams();
   const navigate = useNavigate();
+  const { token, userId } = useSelector((state) => state.auth);
+  const isLoggedIn = Boolean(token);
+
+  const handleStoreClick = ()=> {
+    if(isLoggedIn){
+      navigate("/product/:productId")
+    }
+    else{
+      navigate("/login")
+    }
+  }
 
   const {
     data: products = [],
@@ -300,10 +313,7 @@ const StorePage = () => {
                         </div>
 
                         <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate("/login");
-                          }}
+                         onClick={handleStoreClick}
                           className="rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-bold text-white transition-all duration-300 hover:bg-black"
                         >
                           Buy Now
