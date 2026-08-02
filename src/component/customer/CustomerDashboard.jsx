@@ -27,6 +27,28 @@ const CustomerDashboard = () => {
     navigate('/');
   };
 
+  
+
+
+   const uniqueStores = [
+ ...new Map(
+    products
+      .filter(
+        (product) =>
+          product.seller?.sellerApplication?.storeName
+      )
+      .map((product) => [
+        product.seller.id,
+        {
+          id: product.seller.id,
+          storeName: product.seller.sellerApplication.storeName,
+          storeDescription:
+            product.seller.sellerApplication.storeDescription,
+        },
+      ])
+  ).values(),
+];
+
   // Modern tech-focused animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -36,6 +58,14 @@ const CustomerDashboard = () => {
     }
   };
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 80, damping: 15 },
+    },
+  };
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
@@ -289,6 +319,77 @@ const CustomerDashboard = () => {
           </div>
         </section>
       </main>
+
+      <section
+        id="explore-stores"
+        className="bg-white py-24"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+          {/* Header */}
+          <div className="mb-14 text-center">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+              Marketplace Stores
+            </p>
+      
+            <h2 className="text-3xl font-bold tracking-tight text-gray-950 sm:text-4xl">
+              Explore Trusted Stores
+            </h2>
+      
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-gray-500 sm:text-lg">
+              Discover products from trusted sellers and explore their collections
+              in one place.
+            </p>
+          </div>
+          
+      
+          {/* Store Grid */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {uniqueStores.map((store) => (
+        <motion.div
+          key={store.storeName}
+          variants={cardVariants}
+          whileHover={{ y: -6 }}
+          className="group cursor-pointer rounded-2xl border border-gray-200 bg-white p-6 transition-all duration-300 hover:border-gray-300 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
+        >
+          <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-black text-white">
+            <span className="text-xl font-bold">
+              {store.storeName?.charAt(0)?.toUpperCase() || "P"}
+            </span>
+          </div>
+      
+          <h3 className="text-xl font-bold tracking-tight text-gray-950">
+            {store.storeName || "PriceTag"}
+          </h3>
+      
+          <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-gray-500">
+            {store.storeDescription ||
+              "Explore quality products from this trusted seller."}
+          </p>
+      
+          <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
+            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+              Trusted Seller
+            </span>
+      
+            <button 
+            onClick={() => navigate(`/store/${store.id}`)}
+            className="text-sm font-semibold text-gray-900">
+              Visit Store →
+            </button>
+          </div>
+        </motion.div>
+      ))}
+          </motion.div>
+      
+        </div>
+      </section>
 
       {/* Futuristic Deep Space Footer */}
      <motion.footer
