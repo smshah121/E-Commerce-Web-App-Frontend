@@ -9,11 +9,12 @@ const StorePage = () => {
   const { sellerId } = useParams();
   const navigate = useNavigate();
   const { token, userId } = useSelector((state) => state.auth);
+  
   const isLoggedIn = Boolean(token);
 
-  const handleStoreClick = ()=> {
+  const handleStoreClick = (productId)=> {
     if(isLoggedIn){
-      navigate("/product/:productId")
+      navigate(`/product/${productId}`)
     }
     else{
       navigate("/login")
@@ -313,7 +314,7 @@ const StorePage = () => {
                         </div>
 
                         <button
-                         onClick={handleStoreClick}
+                         onClick={()=>handleStoreClick(product.id)}
                           className="rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-bold text-white transition-all duration-300 hover:bg-black"
                         >
                           Buy Now
