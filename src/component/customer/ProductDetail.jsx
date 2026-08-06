@@ -41,7 +41,7 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     if (product) {
-      dispatch(addToCart({ ...product, quantity }));
+      dispatch(addToCart({ ...product,price: Number(product.price), quantity }));
       setAddedToCartFeedback(true);
       setTimeout(() => setAddedToCartFeedback(false), 2000);
     }

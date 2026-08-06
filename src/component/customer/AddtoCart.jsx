@@ -1,15 +1,15 @@
-// AddToCart.jsx - This component is for displaying CART ITEMS, not products
-import React from 'react';
+
+
 import { useSelector, useDispatch } from 'react-redux';
 import { updateQuantity, removeFromCart } from '../../feature/cart/cartSlice';
-import PlaceOrderButton from '../seller/PlaceOrderButoon';
+
 import { useNavigate } from 'react-router-dom';
 
 const AddToCart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const { items: cart, totalAmount, totalQuantity } = useSelector((state) => state.cart);
-  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
+
 
   const getDashboardPath = ()=> {
     navigate("/customer-dashboard")
