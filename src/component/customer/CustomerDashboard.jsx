@@ -97,7 +97,7 @@ const CustomerDashboard = () => {
           initial={{ scaleX: 0 }}
           animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
           transition={{ duration: 0.6, ease: "circOut" }}
-          className="w-20 h-1 bg-gray-900 mx-auto rounded-full mb-4"
+          className="w-20 h-1 bg-gray-700 mx-auto rounded-full mb-4"
         />
         {subtitle && (
           <motion.p 
