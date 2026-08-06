@@ -179,275 +179,242 @@ const CheckoutPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <CustomerNavbar />
-      <main className="pt-20 pb-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <motion.button
-            onClick={() => navigate(-1)}
-            className="mb-6 flex items-center text-blue-600 hover:text-blue-800 transition-colors font-medium"
-            whileHover={{ x: -5 }}
-          >
-            <FaArrowLeft className="mr-2" /> Back to Cart
-          </motion.button>
+  <div className="min-h-screen bg-neutral-50 text-neutral-900 antialiased">
+  <CustomerNavbar />
+  <main className="pt-16 pb-10">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <motion.button
+        onClick={() => navigate(-1)}
+        className="mb-4 flex items-center text-neutral-600 hover:text-black transition-colors font-medium text-sm tracking-wide"
+        whileHover={{ x: -4 }}
+      >
+        <FaArrowLeft className="mr-2 text-xs" /> Back to Cart
+      </motion.button>
 
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="bg-white rounded-xl shadow-lg p-6 md:p-10"
-          >
-            <h1 className="text-5xl font-bold text-gray-900 mb-4 text-center">Checkout</h1>
-          
-            {/* Order Summary */}
-            <div className="mb-8 border-b border-gray-200 pb-6">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">Order Summary</h2>
-              {cartItems.length === 0 ? (
-                <p className="text-gray-600 text-center py-4">Your cart is empty.</p>
-              ) : (
-                <ul className="space-y-4">
-                  {cartItems.map((item) => {
-                 
-                    return (
-                      <li key={item.id} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
-                      <div className="flex items-center">
-                       <img
-  src={
-    item.images?.[0]?.image ||
-    item.product?.images?.[0]?.image ||
-    `https://placehold.co/80x80?text=${encodeURIComponent(item.name)}`
-  }
-  alt={item.name}
-  className="w-16 h-16 object-cover rounded-md mr-4 shadow-sm"
-/>
-                        <div>
-                          <p className="font-medium text-gray-900">{item.name}</p>
-                          <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="bg-white rounded-2xl shadow-sm border border-neutral-200/90 p-5 md:p-7"
+      >
+        <h1 className="text-3xl font-bold text-neutral-900 mb-1 text-center tracking-tight">Checkout</h1>
+        <p className="text-neutral-500 text-xs text-center mb-6 font-light">Complete your details and finalize your order</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Left Column: Order Summary & Pricing */}
+          <div className="space-y-5 flex flex-col justify-between">
+            <div>
+              <h2 className="text-base font-bold text-neutral-900 mb-3 tracking-wide uppercase text-xs">Order Summary</h2>
+              <div className="border border-neutral-200/80 rounded-xl p-3.5 bg-neutral-50/50 max-h-52 overflow-y-auto">
+                {cartItems.length === 0 ? (
+                  <p className="text-neutral-500 text-center py-4 text-xs font-light">Your cart is empty.</p>
+                ) : (
+                  <ul className="divide-y divide-neutral-200/60">
+                    {cartItems.map((item) => (
+                      <li key={item.id} className="flex justify-between items-center py-2 first:pt-0 last:pb-0">
+                        <div className="flex items-center space-x-3">
+                          <img
+                            src={
+                              item.images?.[0]?.image ||
+                              item.product?.images?.[0]?.image ||
+                              `https://placehold.co/80x80/F5F5F5/171717?text=${encodeURIComponent(item.name)}`
+                            }
+                            alt={item.name}
+                            className="w-12 h-12 object-cover rounded-lg border border-neutral-200 flex-shrink-0"
+                          />
+                          <div>
+                            <p className="font-semibold text-neutral-900 text-xs line-clamp-1">{item.name}</p>
+                            <p className="text-[11px] text-neutral-500">Qty: {item.quantity}</p>
+                          </div>
                         </div>
-                      </div>
-                      <span className="font-semibold text-gray-800">${formatPrice(item.price * item.quantity)}</span>
-                    </li>
-                    )
-                  }
-                    
-                  )}
-                </ul>
-              )}
+                        <span className="font-bold text-neutral-900 text-xs">${formatPrice(item.price * item.quantity)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
 
             {/* Price Details */}
-            <div className="space-y-3 text-lg mb-8">
-              <div className="flex justify-between text-gray-700">
-                <span>Subtotal:</span>
-                <span>${formatPrice(subtotal)}</span>
+            <div className="space-y-2 text-sm bg-neutral-100/60 p-3.5 rounded-xl border border-neutral-200/80">
+              <div className="flex justify-between text-neutral-600 text-xs font-light">
+                <span>Subtotal</span>
+                <span className="font-medium text-neutral-900">${formatPrice(subtotal)}</span>
               </div>
-              <div className="flex justify-between text-gray-700">
-                <span>Shipping:</span>
-                {/* Always display "Free" for shipping */}
-                <span className="font-semibold text-green-600">Free</span>
+              <div className="flex justify-between text-neutral-600 text-xs font-light">
+                <span>Shipping</span>
+                <span className="font-semibold text-neutral-900">Free</span>
               </div>
-              {/* Removed Tax line */}
-              <div className="flex justify-between font-bold text-xl text-gray-900 border-t border-gray-200 pt-3 mt-3">
-                <span>Total:</span>
+              <div className="flex justify-between font-bold text-base text-neutral-900 border-t border-neutral-200/80 pt-2 mt-2 tracking-tight">
+                <span>Total</span>
                 <span>${formatPrice(total)}</span>
               </div>
             </div>
+          </div>
 
-            {/* Delivery Address Section */}
-            <div className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
-                <FaMapMarkerAlt className="mr-3 text-blue-600" /> Delivery Address
-              </h2>
-              <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 space-y-4">
+          {/* Right Column: Delivery Address */}
+          <div>
+            <h2 className="text-base font-bold text-neutral-900 mb-3 flex items-center tracking-wide uppercase text-xs">
+              <FaMapMarkerAlt className="mr-2 text-neutral-700" /> Delivery Address
+            </h2>
+            <div className="bg-neutral-50/50 p-4 rounded-xl border border-neutral-200/80 space-y-3">
+              <div>
+                <label htmlFor="street" className="block text-xs font-medium text-neutral-700 mb-1">Street Address</label>
+                <input
+                  type="text"
+                  id="street"
+                  name="street"
+                  value={address.street}
+                  onChange={handleAddressChange}
+                  className="w-full px-3 py-2 text-xs text-neutral-900 bg-white border border-neutral-300 rounded-lg outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
+                  placeholder="123 Main St"
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
+                  <label htmlFor="city" className="block text-xs font-medium text-neutral-700 mb-1">City</label>
                   <input
                     type="text"
-                    id="street"
-                    name="street"
-                    value={address.street}
+                    id="city"
+                    name="city"
+                    value={address.city}
                     onChange={handleAddressChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="123 Main St"
+                    className="w-full px-3 py-2 text-xs text-neutral-900 bg-white border border-neutral-300 rounded-lg outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
+                    placeholder="Anytown"
                     required
                   />
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                    <input
-                      type="text"
-                      id="city"
-                      name="city"
-                      value={address.city}
-                      onChange={handleAddressChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="Anytown"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">State/Province</label>
-                    <input
-                      type="text"
-                      id="state"
-                      name="state"
-                      value={address.state}
-                      onChange={handleAddressChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="CA"
-                      required
-                    />
-                  </div>
+                <div>
+                  <label htmlFor="state" className="block text-xs font-medium text-neutral-700 mb-1">State / Province</label>
+                  <input
+                    type="text"
+                    id="state"
+                    name="state"
+                    value={address.state}
+                    onChange={handleAddressChange}
+                    className="w-full px-3 py-2 text-xs text-neutral-900 bg-white border border-neutral-300 rounded-lg outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
+                    placeholder="CA"
+                    required
+                  />
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
-                    <input
-                      type="text"
-                      id="postalCode"
-                      name="postalCode"
-                      value={address.postalCode}
-                      onChange={handleAddressChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="90210"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">Country</label>
-                    <input
-                      type="text"
-                      id="country"
-                      name="country"
-                      value={address.country}
-                      onChange={handleAddressChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="USA"
-                      required
-                    />
-                  </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="postalCode" className="block text-xs font-medium text-neutral-700 mb-1">Postal Code</label>
+                  <input
+                    type="text"
+                    id="postalCode"
+                    name="postalCode"
+                    value={address.postalCode}
+                    onChange={handleAddressChange}
+                    className="w-full px-3 py-2 text-xs text-neutral-900 bg-white border border-neutral-300 rounded-lg outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
+                    placeholder="90210"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="country" className="block text-xs font-medium text-neutral-700 mb-1">Country</label>
+                  <input
+                    type="text"
+                    id="country"
+                    name="country"
+                    value={address.country}
+                    onChange={handleAddressChange}
+                    className="w-full px-3 py-2 text-xs text-neutral-900 bg-white border border-neutral-300 rounded-lg outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
+                    placeholder="USA"
+                    required
+                  />
                 </div>
               </div>
             </div>
-
-            {orderError && (
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-6"
-                role="alert"
-              >
-                <strong className="font-bold">Error!</strong>
-                <span className="block sm:inline"> {orderError}</span>
-              </motion.div>
-            )}
-
-            {/* Place Order Button */}
-  
-<div className="border-t border-gray-200 pt-8 mt-8">
-  <h2 className="text-xl font-semibold text-gray-900 text-center mb-2">
-    Select Payment Method
-  </h2>
-
-  <p className="text-gray-600 text-center mb-6">
-    Choose how you'd like to pay for your order.
-  </p>
-
-  {/* Buttons here */}
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-  {/* Cash on Delivery */}
-  <motion.button
-    onClick={handlePlaceOrder}
-    disabled={cartItems.length === 0 || processingOrder}
-    className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-4 rounded-xl text-lg font-semibold shadow-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 flex items-center justify-center disabled:opacity-50"
-    whileHover={{ scale: 1.02 }}
-    whileTap={{ scale: 0.98 }}
-  >
-    {processingOrder ? (
-      <>
-        <svg
-          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          />
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8V0C5.373 
-            0 0 5.373 0 12h4zm2 
-            5.291A7.962 7.962 0 014 
-            12H0c0 3.042 1.135 
-            5.824 3 7.938l3-2.647z"
-          />
-        </svg>
-        Processing...
-      </>
-    ) : (
-      <>
-        <AiOutlineShoppingCart className="mr-2 text-xl" />
-        Cash on Delivery
-      </>
-    )}
-  </motion.button>
-
-  {/* Online Payment */}
-  <motion.button
-    onClick={handlePayOnline}
-    disabled={cartItems.length === 0 || isLoading}
-    className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-4 rounded-xl text-lg font-semibold shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 flex items-center justify-center disabled:opacity-50"
-    whileHover={{ scale: 1.02 }}
-    whileTap={{ scale: 0.98 }}
-  >
-    {isLoading ? (
-      <>
-        <svg
-          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          />
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8V0C5.373 
-            0 0 5.373 0 12h4zm2 
-            5.291A7.962 7.962 0 014 
-            12H0c0 3.042 1.135 
-            5.824 3 7.938l3-2.647z"
-          />
-        </svg>
-        Redirecting...
-      </>
-    ) : (
-      <>
-        💳 Pay Online
-      </>
-    )}
-  </motion.button>
-</div>
-</div>
-          </motion.div>
+          </div>
         </div>
-      </main>
+
+        {orderError && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-neutral-900 border border-neutral-700 text-white px-4 py-2.5 rounded-xl relative mt-4 text-xs"
+            role="alert"
+          >
+            <strong className="font-bold">Error!</strong>
+            <span className="block sm:inline"> {orderError}</span>
+          </motion.div>
+        )}
+
+        {/* Place Order Section */}
+        <div className="border-t border-neutral-200/80 pt-5 mt-5">
+          <h2 className="text-sm font-bold text-neutral-900 text-center mb-0.5 tracking-tight">
+            Select Payment Method
+          </h2>
+          <p className="text-neutral-500 text-xs text-center mb-4 font-light">
+            Choose how you'd like to pay for your order.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {/* Cash on Delivery Button */}
+            <motion.button
+              onClick={handlePlaceOrder}
+              disabled={cartItems.length === 0 || processingOrder}
+              className="bg-white text-neutral-900 border-2 border-black px-5 py-3 rounded-xl text-sm font-semibold hover:bg-neutral-100 transition-all duration-300 flex items-center justify-center disabled:opacity-50 tracking-wide"
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {processingOrder ? (
+                <>
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-black"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  Processing...
+                </>
+              ) : (
+                <>
+                  <AiOutlineShoppingCart className="mr-2 text-base" />
+                  Cash on Delivery
+                </>
+              )}
+            </motion.button>
+
+            {/* Online Payment Button */}
+            <motion.button
+              onClick={handlePayOnline}
+              disabled={cartItems.length === 0 || isLoading}
+              className="bg-black text-white border border-black px-5 py-3 rounded-xl text-sm font-semibold hover:bg-neutral-800 transition-all duration-300 flex items-center justify-center disabled:opacity-50 shadow-sm tracking-wide"
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {isLoading ? (
+                <>
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  Redirecting...
+                </>
+              ) : (
+                <>
+                  💳 Pay Online
+                </>
+              )}
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
     </div>
+  </main>
+</div>
   );
 };
 
