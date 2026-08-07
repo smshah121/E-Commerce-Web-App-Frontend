@@ -73,56 +73,60 @@ const CustomerNavbar = () => {
     <div className="flex justify-between items-center h-20">
 
       {/* Logo */}
-      <div className="flex-shrink-0">
-        <Link
-          to="/"
-          className="flex items-center space-x-3 group"
+     <div className="flex-shrink-0">
+  <Link
+    to="/"
+    className="flex items-center space-x-3 group"
+  >
+    {/* Logo Icon */}
+    <div className="relative">
+      <div
+        className={`w-10 h-10 md:w-11 md:h-11 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105 ${
+          shouldBeWhite
+            ? "bg-black text-white shadow-md"
+            : "bg-white text-black shadow-[0_0_25px_rgba(255,255,255,0.15)]"
+        }`}
+      >
+        <svg
+          className="w-6 h-6 transition-colors duration-300"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <div className="relative">
-            <div
-              className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 ${
-                shouldBeWhite
-                  ? "bg-black shadow-lg"
-                  : "bg-white/10 border border-white/20 shadow-[0_0_25px_rgba(255,255,255,0.08)]"
-              }`}
-            >
-              <svg
-                className={`w-6 h-6 transition-colors duration-300 ${
-                  shouldBeWhite ? "text-white" : "text-white"
-                }`}
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
-              </svg>
-            </div>
-
-            {/* Subtle glow */}
-            {!shouldBeWhite && (
-              <div className="absolute inset-0 rounded-xl bg-white/10 blur-xl -z-10" />
-            )}
-          </div>
-
-          <div className="flex flex-col">
-            <span
-              className={`text-xl font-black tracking-tight transition-colors duration-300 ${
-                shouldBeWhite ? "text-gray-950" : "text-white"
-              }`}
-            >
-              PriceTag
-            </span>
-
-            <span
-              className={`text-[10px] font-semibold tracking-[0.15em] uppercase transition-colors duration-300 ${
-                shouldBeWhite ? "text-gray-400" : "text-white/50"
-              }`}
-            >
-              Premium Shopping
-            </span>
-          </div>
-        </Link>
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a1.994 1.994 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+          />
+        </svg>
       </div>
 
+      {/* Subtle background glow when on black navbar */}
+      {!shouldBeWhite && (
+        <div className="absolute inset-0 rounded-xl bg-white/20 blur-lg -z-10 transition-opacity duration-300" />
+      )}
+    </div>
+
+    {/* Brand Text / Tag */}
+    <div className="flex flex-col">
+      <span
+        className={`font-extrabold text-lg md:text-xl tracking-tight transition-colors duration-300 ${
+          shouldBeWhite ? "text-neutral-900" : "text-white"
+        }`}
+      >
+        PriceTag
+      </span>
+      <span
+        className={`text-[10px] md:text-xs font-medium tracking-widest uppercase transition-colors duration-300 ${
+          shouldBeWhite ? "text-neutral-500" : "text-neutral-300"
+        }`}
+      >
+        Store
+      </span>
+    </div>
+  </Link>
+</div>
       {/* Desktop Navigation */}
       <div className="hidden md:block">
         <div className="flex items-center space-x-1">
