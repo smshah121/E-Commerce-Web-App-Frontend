@@ -20,7 +20,7 @@ const CheckoutPage = () => {
   const isLoggedIn = Boolean(token);
   const [createPayment, { isLoading }] = useCreatePaymentMutation();
 
-  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
+
 
   const [createOrder]=useCreateOrderMutation()
   const [orderPlaced, setOrderPlaced] = useState(false);

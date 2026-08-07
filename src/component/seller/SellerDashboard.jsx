@@ -67,7 +67,7 @@ const cardVariants = {
   },
 };
 
-const AdminDashboard = () => {
+const SellerDashboard = () => {
   // const { data: products = [], isLoading, error } = useGetAllProductsQuery();
   const {
     data: products = [],
@@ -452,4 +452,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default SellerDashboard;
