@@ -122,7 +122,7 @@ const CustomerNavbar = () => {
           shouldBeWhite ? "text-neutral-500" : "text-neutral-300"
         }`}
       >
-        Store
+        Premium Shopping
       </span>
     </div>
   </Link>
