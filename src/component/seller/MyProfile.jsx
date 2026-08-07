@@ -19,6 +19,7 @@ const MyProfile = () => {
 
   const getDashboardPath = () => {
     if (user?.role === 'admin') return '/admin-dashboard';
+    if (user?.role === 'seller') return '/seller-dashboard';
     if (user?.role === 'customer') return '/customer-dashboard';
     return '/'; // fallback
   };
