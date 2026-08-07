@@ -126,135 +126,137 @@ const AddProductImage = ({ productId }) => {
   }
 
   return (
-    <div className="space-y-4">
-      <h4 className="text-xl font-bold text-gray-800">Upload Product Image</h4>
+   <div className="space-y-4 pt-6 border-t border-neutral-200/80 mt-6">
+    <h4 className="text-xs font-bold text-neutral-900 tracking-wider uppercase">Upload Product Media</h4>
 
-      <div
-        className={`relative p-6 border-2 border-dashed rounded-xl transition-all duration-300 ${
-          dragActive
-            ? 'border-blue-500 bg-blue-50'
-            : file
-              ? 'border-green-400 bg-green-50'
-              : 'border-gray-300 bg-white'
-        }`}
-        onDragEnter={handleDrag}
-        onDragOver={handleDrag}
-        onDragLeave={handleDrag}
-        onDrop={handleDrop}
-      >
-        <input
-          ref={fileInputRef}
-          type="file"
-          id={`file-input-${productId}`}
-          className="hidden"
-          onChange={handleFileChange}
-          accept=".pdf,.jpg,.jpeg,.png,.gif,.webp"
-        />
+    <div
+      className={`relative p-6 border-2 border-dashed rounded-xl transition-all duration-300 ${
+        dragActive
+          ? 'border-black bg-neutral-100/80'
+          : file
+            ? 'border-neutral-900 bg-neutral-50'
+            : 'border-neutral-300 bg-neutral-50/50 hover:bg-white hover:border-neutral-400'
+      }`}
+      onDragEnter={handleDrag}
+      onDragOver={handleDrag}
+      onDragLeave={handleDrag}
+      onDrop={handleDrop}
+    >
+      <input
+        ref={fileInputRef}
+        type="file"
+        id={`file-input-${productId}`}
+        className="hidden"
+        onChange={handleFileChange}
+        accept=".pdf,.jpg,.jpeg,.png,.gif,.webp"
+      />
 
-        {!file ? (
-          <motion.label
-            htmlFor={`file-input-${productId}`} 
-            className="flex flex-col items-center justify-center p-8 cursor-pointer text-gray-600"
-            animate={{ scale: dragActive ? 1.02 : 1 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      {!file ? (
+        <motion.label
+          htmlFor={`file-input-${productId}`} 
+          className="flex flex-col items-center justify-center p-6 cursor-pointer text-neutral-600"
+          animate={{ scale: dragActive ? 1.01 : 1 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        >
+          <FaCloudUploadAlt className="text-5xl text-neutral-400 mb-3" />
+          <p className="font-semibold text-sm text-neutral-900 tracking-tight">
+            {dragActive ? 'Drop image file to attach' : 'Drag & drop product image here'}
+          </p>
+          <p className="text-xs text-neutral-500 mt-1 font-light">
+            or <span className="text-black font-semibold underline underline-offset-2">browse files</span> from your computer
+          </p>
+          <p className="text-[11px] text-neutral-400 mt-2 tracking-wide font-light">
+            Supports: JPG, PNG, WEBP, GIF, PDF
+          </p>
+        </motion.label>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex flex-col items-center justify-center p-3"
+        >
+          {isImageFile && previewUrl ? (
+            <img
+              src={previewUrl}
+              alt="Preview"
+              className="max-w-40 max-h-40 object-contain rounded-xl mb-3 border border-neutral-200 shadow-sm"
+            />
+          ) : (
+            <div className="w-20 h-20 bg-neutral-100 border border-neutral-200 rounded-xl flex items-center justify-center text-neutral-400 mb-3">
+              <FaFileAlt className="text-3xl" />
+            </div>
+          )}
+          <p className="font-semibold text-xs text-neutral-900 tracking-tight">{file.name}</p>
+          <p className="text-[11px] text-neutral-400 font-light mt-0.5">{formatFileSize(file.size)}</p>
+          <button
+            onClick={removeFile}
+            className="mt-3 text-neutral-500 hover:text-black text-xs font-semibold uppercase tracking-wider transition-colors flex items-center space-x-1"
           >
-            <FaCloudUploadAlt className="text-6xl text-gray-400 mb-4" />
-            <p className="font-semibold text-lg">
-              {dragActive ? 'Drop your file here' : 'Drag & drop a file here'}
-            </p>
-            <p className="text-sm text-gray-500 mt-1">
-              or <span className="text-blue-500 underline">click to browse</span>
-            </p>
-            <p className="text-xs text-gray-400 mt-2">
-              Supports: PDF, JPG, PNG, GIF, WebP
-            </p>
-          </motion.label>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center justify-center p-4"
-          >
-            {isImageFile && previewUrl ? (
-              <img
-                src={previewUrl}
-                alt="Preview"
-                className="max-w-48 max-h-48 object-contain rounded-lg mb-4 shadow-md"
-              />
-            ) : (
-              <div className="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500 mb-4">
-                <FaFileAlt className="text-4xl" />
-              </div>
-            )}
-            <p className="font-semibold text-center">{file.name}</p>
-            <p className="text-sm text-gray-500">{formatFileSize(file.size)}</p>
-            <button
-              onClick={removeFile}
-              className="mt-3 text-red-500 hover:text-red-700 transition-colors flex items-center space-x-1"
-            >
-              <FaTimesCircle />
-              <span>Remove file</span>
-            </button>
-          </motion.div>
-        )}
-      </div>
-
-      <AnimatePresence>
-        {file && !isSuccess && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="flex items-center space-x-4"
-          >
-            <motion.button
-              onClick={handleSubmit}
-              whileHover={{ scale: isLoading ? 1 : 1.02 }}
-              whileTap={{ scale: isLoading ? 1 : 0.98 }}
-              className="flex-1 bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={isLoading || !file}
-            >
-              {isLoading ? (
-                <>
-                  <FaSpinner className="animate-spin mr-2" />
-                  Uploading...
-                </>
-              ) : (
-                <>
-                  <FaCloudUploadAlt className="mr-2" />
-                  Upload File
-                </>
-              )}
-            </motion.button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {isSuccess && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="bg-green-100 text-green-700 p-3 rounded-lg flex items-center space-x-2 text-sm"
-          >
-            <FaCheckCircle className="text-xl" />
-            <span>File uploaded successfully!</span>
-          </motion.div>
-        )}
-        {isError && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="bg-red-100 text-red-700 p-3 rounded-lg flex items-center space-x-2 text-sm"
-          >
-            <FaTimesCircle className="text-xl" />
-            <span>Error uploading file: {error?.data?.message || 'Unknown error occurred'}</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <FaTimesCircle className="text-sm" />
+            <span>Remove Image</span>
+          </button>
+        </motion.div>
+      )}
     </div>
+
+    {/* Upload Submission Button */}
+    <AnimatePresence>
+      {file && !isSuccess && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          className="flex items-center space-x-4"
+        >
+          <motion.button
+            onClick={handleSubmit}
+            whileHover={{ scale: isLoading ? 1 : 1.01 }}
+            whileTap={{ scale: isLoading ? 1 : 0.98 }}
+            className="flex-1 bg-black text-white font-medium text-xs tracking-wider uppercase py-3 px-6 rounded-xl hover:bg-neutral-800 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+            disabled={isLoading || !file}
+          >
+            {isLoading ? (
+              <>
+                <FaSpinner className="animate-spin mr-2 text-sm" />
+                Uploading Media...
+              </>
+            ) : (
+              <>
+                <FaCloudUploadAlt className="mr-2 text-sm" />
+                Upload Selected File
+              </>
+            )}
+          </motion.button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+
+    {/* Feedback Alerts */}
+    <AnimatePresence>
+      {isSuccess && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          className="bg-neutral-900 text-white p-3 rounded-xl flex items-center space-x-2 text-xs border border-neutral-800 shadow-sm"
+        >
+          <FaCheckCircle className="text-emerald-400 text-base" />
+          <span className="font-medium tracking-wide">Image uploaded to product listing successfully!</span>
+        </motion.div>
+      )}
+      {isError && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          className="bg-neutral-900 text-white p-3 rounded-xl flex items-center space-x-2 text-xs border border-neutral-800 shadow-sm"
+        >
+          <FaTimesCircle className="text-red-400 text-base" />
+          <span className="font-medium tracking-wide">Upload failed: {error?.data?.message || 'Unknown error occurred'}</span>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </div>
   );
 };
 
