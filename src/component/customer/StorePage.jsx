@@ -268,7 +268,9 @@ const StorePage = () => {
 
                         <div className="w-full p-4">
 
-                          <div className="rounded-xl bg-white/95 px-4 py-3 text-center text-xs font-bold text-slate-900 shadow-lg backdrop-blur-sm">
+                          <div 
+                           onClick={()=>handleStoreClick(product.id)}
+                          className="rounded-xl bg-white/95 px-4 py-3 text-center text-xs font-bold text-slate-900 shadow-lg backdrop-blur-sm">
                             View Product
                           </div>
 
