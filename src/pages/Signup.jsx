@@ -53,10 +53,15 @@ const Signup = () => {
       localStorage.setItem("token", res.access_token);
       localStorage.setItem("role", res.role);
       localStorage.setItem("id", res.id);
+
       toast.success("Signup successful! Please log in.");
+
       navigate("/login");
     } catch (err) {
       console.log("signup failed", err);
+      toast.error(
+    err?.data?.message || "Unable to create account. Please try again."
+  );
     }
   };
 
