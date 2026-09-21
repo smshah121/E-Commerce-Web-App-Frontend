@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useCreateProductMutation } from '../../feature/product/productApi';
-
+import { toast } from "react-toastify";
 
 const CreateProductForm = () => {
   const [createProduct] = useCreateProductMutation();
@@ -18,7 +18,7 @@ const CreateProductForm = () => {
     e.preventDefault();
     try {
       await createProduct(formData).unwrap();
-      alert('Product Created');
+      toast.success('Product Created');
       setFormData({ name: '', price: '', description: '' });
     } catch (err) {
       console.error(err);

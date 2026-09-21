@@ -48,29 +48,29 @@ const MyProfile = () => {
 
   const handleChangePassword = async () => {
     if (!password) {
-      alert('❌ Please enter a new password');
+      toast.warining('❌ Please enter a new password');
       return;
     }
     
     if (password !== confirmPassword) {
-      alert('❌ Passwords do not match');
+      toast.warning('❌ Passwords do not match');
       return;
     }
 
     if (password.length < 6) {
-      alert('❌ Password must be at least 6 characters long');
+      toast.warning('❌ Password must be at least 6 characters long');
       return;
     }
 
     setIsUpdating(true);
     try {
       await updateUser({ id: user.id, password }).unwrap();
-      alert('✅ Password updated successfully');
+      toast.success('✅ Password updated successfully');
       setPassword('');
       setConfirmPassword('');
       setShowPasswordForm(false);
     } catch (err) {
-      alert('❌ Failed to update password');
+      toast.error('❌ Failed to update password');
       console.error('Password update error:', err);
     } finally {
       setIsUpdating(false);

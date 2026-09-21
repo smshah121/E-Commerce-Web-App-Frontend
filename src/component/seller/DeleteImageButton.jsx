@@ -2,6 +2,7 @@ import React from 'react';
 import { useDeleteProductImageMutation } from '../../feature/product/productApi';
 import { motion } from 'framer-motion';
 import { Trash2 } from 'lucide-react'; 
+import { toast } from "react-toastify";
 
 const DeleteImageButton = ({ imageId }) => {
   const [deleteImage, { isLoading }] = useDeleteProductImageMutation();
@@ -12,7 +13,7 @@ const DeleteImageButton = ({ imageId }) => {
         await deleteImage(imageId).unwrap();
       } catch (error) {
         console.error('Failed to delete image:', error);
-        alert('Error deleting image');
+        toast.error('Error deleting image');
       }
     }
   };

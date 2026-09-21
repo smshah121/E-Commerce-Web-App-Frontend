@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAddProductImageMutation } from '../../feature/product/productApi';
 import { FaCloudUploadAlt, FaTimesCircle, FaCheckCircle, FaSpinner, FaFileAlt } from 'react-icons/fa';
-
+import { toast } from "react-toastify";
 const AddProductImage = ({ productId }) => {
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);

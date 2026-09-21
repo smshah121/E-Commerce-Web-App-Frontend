@@ -9,7 +9,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { clearCart } from '../../feature/cart/cartSlice';
 import { useCreatePaymentMutation } from '../../feature/payment/paymentApi';
 import { useCreateOrderMutation } from '../../feature/order/orderApi';
-
+import { toast } from "react-toastify";
 
 
 const CheckoutPage = () => {
@@ -45,7 +45,7 @@ const CheckoutPage = () => {
     !address.postalCode ||
     !address.country
   ) {
-    alert("Fill all address fields");
+    toast.warning("Fill all address fields");
     return;
   }
 
@@ -76,11 +76,11 @@ const CheckoutPage = () => {
     if (res.url) {
       window.location.href = res.url;
     } else {
-      alert("Payment session not created.");
+      toast.warning("Payment session not created.");
     }
   } catch (err) {
     console.error(err);
-    alert("Payment initiation failed.");
+    toast.error("Payment initiation failed.");
   }
 };
   // Redirect if not logged in or cart is empty

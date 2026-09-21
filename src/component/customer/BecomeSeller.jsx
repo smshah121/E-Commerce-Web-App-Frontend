@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCreateSellerApplicationMutation } from "../../feature/seller-application/sellerApplicationApi"; 
 import { Link } from "react-router-dom";
-
+import { toast } from "react-toastify";
 const BecomeSeller = () => {
   // 1. Initialize the RTK Query mutation hook
   const [createApplication, { isLoading, isSuccess, isError, error }] =

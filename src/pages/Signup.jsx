@@ -1,7 +1,7 @@
 import  { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useSignupMutation } from "../feature/auth/authApi";
-
+import { toast } from "react-toastify";
 const Signup = () => {
 
   const [name, setName] = useState("");
@@ -53,7 +53,7 @@ const Signup = () => {
       localStorage.setItem("token", res.access_token);
       localStorage.setItem("role", res.role);
       localStorage.setItem("id", res.id);
-      alert("Signup successful! Please log in.");
+      toast.success("Signup successful! Please log in.");
       navigate("/login");
     } catch (err) {
       console.log("signup failed", err);

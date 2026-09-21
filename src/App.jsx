@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 
 
 import Signup from './pages/Signup'
-
+import { ToastContainer } from 'react-toastify';
 import SellerDashboard from './component/seller/SellerDashboard'
 import CustomerDashboard from './component/customer/CustomerDashboard'
 import MyOrders from './component/customer/MyOrders'
@@ -47,6 +47,18 @@ function App() {
   element={<StorePage/>}
 />
    </Routes>
+   <ToastContainer 
+        position="top-center" 
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored" 
+      />
    
   )
 }

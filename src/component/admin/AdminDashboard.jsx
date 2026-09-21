@@ -20,6 +20,7 @@ import {
 } from 'react-icons/fa';
 import { TbLogout } from "react-icons/tb";
 import { CgProfile } from "react-icons/cg";
+import { toast } from "react-toastify";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ const AdminDashboard = () => {
       try {
         await approveApplication(id).unwrap();
       } catch (err) {
-        alert(err?.data?.message || "Failed to approve application");
+        toast.error(err?.data?.message || "Failed to approve application");
       }
     }
   };
@@ -65,7 +66,7 @@ const AdminDashboard = () => {
       try {
         await rejectApplication(id).unwrap();
       } catch (err) {
-        alert(err?.data?.message || "Failed to reject application");
+        toast.error(err?.data?.message || "Failed to reject application");
       }
     }
   };

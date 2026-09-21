@@ -21,7 +21,7 @@ import {
   Instagram,
   Linkedin
 } from "lucide-react";
-
+import { toast } from "react-toastify";
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: products = [], isLoading } = useGetAllProductsQuery();

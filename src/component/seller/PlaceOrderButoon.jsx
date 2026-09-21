@@ -2,6 +2,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useCreateOrderMutation } from '../../feature/order/orderApi';
 import { clearCart } from '../../feature/cart/cartSlice';
+import { toast } from "react-toastify";
 
 const PlaceOrderButton = ({ className = "" }) => {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ const PlaceOrderButton = ({ className = "" }) => {
 
   const handlePlaceOrder = async () => {
     if (cart.length === 0) {
-      alert('Your cart is empty!');
+      toast.info('Your cart is empty!');
       return;
     }
 
@@ -30,14 +31,14 @@ const PlaceOrderButton = ({ className = "" }) => {
       // Clear cart after successful order
       dispatch(clearCart());
       
-      alert(`Order placed successfully! Order ID: ${result.id || 'N/A'}`);
+      toast.success(`Order placed successfully! Order ID: ${result.id || 'N/A'}`);
       console.log('Order created:', result);
     } catch (err) {
       console.error('Order creation failed:', err);
       
       // Better error handling
       const errorMessage = err?.data?.message || err?.message || 'Error placing order';
-      alert(`Failed to place order: ${errorMessage}`);
+      toast.error(`Failed to place order: ${errorMessage}`);
     }
   };
 

@@ -30,7 +30,7 @@ const OauthSuccess = () => {
         navigate('/seller-dashboard');
       } 
     } else {
-      alert('OAuth authorization handshake failed.');
+      toast.error('OAuth authorization handshake failed.');
       navigate('/');
     }
   }, [searchParams, dispatch, navigate]);

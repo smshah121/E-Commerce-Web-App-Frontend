@@ -16,7 +16,7 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import {Tag} from "lucide-react";
 
-
+import { toast } from "react-toastify";
 const CustomerDashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

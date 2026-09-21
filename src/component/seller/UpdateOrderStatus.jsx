@@ -3,6 +3,7 @@ import {
   useUpdateOrderStatusMutation,
   useUpdatePaymentStatusMutation,
 } from '../../feature/order/orderApi';
+import { toast } from "react-toastify";
 
 const UpdateOrderStatus = ({
   orderId,
@@ -31,10 +32,10 @@ const UpdateOrderStatus = ({
         status: newStatus,
       }).unwrap();
 
-      alert('Order status updated!');
+      toast.success('Order status updated!');
     } catch (err) {
       console.error(err);
-      alert('Error updating status');
+      toast.error('Error updating status');
     }
   };
 
@@ -48,10 +49,10 @@ const UpdateOrderStatus = ({
         paymentStatus: newStatus,
       }).unwrap();
 
-      alert('Payment status updated!');
+      toast.success('Payment status updated!');
     } catch (err) {
       console.error(err);
-      alert('Error updating payment status');
+      toast.error('Error updating payment status');
     }
   };
 
