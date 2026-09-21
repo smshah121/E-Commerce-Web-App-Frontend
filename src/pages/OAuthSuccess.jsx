@@ -36,10 +36,23 @@ const OauthSuccess = () => {
   }, [searchParams, dispatch, navigate]);
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center space-y-4">
-      <div className="animate-spin rounded-full h-12 w-12 border-4 border-emerald-500 border-t-transparent"></div>
-      <p className="text-slate-600 font-semibold text-sm tracking-wide">Securing decentralized session certificates...</p>
-    </div>
+    <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center space-y-4 text-neutral-900 antialiased">
+  {/* Minimalist Monochrome Spinner */}
+  <div className="relative">
+    <div className="w-12 h-12 rounded-full border-2 border-neutral-200"></div>
+    <div className="w-12 h-12 rounded-full border-2 border-black border-t-transparent animate-spin absolute top-0 left-0"></div>
+  </div>
+
+  {/* PriceTag Brand Loading Text */}
+  <div className="text-center space-y-1">
+    <p className="text-sm font-bold text-neutral-900 tracking-tight">
+      Authenticating with PriceTag...
+    </p>
+    <p className="text-xs text-neutral-500 font-light tracking-wide">
+      Verifying your account details, please wait a moment
+    </p>
+  </div>
+</div>
   );
 };
 
