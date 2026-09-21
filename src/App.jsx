@@ -24,6 +24,8 @@ function App() {
   
 
   return (
+    <>
+  
    <Routes>
     <Route path='/' element={<HomePage/>}/>
     <Route path='/login' element={<Login/>}/>
@@ -59,6 +61,7 @@ function App() {
         pauseOnHover
         theme="colored" 
       />
+        </>
    
   )
 }
