@@ -56,6 +56,10 @@ const Signup = () => {
 
       toast.success("Signup successful! Please log in.");
 
+      setTimeout(() => {
+    navigate("/login");
+  }, 1500);
+
       navigate("/login");
     } catch (err) {
       console.log("signup failed", err);
