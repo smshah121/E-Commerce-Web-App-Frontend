@@ -20,6 +20,7 @@ import BecomeSeller from "./component/customer/BecomeSeller"
 import AdminDashboard from "./component/admin/AdminDashboard"
 import OAuthSuccess from './pages/OAuthSuccess'
 import StorePage from './component/customer/StorePage'
+import 'react-toastify/dist/ReactToastify.css'
 function App() {
   
 
