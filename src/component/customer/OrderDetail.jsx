@@ -14,6 +14,12 @@ const OrderDetail = () => {
   const { data: order, isLoading, error } = useGetOrderByIdQuery(orderId);
   const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
 
+  const formatPrice = (price) => {
+  return Number(price || 0).toLocaleString("en-PK", {
+    maximumFractionDigits: 0,
+  });
+};
+
   // Mock tracking history for demonstration purposes
   // In a real app, this would come from your backend order data
   const mockTrackingHistory = [
@@ -50,7 +56,7 @@ const OrderDetail = () => {
 
   const calculateItemTotal = (item) => {
     // Ensure item.product and item.product.price exist before calculation
-    return (item.product?.price ? parseFloat(item.product.price) * item.quantity : 0).toFixed(2);
+    return item.product?.price ? parseFloat(item.product.price) * item.quantity : 0;
   };
 
   // Removed calculateOrderTotal as order.subtotal, order.shipping, order.tax, order.total are directly available
@@ -169,11 +175,15 @@ const OrderDetail = () => {
                       <div>
                         <h3 className="font-semibold text-gray-900 text-lg">{item.product?.name || 'Unknown Product'}</h3>
                         <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
-                        <p className="text-sm font-medium text-blue-600">${item.product?.price ? parseFloat(item.product.price).toFixed(2) : 'N/A'} each</p>
+                       <p className="text-sm font-medium text-blue-600">
+  {item.product?.price
+    ? `Rs. ${formatPrice(item.product.price)} each`
+    : 'N/A'}
+</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-lg font-bold text-gray-900">${calculateItemTotal(item)}</p>
+                      <p className="text-lg font-bold text-gray-900">Rs. {calculateItemTotal(item)}</p>
                     </div>
                   </li>
                 ))}
@@ -203,31 +213,29 @@ const OrderDetail = () => {
               <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
                 <FaMoneyBillWave className="mr-3 text-teal-600" /> Payment Summary
               </h2>
-              <div className="flex justify-between text-gray-700">
-                <span>Subtotal:</span>
-                <span>${parseFloat(order.subtotal || 0).toFixed(2)}</span> {/* Use order.subtotal */}
-              </div>
-              <div className="flex justify-between text-gray-700">
-                <span>Shipping:</span>
-                {/* Display 'Free' if shipping is 0, otherwise display the amount */}
-                {(order.shipping || 0) === 0 ? (
-                  <span className="font-semibold text-green-600">Free</span>
-                ) : (
-                  <span>${parseFloat(order.shipping || 0).toFixed(2)}</span>
-                )}
-              </div>
-              <div className="flex justify-between text-gray-700">
-                <span>Tax:</span>
-                <span>${parseFloat(order.tax || 0).toFixed(2)}</span> {/* Use order.tax */}
-              </div>
-              <div className="flex justify-between font-bold text-xl text-gray-900 border-t border-gray-200 pt-3 mt-3">
-                <span>Total Paid:</span>
-                <span>${parseFloat(order.total || 0).toFixed(2)}</span> {/* Use order.total directly */}
-              </div>
-              <p className="text-sm text-gray-600 mt-4 text-center">
-                Payment Method: Cash on Delivery
-              </p>
-            </div>
+             <div className="flex justify-between text-gray-700">
+  <span>Subtotal:</span>
+  <span>Rs. {formatPrice(order.subtotal)}</span>
+</div>
+
+<div className="flex justify-between text-gray-700">
+  <span>Shipping:</span>
+  {(order.shipping || 0) === 0 ? (
+    <span className="font-semibold text-green-600">Free</span>
+  ) : (
+    <span>Rs. {formatPrice(order.shipping)}</span>
+  )}
+</div>
+
+<div className="flex justify-between text-gray-700">
+  <span>Tax:</span>
+  <span>Rs. {formatPrice(order.tax)}</span>
+</div>
+
+<div className="flex justify-between font-bold text-xl text-gray-900 border-t border-gray-200 pt-3 mt-3">
+  <span>Total Paid:</span>
+  <span>Rs. {formatPrice(order.total)}</span>
+</div>
 
             {/* Track Order Section */}
             <div className="mt-8">
