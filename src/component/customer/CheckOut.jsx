@@ -229,7 +229,7 @@ const CheckoutPage = () => {
                             <p className="text-[11px] text-neutral-500">Qty: {item.quantity}</p>
                           </div>
                         </div>
-                        <span className="font-bold text-neutral-900 text-xs">${formatPrice(item.price * item.quantity)}</span>
+                        <span className="font-bold text-neutral-900 text-xs">{formatPrice(item.price * item.quantity)}</span>
                       </li>
                     ))}
                   </ul>
@@ -241,7 +241,7 @@ const CheckoutPage = () => {
             <div className="space-y-2 text-sm bg-neutral-100/60 p-3.5 rounded-xl border border-neutral-200/80">
               <div className="flex justify-between text-neutral-600 text-xs font-light">
                 <span>Subtotal</span>
-                <span className="font-medium text-neutral-900">${formatPrice(subtotal)}</span>
+                <span className="font-medium text-neutral-900">{formatPrice(subtotal)}</span>
               </div>
               <div className="flex justify-between text-neutral-600 text-xs font-light">
                 <span>Shipping</span>
