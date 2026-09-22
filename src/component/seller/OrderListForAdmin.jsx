@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import UpdateOrderStatus from './UpdateOrderStatus';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGetOrdersForAdminQuery } from '../../feature/order/orderApi'; // ✅ updated
-import { FaBoxOpen, FaUser, FaDollarSign, FaCalendarAlt, FaChevronDown } from 'react-icons/fa';
+import { FaBoxOpen, FaUser, FaCalendarAlt, FaChevronDown, FaMoneyBillWave } from 'react-icons/fa';
 
 // Animation variants
 const containerVariants = {
@@ -38,6 +38,15 @@ const getStatusColor = (status) => {
 const OrderListForAdmin = () => {
   const { data: orders = [], isLoading, isError, refetch } = useGetOrdersForAdminQuery(undefined, {refetchOnMountOrArgChange:true}); // ✅ only current admin
   const [expandedOrder, setExpandedOrder] = useState(null);
+
+
+
+  const formatPrice = (price) => {
+  return Number(price || 0).toLocaleString("en-PK", {
+    maximumFractionDigits: 0,
+  });
+};
+
 
   const toggleDetails = (orderId) => {
     setExpandedOrder(expandedOrder === orderId ? null : orderId);
@@ -124,7 +133,9 @@ const OrderListForAdmin = () => {
                   </span>
                   <div className="text-right">
                     <p className="text-sm text-gray-500">Total</p>
-                    <p className="text-xl font-bold text-green-600">${order.total}</p>
+                    <p className="text-xl font-bold text-green-600">
+  Rs. {formatPrice(order.total)}
+</p>
                   </div>
                 </div>
               </div>
@@ -147,7 +158,7 @@ const OrderListForAdmin = () => {
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <FaDollarSign className="text-lg text-green-500" />
+                  <FaMoneyBillWave className="text-lg text-green-500" />
                   <div>
                     <p className="font-semibold">Payment</p>
                     <p className="text-sm text-gray-700">{order.paymentMethod}</p>
@@ -188,8 +199,10 @@ const OrderListForAdmin = () => {
                               <p className="text-xs text-gray-500">Quantity: {item.quantity}</p>
                             </div>
                             <p className="text-sm font-semibold text-gray-800">
-                              ${typeof item.price === 'number' ? item.price.toFixed(2) : 'N/A'}
-                            </p>
+  {typeof item.price === 'number'
+    ? `Rs. ${formatPrice(item.price)}`
+    : 'N/A'}
+</p>
                           </li>
                         ))}
                       </ul>
