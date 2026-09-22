@@ -16,6 +16,13 @@ const MyOrders = () => {
 
   const { data: orders = [], isLoading } = useGetMyOrderQuery();
 
+
+  const formatPrice = (price) => {
+  return Number(price || 0).toLocaleString("en-PK", {
+    maximumFractionDigits: 0,
+  });
+};
+
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case "pending":
@@ -224,8 +231,8 @@ const MyOrders = () => {
                 <div className="text-right ml-auto">
                   <p className="text-xs text-neutral-400 uppercase tracking-wider font-medium">Total</p>
                   <p className="text-lg font-bold text-neutral-900">
-                    ${parseFloat(order.total)?.toFixed(2) || "0.00"}
-                  </p>
+  Rs. {formatPrice(order.total)}
+</p>
                 </div>
               </div>
             </div>
@@ -311,13 +318,13 @@ const MyOrders = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-neutral-900 text-sm">
-                      $
-                      {(item.product?.price
-                        ? parseFloat(item.product.price) * item.quantity
-                        : 0
-                      ).toFixed(2)}
-                    </p>
+                   <p className="font-bold text-neutral-900 text-sm">
+  Rs. {formatPrice(
+    item.product?.price
+      ? parseFloat(item.product.price) * item.quantity
+      : 0
+  )}
+</p>
                   </div>
                 </div>
               ))}
@@ -348,8 +355,8 @@ const MyOrders = () => {
             <p className="text-xs text-neutral-500 font-light">
               Order Total:{" "}
               <span className="font-bold text-neutral-900 text-sm ml-1">
-                ${parseFloat(order.total)?.toFixed(2) || "0.00"}
-              </span>
+  Rs. {formatPrice(order.total)}
+</span>
             </p>
           </div>
         </motion.div>
@@ -386,15 +393,14 @@ const MyOrders = () => {
         </div>
         <div className="pt-4 md:pt-0">
           <p className="text-3xl font-extrabold text-neutral-900 tracking-tight">
-            $
-            {orders
-              .reduce(
-                (total, order) =>
-                  total + (order.total ? parseFloat(order.total) : 0),
-                0
-              )
-              .toFixed(2)}
-          </p>
+  Rs. {formatPrice(
+    orders.reduce(
+      (total, order) =>
+        total + (order.total ? parseFloat(order.total) : 0),
+      0
+    )
+  )}
+</p>
           <p className="text-xs text-neutral-500 uppercase tracking-wider font-medium mt-1">Total Spent</p>
         </div>
       </div>
