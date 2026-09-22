@@ -199,7 +199,7 @@ const OrderListForAdmin = () => {
                               <p className="text-xs text-gray-500">Quantity: {item.quantity}</p>
                             </div>
                             <p className="text-sm font-semibold text-gray-800">
-                               Rs. {formatPrice(item.price)}
+                               Rs. {formatPrice(order.total)}
 </p>
                           </li>
                         ))}
