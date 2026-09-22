@@ -37,11 +37,11 @@ const ProductGrid = ({ products }) => {
     navigate(`/product/${productId}`);
   };
 
-  const formatPrice = (price) => {
-    return typeof price === 'number'
-      ? price.toFixed(2)
-      : parseFloat(price || 0).toFixed(2);
-  };
+ const formatPrice = (price) => {
+  return Number(price || 0).toLocaleString("en-PK", {
+    maximumFractionDigits: 0,
+  });
+};
 
   const filteredProducts = products
   ?.filter((product) =>
@@ -182,7 +182,7 @@ const ProductGrid = ({ products }) => {
                   </h3>
 
                   <span className="shrink-0 text-lg font-bold text-neutral-900">
-                    {formatPrice(product.price)}
+                   Rs. {formatPrice(product.price)}
                   </span>
                 </div>
 

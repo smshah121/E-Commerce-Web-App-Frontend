@@ -94,10 +94,10 @@ const SellerDashboard = () => {
   const { data: orders = [], isLoading: ordersLoading } = useGetAllOrdersQuery();
 
   const formatPrice = (price) => {
-    return typeof price === "number"
-      ? price.toFixed(2)
-      : parseFloat(price || 0).toFixed(2);
-  };
+  return Number(price || 0).toLocaleString("en-PK", {
+    maximumFractionDigits: 0,
+  });
+};
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -338,7 +338,7 @@ const SellerDashboard = () => {
                               animate={{ scale: 1 }}
                               className="text-2xl font-black text-neutral-900"
                             >
-                              {formatPrice(product.price)}
+                             Rs. {formatPrice(product.price)}
                             </motion.div>
                             <span className="bg-neutral-100 text-neutral-800 border border-neutral-200/80 text-[11px] font-semibold px-2.5 py-0.5 rounded-md uppercase tracking-wider">
                               ID: #{product.id}

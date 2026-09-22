@@ -27,10 +27,10 @@ const StorePage = () => {
   } = useGetAllProductsQuery();
 
   const formatPrice = (price) => {
-    return typeof price === "number"
-      ? price.toFixed(2)
-      : parseFloat(price || 0).toFixed(2);
-  };
+  return Number(price || 0).toLocaleString("en-PK", {
+    maximumFractionDigits: 0,
+  });
+};
 
   // Get only products belonging to this seller
   const storeProducts = products.filter(
@@ -311,7 +311,7 @@ const StorePage = () => {
                           </p>
 
                           <span className="text-xl font-black text-slate-950">
-                            {formatPrice(product.price)}
+                           Rs. {formatPrice(product.price)}
                           </span>
                         </div>
 

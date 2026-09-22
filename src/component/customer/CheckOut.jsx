@@ -97,9 +97,11 @@ const CheckoutPage = () => {
   const tax = 0.00; // No tax as requested
   const total = subtotal + shipping + tax; // Total is now just subtotal + free shipping
 
-  const formatPrice = (price) => {
-    return typeof price === 'number' ? price.toFixed(2) : parseFloat(price || 0).toFixed(2);
-  };
+ const formatPrice = (price) => {
+  return Number(price || 0).toLocaleString("en-PK", {
+    maximumFractionDigits: 0,
+  });
+};
 
   const handleAddressChange = (e) => {
     const { name, value } = e.target;

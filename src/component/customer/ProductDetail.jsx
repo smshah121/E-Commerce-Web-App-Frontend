@@ -62,8 +62,10 @@ const ProductDetail = () => {
   };
 
   const formatPrice = (price) => {
-    return typeof price === 'number' ? price.toFixed(2) : parseFloat(price || 0).toFixed(2);
-  };
+  return Number(price || 0).toLocaleString("en-PK", {
+    maximumFractionDigits: 0,
+  });
+};
 
   if (isLoading) {
     return (
@@ -209,7 +211,7 @@ const ProductDetail = () => {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="text-2xl font-semibold text-neutral-900 mb-6"
           >
-            ${formatPrice(product.price)}
+            Rs. {formatPrice(product.price)}
           </motion.p>
           
           <motion.p
