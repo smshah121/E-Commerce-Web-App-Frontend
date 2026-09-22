@@ -311,7 +311,7 @@ const StorePage = () => {
                           </p>
 
                           <span className="text-xl font-black text-slate-950">
-                            ${formatPrice(product.price)}
+                            {formatPrice(product.price)}
                           </span>
                         </div>
 

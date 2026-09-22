@@ -182,7 +182,7 @@ const ProductGrid = ({ products }) => {
                   </h3>
 
                   <span className="shrink-0 text-lg font-bold text-neutral-900">
-                    ${formatPrice(product.price)}
+                    {formatPrice(product.price)}
                   </span>
                 </div>
 

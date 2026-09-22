@@ -48,7 +48,7 @@ const CreateProductForm = () => {
       </motion.div>
       
       <motion.div className="space-y-1.5">
-        <label className="text-xs font-semibold text-neutral-700 tracking-wide uppercase">Price ($)</label>
+        <label className="text-xs font-semibold text-neutral-700 tracking-wide uppercase">Price</label>
         <input
           type="number"
           name="price"

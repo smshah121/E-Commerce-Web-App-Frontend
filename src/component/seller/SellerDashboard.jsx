@@ -338,7 +338,7 @@ const SellerDashboard = () => {
                               animate={{ scale: 1 }}
                               className="text-2xl font-black text-neutral-900"
                             >
-                              ${formatPrice(product.price)}
+                              {formatPrice(product.price)}
                             </motion.div>
                             <span className="bg-neutral-100 text-neutral-800 border border-neutral-200/80 text-[11px] font-semibold px-2.5 py-0.5 rounded-md uppercase tracking-wider">
                               ID: #{product.id}
