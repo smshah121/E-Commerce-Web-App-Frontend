@@ -213,7 +213,13 @@ const OrderDetail = () => {
               <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
                 <FaMoneyBillWave className="mr-3 text-teal-600" /> Payment Summary
               </h2>
-             <div className="flex justify-between text-gray-700">
+
+
+
+
+
+
+              <div className="flex justify-between text-gray-700">
   <span>Subtotal:</span>
   <span>Rs. {formatPrice(order.subtotal)}</span>
 </div>
@@ -236,6 +242,15 @@ const OrderDetail = () => {
   <span>Total Paid:</span>
   <span>Rs. {formatPrice(order.total)}</span>
 </div>
+              <p className="text-sm text-gray-600 mt-4 text-center">
+                Payment Method: Cash on Delivery
+              </p>
+
+
+
+
+
+            </div>
 
             {/* Track Order Section */}
             <div className="mt-8">
